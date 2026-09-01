@@ -54,24 +54,34 @@ import Layout from '../layouts/Layout.astro';
           <span class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]">All Body Types &amp; Fitness Levels Welcome</span>
         </div>
 
-        <!-- Juniors -->
+        <!-- Juniors Referral -->
         <div class="bg-[#1B1B1B] border-2 border-[#541221] p-8 rounded-xl flex flex-col justify-between shadow-xl">
           <div>
             <div class="w-12 h-12 bg-[#3B0B16] text-[#E5A93C] rounded-lg flex items-center justify-center font-heading text-2xl mb-6">
               02
             </div>
-            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">Junior Derby (Ages 8-17)</h3>
-            <p class="text-xs uppercase font-subheading text-[#E5A93C] mb-4">Youth League • Level-Based Contact</p>
+            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">Junior Derby (Youth)</h3>
+            <p class="text-xs uppercase font-subheading text-[#E5A93C] mb-4">JRDA Program • SoDAK Attack</p>
             <p class="text-sm text-gray-300 leading-relaxed mb-4">
-              Build confidence, balance, and leadership in a supportive, fun team environment. Junior skaters learn positional blocking and derby fundamentals safely.
+              BARD does not run an in-house junior league, but we proudly support youth derby through <strong>SoDAK Attack</strong>, a JRDA junior roller derby program based in Sioux Falls, SD. An active group of Brookings-area juniors carpool and commute together every week!
             </p>
             <ul class="space-y-1.5 text-xs text-gray-400 mb-6">
-              <li>✓ Mentored by veteran BARD skaters</li>
-              <li>✓ Level 1 (Non-contact) to Level 3 progression</li>
-              <li>✓ Family-friendly events and junior mixers</li>
+              <li>✓ Junior Roller Derby Association (JRDA) league</li>
+              <li>✓ Open to youth skaters ages 8–17 of all skill levels</li>
+              <li>✓ Active Brookings carpool &amp; commuter network</li>
+              <li class="pt-2">
+                <a 
+                  href="https://www.facebook.com/SiouxFallsJuniorRollerDerby" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="text-[#E5A93C] hover:underline font-bold inline-flex items-center gap-1"
+                >
+                  Visit Sioux Falls Junior Roller Derby on Facebook &rarr;
+                </a>
+              </li>
             </ul>
           </div>
-          <span class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]">Youth Scholarships Available</span>
+          <span class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]">Sioux Falls / Brookings Youth Commuters</span>
         </div>
 
         <!-- Officials -->
@@ -110,61 +120,34 @@ import Layout from '../layouts/Layout.astro';
       </p>
     </div>
 
-    <!-- Intake & Contact Form Placeholder -->
+    <!-- Contact & Join Options -->
     <div class="bg-[#1B1B1B] border-2 border-[#541221] rounded-2xl p-8 sm:p-12">
-      <div class="max-w-3xl mx-auto space-y-8">
+      <div class="max-w-3xl mx-auto space-y-8 text-center">
         
-        <div class="text-center">
+        <div>
           <span class="text-xs uppercase font-heading tracking-widest text-[#E5A93C] block mb-1">Get Started Today</span>
-          <h2 class="font-heading text-4xl uppercase tracking-wider text-white">Fresh Meat &amp; Volunteer Intake</h2>
-          <p class="text-gray-400 text-sm mt-2">
-            Fill out this quick form or reach out directly on Facebook. A league coordinator will reach out within 48 hours to invite you to our next practice session!
+          <h2 class="font-heading text-4xl uppercase tracking-wider text-white">Join the Pack / Get in Touch</h2>
+          <p class="text-gray-400 text-sm mt-2 max-w-xl mx-auto">
+            The fastest and easiest way to join BARD, ask questions about practice schedules, or connect regarding junior carpooling is to message our team directly on Facebook.
           </p>
         </div>
 
-        <form class="space-y-6" onsubmit="event.preventDefault(); alert('Thank you for reaching out to BARD! We will follow up with you regarding upcoming practice schedules.');">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label class="block text-xs font-heading uppercase tracking-wider text-gray-300 mb-2">First &amp; Last Name *</label>
-              <input type="text" required placeholder="Jane Doe" class="w-full bg-[#121212] border border-[#3B0B16] focus:border-[#E5A93C] rounded px-4 py-3 text-white text-sm focus:outline-none transition-colors" />
-            </div>
-            <div>
-              <label class="block text-xs font-heading uppercase tracking-wider text-gray-300 mb-2">Email Address *</label>
-              <input type="email" required placeholder="skater@example.com" class="w-full bg-[#121212] border border-[#3B0B16] focus:border-[#E5A93C] rounded px-4 py-3 text-white text-sm focus:outline-none transition-colors" />
-            </div>
-          </div>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
+          <a 
+            href="https://www.facebook.com/midwestmaidens" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="px-8 py-4 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider text-xl rounded-xl shadow-xl border border-[#9E1F3D] transition-transform active:scale-95 flex items-center gap-3"
+          >
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"/>
+            </svg>
+            Message Us on Facebook
+          </a>
+        </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label class="block text-xs font-heading uppercase tracking-wider text-gray-300 mb-2">Phone Number</label>
-              <input type="tel" placeholder="(605) 555-0199" class="w-full bg-[#121212] border border-[#3B0B16] focus:border-[#E5A93C] rounded px-4 py-3 text-white text-sm focus:outline-none transition-colors" />
-            </div>
-            <div>
-              <label class="block text-xs font-heading uppercase tracking-wider text-gray-300 mb-2">Area of Interest *</label>
-              <select required class="w-full bg-[#121212] border border-[#3B0B16] focus:border-[#E5A93C] rounded px-4 py-3 text-white text-sm focus:outline-none transition-colors">
-                <option value="adult-skater">Adult Skater (18+)</option>
-                <option value="junior-skater">Junior Derby (Ages 8-17)</option>
-                <option value="referee">Skating Referee (Zebra)</option>
-                <option value="nso">Non-Skating Official (NSO)</option>
-                <option value="volunteer">Event Volunteer / Bout Staff</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-heading uppercase tracking-wider text-gray-300 mb-2">Skating Experience / Questions</label>
-            <textarea rows="4" placeholder="Tell us if you have any roller skating experience, need loaner gear, or have any specific questions for our coaching staff!" class="w-full bg-[#121212] border border-[#3B0B16] focus:border-[#E5A93C] rounded px-4 py-3 text-white text-sm focus:outline-none transition-colors"></textarea>
-          </div>
-
-          <div class="text-center pt-2">
-            <button type="submit" class="px-10 py-4 bg-[#9E1F3D] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider text-xl rounded shadow-xl border border-white/20 transition-transform active:scale-95">
-              Submit Intake Information
-            </button>
-          </div>
-        </form>
-
-        <div class="pt-6 border-t border-[#282828] text-center text-xs text-gray-400">
-          Prefer social media? You can also message our recruitment team directly on <a href="https://www.facebook.com/BrookingsAreaRollerDerby" target="_blank" rel="noopener noreferrer" class="text-[#E5A93C] underline font-bold">Facebook</a>.
+        <div class="pt-6 border-t border-[#282828] text-xs text-gray-400 max-w-lg mx-auto">
+          Whether you're interested in adult skating, officiating (referee/NSO), volunteering at bouts, or getting in touch with the Brookings junior derby carpool group for SoDAK Attack, reach out to us anytime!
         </div>
 
       </div>
