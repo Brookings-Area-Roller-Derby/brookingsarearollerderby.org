@@ -1,17 +1,19 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 const roster = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/roster' }),
-  schema: ({ image }) => z.object({
-    derbyName: z.string(),
-    legalName: z.string().optional(),
-    number: z.string(),
-    positions: z.array(z.enum(['Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO'])),
-    bio: z.string(),
-    photo: image().optional(),
-    active: z.boolean().default(true),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      derbyName: z.string(),
+      legalName: z.string().optional(),
+      number: z.string(),
+      positions: z.array(z.enum(['Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO'])),
+      bio: z.string(),
+      photo: image().optional(),
+      active: z.boolean().default(true),
+    }),
 });
 
 const bouts = defineCollection({
@@ -23,7 +25,7 @@ const bouts = defineCollection({
     location: z.string(),
     homeOrAway: z.enum(['home', 'away']),
     details: z.string().optional(),
-    ticketLink: z.string().url().optional(),
+    ticketLink: z.url().optional(),
     time: z.string().default('Doors 5:30 PM | Whistle 6:30 PM'),
     highlight: z.boolean().default(false),
   }),
@@ -43,14 +45,15 @@ const events = defineCollection({
 
 const sponsors = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/sponsors' }),
-  schema: ({ image }) => z.object({
-    name: z.string(),
-    tier: z.enum(['grand-slam', 'apex-jump', 'rookie', 'exclusive']),
-    logo: image().optional(),
-    url: z.string().url().optional(),
-    active: z.boolean().default(true),
-    blurb: z.string().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      tier: z.enum(['grand-slam', 'apex-jump', 'rookie', 'exclusive']),
+      logo: image().optional(),
+      url: z.url().optional(),
+      active: z.boolean().default(true),
+      blurb: z.string().optional(),
+    }),
 });
 
 export const collections = {

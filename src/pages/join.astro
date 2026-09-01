@@ -1,26 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../config/site';
 ---
 
-<Layout title="Join the League - Fresh Meat Clinic" description="Join Brookings Area Roller Derby. Skaters, referees, and non-skating officials (NSOs) of all experience levels welcome.">
-  
+<Layout
+  title="Join the League - Fresh Meat Clinic"
+  description="Join Brookings Area Roller Derby. Skaters, referees, and non-skating officials (NSOs) of all experience levels welcome."
+>
   <!-- Header Banner -->
   <section class="bg-grunge py-14 border-b-4 border-[#541221]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-[#3B0B16] text-[#E5A93C] font-heading uppercase text-xs tracking-widest rounded mb-3">
+      <span
+        class="inline-block px-3 py-1 bg-[#3B0B16] text-[#E5A93C] font-heading uppercase text-xs tracking-widest rounded mb-3"
+      >
         Recruitment &amp; Clinics
       </span>
       <h1 class="font-heading text-5xl sm:text-7xl uppercase tracking-wider text-white">
         Join the Pack / Fresh Meat
       </h1>
       <p class="text-gray-400 text-lg max-w-2xl mt-2">
-        Whether you've never worn skates or you're a seasoned skater looking for a new league, we have a place for you.
+        Whether you've never worn skates or you're a seasoned skater looking for a new league, we
+        have a place for you.
       </p>
     </div>
   </section>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-16">
-    
     <!-- Roles Breakdown -->
     <div>
       <div class="text-center max-w-3xl mx-auto mb-12">
@@ -28,22 +33,31 @@ import Layout from '../layouts/Layout.astro';
           Find Your Role in BARD
         </h2>
         <p class="text-gray-400 text-base">
-          Roller derby takes a full village of athletes and officials. Explore how you can participate.
+          Roller derby takes a full village of athletes and officials. Explore how you can
+          participate.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
         <!-- Skaters -->
-        <div class="bg-[#1B1B1B] border-2 border-[#541221] p-8 rounded-xl flex flex-col justify-between shadow-xl">
+        <div
+          class="bg-[#1B1B1B] border-2 border-[#541221] p-8 rounded-xl flex flex-col justify-between shadow-xl"
+        >
           <div>
-            <div class="w-12 h-12 bg-[#3B0B16] text-[#E5A93C] rounded-lg flex items-center justify-center font-heading text-2xl mb-6">
+            <div
+              class="w-12 h-12 bg-[#3B0B16] text-[#E5A93C] rounded-lg flex items-center justify-center font-heading text-2xl mb-6"
+            >
               01
             </div>
-            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">Adult Skaters (18+)</h3>
-            <p class="text-xs uppercase font-subheading text-[#E5A93C] mb-4">Adult Division • Full Contact</p>
+            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">
+              Adult Skaters (18+)
+            </h3>
+            <p class="text-xs uppercase font-subheading text-[#E5A93C] mb-4">
+              Adult Division • Full Contact
+            </p>
             <p class="text-sm text-gray-300 leading-relaxed mb-4">
-              Train in skating posture, pack strategy, hitting, stopping, and apex jumps. We guide you through safety benchmarks step-by-step until you're ready for inter-league bouts.
+              Train in skating posture, pack strategy, hitting, stopping, and apex jumps. We guide
+              you through safety benchmarks step-by-step until you're ready for inter-league bouts.
             </p>
             <ul class="space-y-1.5 text-xs text-gray-400 mb-6">
               <li>✓ No prior skating experience required</li>
@@ -51,29 +65,43 @@ import Layout from '../layouts/Layout.astro';
               <li>✓ Practice 2x weekly at Outdoor Adventure Center</li>
             </ul>
           </div>
-          <span class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]">All Body Types &amp; Fitness Levels Welcome</span>
+          <span
+            class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]"
+            >All Body Types &amp; Fitness Levels Welcome</span
+          >
         </div>
 
         <!-- Juniors Referral -->
-        <div class="bg-[#1B1B1B] border-2 border-[#541221] p-8 rounded-xl flex flex-col justify-between shadow-xl">
+        <div
+          class="bg-[#1B1B1B] border-2 border-[#541221] p-8 rounded-xl flex flex-col justify-between shadow-xl"
+        >
           <div>
-            <div class="w-12 h-12 bg-[#3B0B16] text-[#E5A93C] rounded-lg flex items-center justify-center font-heading text-2xl mb-6">
+            <div
+              class="w-12 h-12 bg-[#3B0B16] text-[#E5A93C] rounded-lg flex items-center justify-center font-heading text-2xl mb-6"
+            >
               02
             </div>
-            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">Junior Derby (Youth)</h3>
-            <p class="text-xs uppercase font-subheading text-[#E5A93C] mb-4">JRDA Program • SoDAK Attack</p>
+            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">
+              Junior Derby (Youth)
+            </h3>
+            <p class="text-xs uppercase font-subheading text-[#E5A93C] mb-4">
+              JRDA Program • SoDAK Attack
+            </p>
             <p class="text-sm text-gray-300 leading-relaxed mb-4">
-              BARD does not run an in-house junior league, but we proudly support youth derby through <strong>SoDAK Attack</strong>, a JRDA junior roller derby program based in Sioux Falls, SD. An active group of Brookings-area juniors carpool and commute together every week!
+              BARD does not run an in-house junior league, but we proudly support youth derby
+              through <strong>SoDAK Attack</strong>, a JRDA junior roller derby program based in
+              Sioux Falls, SD. An active group of Brookings-area juniors carpool and commute
+              together every week!
             </p>
             <ul class="space-y-1.5 text-xs text-gray-400 mb-6">
               <li>✓ Junior Roller Derby Association (JRDA) league</li>
               <li>✓ Open to youth skaters ages 8–17 of all skill levels</li>
               <li>✓ Active Brookings carpool &amp; commuter network</li>
               <li class="pt-2">
-                <a 
-                  href="https://www.facebook.com/SiouxFallsJuniorRollerDerby" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://www.facebook.com/SiouxFallsJuniorRollerDerby"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   class="text-[#E5A93C] hover:underline font-bold inline-flex items-center gap-1"
                 >
                   Visit Sioux Falls Junior Roller Derby on Facebook &rarr;
@@ -81,19 +109,31 @@ import Layout from '../layouts/Layout.astro';
               </li>
             </ul>
           </div>
-          <span class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]">Sioux Falls / Brookings Youth Commuters</span>
+          <span
+            class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]"
+            >Sioux Falls / Brookings Youth Commuters</span
+          >
         </div>
 
         <!-- Officials -->
-        <div class="bg-[#1B1B1B] border-2 border-[#541221] p-8 rounded-xl flex flex-col justify-between shadow-xl">
+        <div
+          class="bg-[#1B1B1B] border-2 border-[#541221] p-8 rounded-xl flex flex-col justify-between shadow-xl"
+        >
           <div>
-            <div class="w-12 h-12 bg-[#3B0B16] text-[#E5A93C] rounded-lg flex items-center justify-center font-heading text-2xl mb-6">
+            <div
+              class="w-12 h-12 bg-[#3B0B16] text-[#E5A93C] rounded-lg flex items-center justify-center font-heading text-2xl mb-6"
+            >
               03
             </div>
-            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">Refs &amp; NSOs</h3>
-            <p class="text-xs uppercase font-subheading text-[#E5A93C] mb-4">Skating &amp; Non-Skating Officials</p>
+            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">
+              Refs &amp; NSOs
+            </h3>
+            <p class="text-xs uppercase font-subheading text-[#E5A93C] mb-4">
+              Skating &amp; Non-Skating Officials
+            </p>
             <p class="text-sm text-gray-300 leading-relaxed mb-4">
-              Don't want to get tackled, but still want to be in the center of the action? Zebras (skating refs) and NSOs (penalty tracking, scoreboard, jam timing) run every game.
+              Don't want to get tackled, but still want to be in the center of the action? Zebras
+              (skating refs) and NSOs (penalty tracking, scoreboard, jam timing) run every game.
             </p>
             <ul class="space-y-1.5 text-xs text-gray-400 mb-6">
               <li>✓ Best seat in the house for every bout</li>
@@ -101,9 +141,11 @@ import Layout from '../layouts/Layout.astro';
               <li>✓ Full training on WFTDA/MRDA rulesets</li>
             </ul>
           </div>
-          <span class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]">Free Admission &amp; Travel Stipends</span>
+          <span
+            class="text-xs font-heading uppercase text-gray-400 block pt-4 border-t border-[#282828]"
+            >Free Admission &amp; Travel Stipends</span
+          >
         </div>
-
       </div>
     </div>
 
@@ -116,42 +158,52 @@ import Layout from '../layouts/Layout.astro';
         </h3>
       </div>
       <p class="text-gray-200 text-sm sm:text-base leading-relaxed">
-        Brookings Area Roller Derby is committed to fostering an open, safe, inclusive, and empowering sports space. We welcome cisgender women, transgender women, intersex individuals, and gender expansive or non-binary participants across our teams. Our officiating, coaching, volunteer, and junior support positions are open to individuals of all genders. Discrimination, racism, and harassment have zero place on our track.
+        Brookings Area Roller Derby is committed to fostering an open, safe, inclusive, and
+        empowering sports space. We welcome cisgender women, transgender women, intersex
+        individuals, and gender expansive or non-binary participants across our teams. Our
+        officiating, coaching, volunteer, and junior support positions are open to individuals of
+        all genders. Discrimination, racism, and harassment have zero place on our track.
       </p>
     </div>
 
     <!-- Contact & Join Options -->
     <div class="bg-[#1B1B1B] border-2 border-[#541221] rounded-2xl p-8 sm:p-12">
       <div class="max-w-3xl mx-auto space-y-8 text-center">
-        
         <div>
-          <span class="text-xs uppercase font-heading tracking-widest text-[#E5A93C] block mb-1">Get Started Today</span>
-          <h2 class="font-heading text-4xl uppercase tracking-wider text-white">Join the Pack / Get in Touch</h2>
+          <span class="text-xs uppercase font-heading tracking-widest text-[#E5A93C] block mb-1"
+            >Get Started Today</span
+          >
+          <h2 class="font-heading text-4xl uppercase tracking-wider text-white">
+            Join the Pack / Get in Touch
+          </h2>
           <p class="text-gray-400 text-sm mt-2 max-w-xl mx-auto">
-            The fastest and easiest way to join BARD, ask questions about practice schedules, or connect regarding junior carpooling is to message our team directly on Facebook.
+            The fastest and easiest way to join BARD, ask questions about practice schedules, or
+            connect regarding junior carpooling is to message our team directly on Facebook.
           </p>
         </div>
 
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
-          <a 
-            href="https://www.facebook.com/midwestmaidens" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href={siteConfig.facebookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             class="px-8 py-4 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider text-xl rounded-xl shadow-xl border border-[#9E1F3D] transition-transform active:scale-95 flex items-center gap-3"
           >
             <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-              <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"/>
+              <path
+                d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"
+              ></path>
             </svg>
             Message Us on Facebook
           </a>
         </div>
 
         <div class="pt-6 border-t border-[#282828] text-xs text-gray-400 max-w-lg mx-auto">
-          Whether you're interested in adult skating, officiating (referee/NSO), volunteering at bouts, or getting in touch with the Brookings junior derby carpool group for SoDAK Attack, reach out to us anytime!
+          Whether you're interested in adult skating, officiating (referee/NSO), volunteering at
+          bouts, or getting in touch with the Brookings junior derby carpool group for SoDAK Attack,
+          reach out to us anytime!
         </div>
-
       </div>
     </div>
-
   </div>
 </Layout>

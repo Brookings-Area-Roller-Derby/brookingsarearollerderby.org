@@ -1,46 +1,56 @@
-# Astro Starter Kit: Basics
+# Brookings Area Roller Derby
+
+Static Astro website for Brookings Area Roller Derby (BARD), deployed to Cloudflare Pages.
+
+## Requirements
+
+- Node.js 22.12 or newer
+- npm
+- Wrangler authentication for deployment
+
+Install dependencies with `npm install`.
+
+## Development
+
+Start the Astro development server in background mode:
 
 ```sh
-npm create astro@latest -- --template basics
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Manage it with `astro dev status`, `astro dev logs`, and `astro dev stop`.
 
-## 🚀 Project Structure
+## Content
 
-Inside of your Astro project, you'll see the following folders and files:
+Roster members, bouts, community events, and sponsors live under `src/content/`. Their
+frontmatter is validated by `src/content.config.ts` during checks and builds.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+Event timestamps must be ISO 8601 values with an explicit UTC offset. Brookings uses Central
+Time, so summer events normally use `-05:00` and winter events normally use `-06:00`.
+
+The site currently runs in demo mode through `src/config/site.ts`. Demo mode displays a public
+warning and emits `noindex, nofollow`. Before switching it off, verify every name, date, sponsor,
+link, nonprofit/tax statement, attendance figure, benefit, and organizational claim.
+
+Shared identity, contact, season, timezone, social metadata, and demo settings also live in
+`src/config/site.ts`.
+
+## Verification
+
+Run every quality gate with:
+
+```sh
+npm run verify
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Individual commands are available for type-checking (`npm run check`), linting (`npm run lint`),
+format validation (`npm run format:check`), tests (`npm test`), and the production build
+(`npm run build`).
 
-## 🧞 Commands
+## Deployment
 
-All commands are run from the root of the project, from a terminal:
+After verification and content approval, deploy the static `dist/` output with:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+npm run deploy
+```

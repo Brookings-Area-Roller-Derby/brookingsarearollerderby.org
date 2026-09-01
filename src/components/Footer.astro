@@ -1,76 +1,102 @@
 ---
 import { Image } from 'astro:assets';
 import logoImage from '../assets/logo.jpg';
+import { siteConfig } from '../config/site';
 ---
 
 <footer class="bg-[#0B0B0B] text-gray-400 border-t-4 border-[#541221] mt-auto">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      
       <!-- League & 501(c)(3) Notice -->
       <div class="md:col-span-2 space-y-4">
         <div class="flex items-center gap-3">
-          <Image 
-            src={logoImage} 
-            alt="Brookings Area Roller Derby Logo" 
-            class="w-12 h-12 object-contain" 
+          <Image
+            src={logoImage}
+            alt="Brookings Area Roller Derby Logo"
+            class="w-12 h-12 rounded-full bg-white p-1 object-contain"
           />
           <h3 class="font-heading text-2xl text-white tracking-wider uppercase">
             Brookings Area Roller Derby
           </h3>
         </div>
         <p class="text-sm leading-relaxed text-gray-300 max-w-md">
-          Brookings Area Roller Derby (BARD) is an inclusive, skater-owned non-profit sports organization dedicated to athletic excellence, community empowerment, and full-contact flat-track roller derby in Eastern South Dakota.
+          Brookings Area Roller Derby (BARD) is an inclusive, skater-owned non-profit sports
+          organization dedicated to athletic excellence, community empowerment, and full-contact
+          flat-track roller derby in Eastern South Dakota.
         </p>
         <div class="p-3 bg-[#1B1B1B] border-l-2 border-[#E5A93C] text-xs text-gray-400">
-          <strong class="text-white block uppercase tracking-wide mb-0.5">Non-Profit Status:</strong>
-          BARD is organized as a community non-profit 501(c)(3) organization. Donations and sponsorships are tax-deductible to the extent allowed by law.
+          <strong class="text-white block uppercase tracking-wide mb-0.5">Non-Profit Status:</strong
+          >
+          BARD is organized as a community non-profit 501(c)(3) organization. Donations and sponsorships
+          are tax-deductible to the extent allowed by law.
         </div>
       </div>
 
       <!-- Quick Links -->
       <div>
-        <h4 class="font-heading text-xl text-white uppercase tracking-wider mb-4 border-b border-[#3B0B16] pb-1">
+        <h4
+          class="font-heading text-xl text-white uppercase tracking-wider mb-4 border-b border-[#3B0B16] pb-1"
+        >
           Explore
         </h4>
         <ul class="space-y-2 text-sm font-medium">
           <li><a href="/" class="hover:text-[#E5A93C] transition-colors">Home</a></li>
-          <li><a href="/schedule" class="hover:text-[#E5A93C] transition-colors">2026 Season Schedule</a></li>
-          <li><a href="/roster" class="hover:text-[#E5A93C] transition-colors">Skater Roster</a></li>
-          <li><a href="/sponsors" class="hover:text-[#E5A93C] transition-colors">Sponsorship Tiers</a></li>
-          <li><a href="/join" class="hover:text-[#E5A93C] transition-colors">Join / Fresh Meat Clinic</a></li>
+          <li>
+            <a href="/schedule" class="hover:text-[#E5A93C] transition-colors"
+              >{siteConfig.season} Season Schedule</a
+            >
+          </li>
+          <li>
+            <a href="/roster" class="hover:text-[#E5A93C] transition-colors">Skater Roster</a>
+          </li>
+          <li>
+            <a href="/sponsors" class="hover:text-[#E5A93C] transition-colors">Sponsorship Tiers</a>
+          </li>
+          <li>
+            <a href="/join" class="hover:text-[#E5A93C] transition-colors"
+              >Join / Fresh Meat Clinic</a
+            >
+          </li>
         </ul>
       </div>
 
       <!-- Connect & Venue -->
       <div>
-        <h4 class="font-heading text-xl text-white uppercase tracking-wider mb-4 border-b border-[#3B0B16] pb-1">
+        <h4
+          class="font-heading text-xl text-white uppercase tracking-wider mb-4 border-b border-[#3B0B16] pb-1"
+        >
           Home Track & Connect
         </h4>
         <p class="text-sm text-gray-300 mb-3">
           <strong class="text-white block">Home Arena:</strong>
-          Brookings County Outdoor Adventure Center<br />
-          2810 22nd Ave S, Brookings, SD 57006
+          {siteConfig.homeVenue.name}<br />
+          {siteConfig.homeVenue.address}
         </p>
         <div class="pt-2">
-          <a 
-            href="https://www.facebook.com/midwestmaidens" 
-            target="_blank" 
+          <a
+            href={siteConfig.facebookUrl}
+            target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 px-3.5 py-2 bg-[#3B0B16] hover:bg-[#541221] text-white text-xs font-heading uppercase tracking-wider rounded transition-colors border border-[#7A1A30]"
           >
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-              <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"/>
+              <path
+                d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"
+              ></path>
             </svg>
             Follow on Facebook
           </a>
         </div>
       </div>
-
     </div>
 
-    <div class="mt-12 pt-6 border-t border-[#1B1B1B] text-center text-xs text-gray-400 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p>&copy; {new Date().getFullYear()} Brookings Area Roller Derby (BARD). All rights reserved.</p>
+    <div
+      class="mt-12 pt-6 border-t border-[#1B1B1B] text-center text-xs text-gray-400 flex flex-col sm:flex-row justify-between items-center gap-4"
+    >
+      <p>
+        &copy; {new Date().getFullYear()}
+        {siteConfig.name} ({siteConfig.shortName}). All rights reserved.
+      </p>
       <p class="text-gray-400">Skater Owned &amp; Operated • Brookings, South Dakota</p>
     </div>
   </div>

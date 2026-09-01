@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { siteConfig } from '../config/site';
+import { formatEventDate } from '../lib/events';
+
+interface Props {
+  event: CollectionEntry<'events'>;
+  status: 'upcoming' | 'past';
+}
+
+const { event, status } = Astro.props;
+---
+
+<article
+  class="bg-[#181818] p-6 rounded-xl border border-[#2A2A2A] space-y-3 flex flex-col justify-between"
+  data-event-card
+  data-event-type="events"
+  data-event-date={event.data.date.toISOString()}
+>
+  <div>
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+      <div class="flex flex-wrap gap-2">
+        <span
+          class="px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider rounded bg-[#252525] text-gray-300"
+        >
+          {event.data.category === 'fundraiser' ? 'Fundraiser' : 'Community Event'}
+        </span>
+        <span
+          class="px-2 py-0.5 text-xs font-semibold uppercase tracking-wider rounded bg-[#252525] text-gray-300"
+          data-event-status
+        >
+          {status === 'past' ? 'Completed' : 'Upcoming'}
+        </span>
+      </div>
+      <time datetime={event.data.date.toISOString()} class="text-xs text-gray-400 font-mono">
+        {formatEventDate(event.data.date)}
+      </time>
+    </div>
+
+    <h3 class="font-heading text-2xl text-white uppercase tracking-wider">{event.data.title}</h3>
+    <p class="text-xs text-red-400 mb-3">
+      📍 {event.data.location}
+      {event.data.time && `• ⏰ ${event.data.time}`}
+    </p>
+    <p class="text-sm text-gray-300 leading-relaxed">{event.data.description}</p>
+  </div>
+
+  <div class="pt-3 border-t border-[#252525]">
+    <a
+      href={siteConfig.facebookUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-xs font-medium text-gray-400 hover:text-white inline-flex items-center gap-1"
+    >
+      Event Updates on Facebook &rarr;
+    </a>
+  </div>
+</article>

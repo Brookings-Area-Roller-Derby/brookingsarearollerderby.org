@@ -1,6 +1,8 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import DemoBanner from '../components/DemoBanner.astro';
+import { siteConfig } from '../config/site';
 import '../styles/global.css';
 
 interface Props {
@@ -8,10 +10,10 @@ interface Props {
   description?: string;
 }
 
-const { 
-  title, 
-  description = "Brookings Area Roller Derby (BARD) - South Dakota's premier skater-owned full contact flat track roller derby league." 
-} = Astro.props;
+const { title, description = siteConfig.description } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url);
+const socialImageUrl = new URL(siteConfig.socialImage, siteConfig.url);
 ---
 
 <!doctype html>
@@ -19,27 +21,52 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    
+    {siteConfig.demoMode && <meta name="robots" content="noindex, nofollow" />}
+
     <!-- Google Fonts: Bebas Neue, Oswald, Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={`${title} | Brookings Area Roller Derby`} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={`${title} | ${siteConfig.name}`} />
     <meta property="og:description" content={description} />
-    
-    <title>{title} | Brookings Area Roller Derby (BARD)</title>
-  </head>
-  <body class="bg-[#121212] text-gray-100 min-h-screen flex flex-col antialiased selection:bg-[#9E1F3D] selection:text-white">
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:alt" content={`${siteConfig.name} logo`} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={`${title} | ${siteConfig.name}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+
+    <title>{title} | {siteConfig.name} ({siteConfig.shortName}</title></head
+  >)
+
+  <body
+    class="bg-[#121212] text-gray-100 min-h-screen flex flex-col antialiased selection:bg-[#9E1F3D] selection:text-white"
+  >
+    <a
+      href="#main-content"
+      class="fixed left-4 top-4 z-[100] -translate-y-24 rounded bg-white px-4 py-2 font-semibold text-black transition-transform focus:translate-y-0"
+    >
+      Skip to content
+    </a>
+    <DemoBanner />
     <Header />
-    <main class="flex-grow">
+    <main id="main-content" class="flex-grow" tabindex="-1">
       <slot />
     </main>
     <Footer />
   </body>
+
+
 </html>

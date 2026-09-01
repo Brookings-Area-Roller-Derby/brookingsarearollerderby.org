@@ -1,0 +1,94 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatEventDate } from '../lib/events';
+
+interface Props {
+  bout: CollectionEntry<'bouts'>;
+  status: 'upcoming' | 'past';
+}
+
+const { bout, status } = Astro.props;
+const isHome = bout.data.homeOrAway === 'home';
+const month = formatEventDate(bout.data.date, { month: 'short' });
+const day = formatEventDate(bout.data.date, { day: '2-digit' });
+const year = formatEventDate(bout.data.date, { year: 'numeric' });
+---
+
+<article
+  class={`bg-[#181818] rounded-xl border ${isHome ? 'border-[#541221]' : 'border-[#2A2A2A]'} overflow-hidden shadow-md`}
+  data-event-card
+  data-event-type="bouts"
+  data-event-date={bout.data.date.toISOString()}
+>
+  <div class="p-6 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+    <div class="flex items-center gap-5">
+      <time
+        datetime={bout.data.date.toISOString()}
+        class={`text-center rounded-lg p-3 w-20 flex-shrink-0 ${isHome ? 'bg-[#541221] text-white' : 'bg-[#222] text-gray-300'}`}
+      >
+        <span class="block text-xs uppercase font-sans font-bold tracking-wider">{month}</span>
+        <span class="block font-heading text-4xl leading-none my-0.5">{day}</span>
+        <span class="block text-[11px] opacity-75 font-mono">{year}</span>
+      </time>
+
+      <div>
+        <div class="flex flex-wrap items-center gap-2 mb-1.5">
+          <span
+            class={`px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider rounded ${isHome ? 'bg-[#541221] text-white' : 'bg-[#282828] text-gray-300'}`}
+          >
+            {isHome ? 'Home Bout' : 'Away Match'}
+          </span>
+          <span
+            class="px-2 py-0.5 text-xs font-semibold uppercase tracking-wider rounded bg-[#252525] text-gray-300"
+            data-event-status
+          >
+            {status === 'past' ? 'Completed' : 'Upcoming'}
+          </span>
+          {
+            bout.data.highlight && (
+              <span class="px-2 py-0.5 text-xs font-semibold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded">
+                Doubleheader Feature
+              </span>
+            )
+          }
+        </div>
+
+        <h3 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+          {bout.data.title}
+        </h3>
+        <p class="text-sm text-gray-400 mt-0.5">
+          Opponent: <span class="text-gray-200 font-medium">{bout.data.opponent}</span>
+        </p>
+        <p class="text-xs text-gray-400 mt-2">📍 {bout.data.location}</p>
+        <p class="text-xs text-gray-400 mt-1">⏰ {bout.data.time}</p>
+      </div>
+    </div>
+
+    <div class="w-full md:w-auto flex-shrink-0">
+      {
+        bout.data.ticketLink ? (
+          <a
+            href={bout.data.ticketLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block text-center px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider rounded border border-[#9E1F3D]"
+          >
+            Tickets / Event Info
+          </a>
+        ) : (
+          <span class="block text-center px-5 py-2 bg-[#252525] text-gray-400 font-heading uppercase tracking-wider rounded">
+            Tickets at the Door
+          </span>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    bout.data.details && (
+      <div class="bg-[#141414] px-6 py-3 border-t border-[#252525] text-xs text-gray-400 leading-relaxed">
+        <strong class="text-gray-300">Details:</strong> {bout.data.details}
+      </div>
+    )
+  }
+</article>

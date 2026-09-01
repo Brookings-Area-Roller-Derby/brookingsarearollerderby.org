@@ -1,0 +1,15 @@
+---
+import { siteConfig } from '../config/site';
+---
+
+{
+  siteConfig.demoMode && (
+    <aside
+      class="bg-amber-300 px-4 py-2 text-center text-sm font-semibold text-black"
+      aria-label="Demonstration content notice"
+    >
+      Preview site: names, dates, sponsors, and organizational claims may be demonstration content
+      and must be verified before publication.
+    </aside>
+  )
+}

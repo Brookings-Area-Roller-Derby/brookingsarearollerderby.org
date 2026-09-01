@@ -4,71 +4,79 @@ import BoutCountdown from '../components/BoutCountdown.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import logoImage from '../assets/logo.jpg';
+import { siteConfig } from '../config/site';
 
 const bouts = await getCollection('bouts');
-const sortedBouts = bouts.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
-const nextBout = sortedBouts[0];
-
-const sponsors = await getCollection('sponsors', ({ data }) => data.active);
+const countdownEvents = bouts.map((bout) => ({
+  title: bout.data.title,
+  date: bout.data.date.toISOString(),
+  location: bout.data.location,
+}));
 ---
 
 <Layout title="Home - South Dakota Flat Track Roller Derby">
-  
   <!-- Hero Section -->
   <section class="relative bg-[#121212] py-16 lg:py-24 border-b border-[#252525]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
         <!-- Left Hero Content -->
         <div class="lg:col-span-8 space-y-6 text-center lg:text-left">
-          
-          <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#1E1E1E] border border-[#333] rounded-full text-xs font-semibold uppercase text-gray-300 tracking-wider">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 bg-[#1E1E1E] border border-[#333] rounded-full text-xs font-semibold uppercase text-gray-300 tracking-wider"
+          >
             <span class="w-2 h-2 rounded-full bg-red-600"></span>
             Eastern South Dakota • Skater-Owned 501(c)(3)
           </div>
-          
-          <h1 class="font-heading text-6xl sm:text-7xl lg:text-8xl uppercase tracking-tight text-white leading-none">
+
+          <h1
+            class="font-heading text-6xl sm:text-7xl lg:text-8xl uppercase tracking-tight text-white leading-none"
+          >
             Hard Hits.<br />
             <span class="text-red-500">Fast Wheels.</span><br />
             Pure Community.
           </h1>
 
           <p class="text-lg text-gray-300 max-w-2xl font-normal leading-relaxed">
-            Brookings Area Roller Derby (BARD) brings competitive full-contact flat-track roller derby to Brookings, SD. Open to adult skaters, youth junior derby, referees, and enthusiastic volunteers.
+            Brookings Area Roller Derby (BARD) brings competitive full-contact flat-track roller
+            derby to Brookings, SD. Adult skaters, referees, volunteers, and youth seeking a
+            junior-program referral are welcome.
           </p>
 
           <!-- CTAs -->
           <div class="pt-2 flex flex-wrap justify-center lg:justify-start gap-4">
-            <a 
-              href="/schedule" 
+            <a
+              href="/schedule"
               class="px-8 py-3.5 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading text-xl uppercase tracking-wider rounded-md border border-[#9E1F3D] transition-colors shadow-lg"
             >
-              2026 Bout Schedule
+              {siteConfig.season} Bout Schedule
             </a>
-            <a 
-              href="/join" 
+            <a
+              href="/join"
               class="px-8 py-3.5 bg-[#1F1F1F] hover:bg-[#2A2A2A] text-white font-heading text-xl uppercase tracking-wider rounded-md border border-[#3A3A3A] transition-colors"
             >
               Join the League
             </a>
-            <a 
-              href="/sponsors" 
+            <a
+              href="/sponsors"
               class="px-6 py-3.5 bg-transparent hover:bg-white/5 text-gray-300 font-heading text-xl uppercase tracking-wider rounded-md border border-[#2E2E2E] transition-colors"
             >
               Become a Sponsor
             </a>
           </div>
-
         </div>
 
         <!-- Right Hero Logo Visual -->
         <div class="lg:col-span-4 flex justify-center">
-          <div class="bg-[#181818] border border-[#2A2A2A] p-8 rounded-2xl shadow-2xl text-center max-w-sm w-full">
-            <div class="w-48 h-48 sm:w-56 sm:h-56 mx-auto flex items-center justify-center mb-6">
-              <Image 
-                src={logoImage} 
-                alt="Brookings Area Roller Derby Official Logo" 
-                class="w-full h-full object-contain drop-shadow-xl" 
+          <div
+            class="bg-[#181818] border border-[#2A2A2A] p-8 rounded-2xl shadow-2xl text-center max-w-sm w-full"
+          >
+            <div
+              class="w-48 h-48 sm:w-56 sm:h-56 mx-auto flex items-center justify-center mb-6 rounded-full bg-white p-3 shadow-inner"
+            >
+              <Image
+                src={logoImage}
+                alt="Brookings Area Roller Derby Official Logo"
+                class="w-full h-full object-contain drop-shadow-xl"
               />
             </div>
             <h2 class="font-heading text-3xl text-white uppercase tracking-wider">
@@ -82,109 +90,150 @@ const sponsors = await getCollection('sponsors', ({ data }) => data.active);
             </p>
           </div>
         </div>
-
       </div>
 
       <!-- Live Bout Countdown -->
-      {nextBout && (
-        <div class="mt-14">
-          <BoutCountdown 
-            targetDate={nextBout.data.date.toISOString()} 
-            eventTitle={nextBout.data.title}
-          />
-        </div>
-      )}
-
+      {
+        countdownEvents.length > 0 && (
+          <div class="mt-14">
+            <BoutCountdown events={countdownEvents} />
+          </div>
+        )
+      }
     </div>
   </section>
 
   <!-- Feature Cards Grid -->
   <section class="py-16 bg-[#161616] border-b border-[#252525]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
       <div class="text-center max-w-2xl mx-auto mb-12">
         <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white mb-2">
           Get Involved with BARD
         </h2>
         <p class="text-gray-400 text-sm sm:text-base">
-          Athleticism, teamwork, and empowering sportsmanship for athletes and fans of all backgrounds.
+          Athleticism, teamwork, and empowering sportsmanship for athletes and fans of all
+          backgrounds.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
         <!-- Feature 1 -->
-        <div class="bg-[#1C1C1C] border border-[#2A2A2A] hover:border-red-800 p-8 rounded-xl transition-colors flex flex-col justify-between">
+        <div
+          class="bg-[#1C1C1C] border border-[#2A2A2A] hover:border-red-800 p-8 rounded-xl transition-colors flex flex-col justify-between"
+        >
           <div>
-            <div class="w-12 h-12 bg-[#541221] rounded-lg flex items-center justify-center text-white mb-6">
+            <div
+              class="w-12 h-12 bg-[#541221] rounded-lg flex items-center justify-center text-white mb-6"
+            >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"></path>
               </svg>
             </div>
-            <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-2">Adult &amp; Junior Divisions</h3>
+            <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-2">
+              Adult Derby &amp; Youth Referrals
+            </h3>
             <p class="text-gray-400 text-sm leading-relaxed mb-6">
-              We operate competitive full-contact adult squads alongside our beginner-friendly youth junior derby team.
+              We operate competitive full-contact adult squads and connect youth skaters with SoDAK
+              Attack junior roller derby in Sioux Falls.
             </p>
           </div>
-          <a href="/roster" class="text-red-400 hover:text-red-300 font-heading uppercase text-base tracking-wider inline-flex items-center gap-1">
+          <a
+            href="/roster"
+            class="text-red-400 hover:text-red-300 font-heading uppercase text-base tracking-wider inline-flex items-center gap-1"
+          >
             Meet the Skater Roster &rarr;
           </a>
         </div>
 
         <!-- Feature 2 -->
-        <div class="bg-[#1C1C1C] border border-[#2A2A2A] hover:border-red-800 p-8 rounded-xl transition-colors flex flex-col justify-between">
+        <div
+          class="bg-[#1C1C1C] border border-[#2A2A2A] hover:border-red-800 p-8 rounded-xl transition-colors flex flex-col justify-between"
+        >
           <div>
-            <div class="w-12 h-12 bg-[#541221] rounded-lg flex items-center justify-center text-white mb-6">
+            <div
+              class="w-12 h-12 bg-[#541221] rounded-lg flex items-center justify-center text-white mb-6"
+            >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
               </svg>
             </div>
-            <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-2">2026 Home Bouts</h3>
+            <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-2">
+              {siteConfig.season} Home Bouts
+            </h3>
             <p class="text-gray-400 text-sm leading-relaxed mb-6">
-              Catch the live action at the Brookings County Outdoor Adventure Center! Doubleheaders, concessions, and family fun.
+              Catch the live action at the Brookings County Outdoor Adventure Center! Doubleheaders,
+              concessions, and family fun.
             </p>
           </div>
-          <a href="/schedule" class="text-red-400 hover:text-red-300 font-heading uppercase text-base tracking-wider inline-flex items-center gap-1">
+          <a
+            href="/schedule"
+            class="text-red-400 hover:text-red-300 font-heading uppercase text-base tracking-wider inline-flex items-center gap-1"
+          >
             View Match Schedule &rarr;
           </a>
         </div>
 
         <!-- Feature 3 -->
-        <div class="bg-[#1C1C1C] border border-[#2A2A2A] hover:border-red-800 p-8 rounded-xl transition-colors flex flex-col justify-between">
+        <div
+          class="bg-[#1C1C1C] border border-[#2A2A2A] hover:border-red-800 p-8 rounded-xl transition-colors flex flex-col justify-between"
+        >
           <div>
-            <div class="w-12 h-12 bg-[#541221] rounded-lg flex items-center justify-center text-white mb-6">
+            <div
+              class="w-12 h-12 bg-[#541221] rounded-lg flex items-center justify-center text-white mb-6"
+            >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                ></path>
               </svg>
             </div>
-            <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-2">Zero Experience Needed</h3>
+            <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-2">
+              Zero Experience Needed
+            </h3>
             <p class="text-gray-400 text-sm leading-relaxed mb-6">
-              No prior skating background necessary. We provide loaner gear and structured clinics for new skaters, refs, and NSOs.
+              No prior skating background necessary. We provide loaner gear and structured clinics
+              for new skaters, refs, and NSOs.
             </p>
           </div>
-          <a href="/join" class="text-red-400 hover:text-red-300 font-heading uppercase text-base tracking-wider inline-flex items-center gap-1">
+          <a
+            href="/join"
+            class="text-red-400 hover:text-red-300 font-heading uppercase text-base tracking-wider inline-flex items-center gap-1"
+          >
             Join Fresh Meat Clinic &rarr;
           </a>
         </div>
-
       </div>
-
     </div>
   </section>
 
   <!-- Non-Profit 501(c)(3) Mission Statement -->
   <section class="py-14 bg-[#541221] text-white">
     <div class="max-w-4xl mx-auto px-4 text-center space-y-3">
-      <span class="inline-block px-3 py-0.5 bg-black/40 text-gray-200 font-semibold uppercase tracking-wider text-xs rounded-full">
+      <span
+        class="inline-block px-3 py-0.5 bg-black/40 text-gray-200 font-semibold uppercase tracking-wider text-xs rounded-full"
+      >
         501(c)(3) Non-Profit Mission
       </span>
       <h2 class="font-heading text-3xl sm:text-4xl uppercase tracking-wider">
         Community Empowerment Through Athletics
       </h2>
       <p class="text-gray-200 text-sm sm:text-base leading-relaxed">
-        Brookings Area Roller Derby is dedicated to promoting physical fitness, self-confidence, and sportsmanship through full-contact flat-track roller derby. We actively serve the Brookings community through charity drives, youth mentorship, and volunteer outreach.
+        Brookings Area Roller Derby is dedicated to promoting physical fitness, self-confidence, and
+        sportsmanship through full-contact flat-track roller derby. We actively serve the Brookings
+        community through charity drives, youth mentorship, and volunteer outreach.
       </p>
     </div>
   </section>
-
 </Layout>

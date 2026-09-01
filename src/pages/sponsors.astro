@@ -1,8 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { siteConfig } from '../config/site';
 
 const sponsors = await getCollection('sponsors', ({ data }) => data.active);
+const sponsorshipInquiry = `mailto:${siteConfig.sponsorEmail}?subject=BARD%20Sponsorship%20Inquiry%20-%20Tier%20Interest`;
+const packetRequest = `mailto:${siteConfig.sponsorEmail}?subject=Request%20BARD%20Sponsorship%20Packet`;
 
 const tiers = [
   {
@@ -16,8 +19,8 @@ const tiers = [
       'Dedicated shout-outs and announcer mentions during every home bout and tournament',
       'Logo + live link featured at top of BARD website and Facebook match promo graphics',
       '4 complimentary VIP season passes to all home doubleheaders',
-      'Framed team appreciation photo & certificate'
-    ]
+      'Framed team appreciation photo & certificate',
+    ],
   },
   {
     id: 'apex-jump',
@@ -30,8 +33,8 @@ const tiers = [
       'Announcer sponsor thank-yous during half-time scrimmages',
       'Logo on website sponsors directory with direct link',
       '2 complimentary season passes to all home bouts',
-      'Team signed commemorative poster'
-    ]
+      'Team signed commemorative poster',
+    ],
   },
   {
     id: 'rookie',
@@ -43,8 +46,8 @@ const tiers = [
       'Business listing in home bout programs and tournament schedules',
       'Listing on website sponsor directory',
       '1 complimentary ticket to any home bout of your choice',
-      'Tax-deductible non-profit contribution receipt'
-    ]
+      'Tax-deductible non-profit contribution receipt',
+    ],
   },
   {
     id: 'exclusive',
@@ -57,48 +60,67 @@ const tiers = [
       'Junior Derby scholarship funding & youth gear subsidies',
       'Bout Half-Time activity host & vendor pop-up booth',
       'Custom cross-promotional social media campaigns',
-      'Tailored community event partnerships'
-    ]
-  }
+      'Tailored community event partnerships',
+    ],
+  },
 ];
 ---
 
-<Layout title="Sponsor the League" description="Support Brookings Area Roller Derby (BARD). View our 501(c)(3) tax-deductible sponsorship tiers and partner packages.">
-  
+<Layout
+  title="Sponsor the League"
+  description="Support Brookings Area Roller Derby (BARD). View our 501(c)(3) tax-deductible sponsorship tiers and partner packages."
+>
   <!-- Header Banner -->
   <section class="bg-grunge py-14 border-b-4 border-[#541221]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-[#3B0B16] text-[#E5A93C] font-heading uppercase text-xs tracking-widest rounded mb-3">
+      <span
+        class="inline-block px-3 py-1 bg-[#3B0B16] text-[#E5A93C] font-heading uppercase text-xs tracking-widest rounded mb-3"
+      >
         501(c)(3) Non-Profit Partnership
       </span>
       <h1 class="font-heading text-5xl sm:text-7xl uppercase tracking-wider text-white">
         Sponsorship Packages
       </h1>
       <p class="text-gray-400 text-lg max-w-2xl mt-2">
-        Partner with Eastern South Dakota's premier flat-track roller derby league. Put your brand directly in front of hundreds of energetic local fans.
+        Partner with Eastern South Dakota's premier flat-track roller derby league. Put your brand
+        directly in front of hundreds of energetic local fans.
       </p>
     </div>
   </section>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-16">
-    
     <!-- Why Sponsor Section -->
     <div class="bg-[#1B1B1B] border border-[#3B0B16] rounded-xl p-8 sm:p-10">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center sm:text-left">
         <div>
           <span class="font-heading text-4xl text-[#E5A93C] block mb-1">501(c)(3)</span>
-          <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">Tax-Deductible Support</h3>
-          <p class="text-sm text-gray-400">All sponsorships qualify as tax-deductible non-profit contributions supporting amateur athletics and youth recreation.</p>
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">
+            Tax-Deductible Support
+          </h3>
+          <p class="text-sm text-gray-400">
+            All sponsorships qualify as tax-deductible non-profit contributions supporting amateur
+            athletics and youth recreation.
+          </p>
         </div>
         <div>
           <span class="font-heading text-4xl text-[#E5A93C] block mb-1">500+</span>
-          <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">Engaged Local Fans</h3>
-          <p class="text-sm text-gray-400">Our family-friendly bouts pack the bleachers with passionate, loyal community members who support local businesses.</p>
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">
+            Engaged Local Fans
+          </h3>
+          <p class="text-sm text-gray-400">
+            Our family-friendly bouts pack the bleachers with passionate, loyal community members
+            who support local businesses.
+          </p>
         </div>
         <div>
           <span class="font-heading text-4xl text-[#E5A93C] block mb-1">100%</span>
-          <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">Skater-Owned &amp; Driven</h3>
-          <p class="text-sm text-gray-400">Your funds directly pay for track rental, safety equipment, referee insurance, and youth junior derby gear.</p>
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">
+            Skater-Owned &amp; Driven
+          </h3>
+          <p class="text-sm text-gray-400">
+            Your funds directly pay for track rental, safety equipment, referee insurance, and youth
+            junior derby gear.
+          </p>
         </div>
       </div>
     </div>
@@ -107,80 +129,88 @@ const tiers = [
     <div>
       <div class="text-center max-w-3xl mx-auto mb-12">
         <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white mb-3">
-          2026 Sponsorship Tiers
+          {siteConfig.season} Sponsorship Tiers
         </h2>
         <p class="text-gray-400 text-sm sm:text-base">
-          Choose the package that fits your organization, or contact us for custom in-kind equipment trades.
+          Choose the package that fits your organization, or contact us for custom in-kind equipment
+          trades.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {tiers.map((tier) => (
-          <div class={`rounded-xl border-2 ${tier.color} p-6 flex flex-col justify-between shadow-2xl relative`}>
-            
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class={`px-2.5 py-1 text-xs font-heading uppercase tracking-widest rounded font-bold ${tier.badge}`}>
-                  {tier.name.split(' ')[0]} Tier
-                </span>
+        {
+          tiers.map((tier) => (
+            <div
+              class={`rounded-xl border-2 ${tier.color} p-6 flex flex-col justify-between shadow-2xl relative`}
+            >
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span
+                    class={`px-2.5 py-1 text-xs font-heading uppercase tracking-widest rounded font-bold ${tier.badge}`}
+                  >
+                    {tier.name.split(' ')[0]} Tier
+                  </span>
+                </div>
+
+                <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-1">
+                  {tier.name}
+                </h3>
+
+                <div class="font-heading text-3xl text-[#E5A93C] tracking-wide mb-6">
+                  {tier.price}
+                </div>
+
+                <div class="border-t border-[#3B0B16] pt-4 mb-6">
+                  <p class="text-xs uppercase font-subheading text-gray-400 font-bold mb-3 tracking-wider">
+                    Included Benefits:
+                  </p>
+                  <ul class="space-y-2.5 text-xs text-gray-300">
+                    {tier.perks.map((perk) => (
+                      <li class="flex items-start gap-2">
+                        <span class="text-[#E5A93C] font-bold">✓</span>
+                        <span>{perk}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
-              <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-1">
-                {tier.name}
-              </h3>
-              
-              <div class="font-heading text-3xl text-[#E5A93C] tracking-wide mb-6">
-                {tier.price}
-              </div>
-
-              <div class="border-t border-[#3B0B16] pt-4 mb-6">
-                <p class="text-xs uppercase font-subheading text-gray-400 font-bold mb-3 tracking-wider">
-                  Included Benefits:
-                </p>
-                <ul class="space-y-2.5 text-xs text-gray-300">
-                  {tier.perks.map((perk) => (
-                    <li class="flex items-start gap-2">
-                      <span class="text-[#E5A93C] font-bold">✓</span>
-                      <span>{perk}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div class="pt-4 border-t border-[#282828]">
+                <a
+                  href={sponsorshipInquiry}
+                  class="block w-full py-2.5 text-center bg-[#3B0B16] hover:bg-[#541221] text-white font-heading uppercase text-sm tracking-wider rounded border border-[#7A1A30] transition-colors"
+                >
+                  Select Package
+                </a>
               </div>
             </div>
-
-            <div class="pt-4 border-t border-[#282828]">
-              <a 
-                href="mailto:sponsors@brookingsarearollerderby.org?subject=BARD%20Sponsorship%20Inquiry%20-%20Tier%20Interest" 
-                class="block w-full py-2.5 text-center bg-[#3B0B16] hover:bg-[#541221] text-white font-heading uppercase text-sm tracking-wider rounded border border-[#7A1A30] transition-colors"
-              >
-                Select Package
-              </a>
-            </div>
-
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
 
     <!-- Sponsor Packet Download & Action Box -->
-    <div class="bg-gradient-to-r from-[#1B1B1B] via-[#3B0B16] to-[#1B1B1B] border-2 border-[#E5A93C] rounded-2xl p-8 sm:p-12 text-center space-y-6">
+    <div
+      class="bg-gradient-to-r from-[#1B1B1B] via-[#3B0B16] to-[#1B1B1B] border-2 border-[#E5A93C] rounded-2xl p-8 sm:p-12 text-center space-y-6"
+    >
       <h2 class="font-heading text-3xl sm:text-5xl uppercase tracking-wider text-white">
-        Download 2026 Sponsor Agreement Packet
+        Download {siteConfig.season} Sponsor Agreement Packet
       </h2>
       <p class="text-gray-200 text-base max-w-2xl mx-auto">
-        Need a formal PDF invoice, W-9, or breakdown for your marketing team or board of directors? Request our complete 2026 BARD Partnership Packet.
+        Need a formal PDF invoice, W-9, or breakdown for your marketing team or board of directors?
+        Request our complete {siteConfig.season} BARD Partnership Packet.
       </p>
       <div class="flex flex-wrap justify-center gap-4 pt-2">
-        <a 
-          href="https://www.facebook.com/midwestmaidens" 
-          target="_blank" 
+        <a
+          href={siteConfig.facebookUrl}
+          target="_blank"
           rel="noopener noreferrer"
           class="px-8 py-3.5 bg-[#E5A93C] hover:bg-[#d6982b] text-black font-heading uppercase tracking-wider text-lg rounded font-bold shadow-lg transition-transform active:scale-95"
         >
           Message BARD on Facebook
         </a>
-        <a 
-          href="mailto:sponsors@brookingsarearollerderby.org?subject=Request%20BARD%20Sponsorship%20Packet" 
+        <a
+          href={packetRequest}
           class="px-8 py-3.5 bg-[#121212] hover:bg-[#282828] text-white font-heading uppercase tracking-wider text-lg rounded border border-gray-600 transition-colors"
         >
           Email Sponsorship Coordinators
@@ -189,31 +219,39 @@ const tiers = [
     </div>
 
     <!-- Current Active Sponsors List -->
-    {sponsors.length > 0 && (
-      <div class="pt-8 border-t border-[#3B0B16]">
-        <h3 class="font-heading text-2xl uppercase tracking-wider text-white text-center mb-8">
-          Current League Partners &amp; Sponsors
-        </h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {sponsors.map((s) => (
-            <div class="bg-[#1B1B1B] border border-[#282828] rounded-lg p-6 flex flex-col justify-between">
-              <div>
-                <span class="text-[10px] font-heading uppercase tracking-widest text-[#E5A93C] bg-[#3B0B16] px-2 py-0.5 rounded inline-block mb-2">
-                  {s.data.tier.replace('-', ' ')}
-                </span>
-                <h4 class="font-heading text-xl text-white uppercase tracking-wider">{s.data.name}</h4>
-                {s.data.blurb && <p class="text-xs text-gray-400 mt-2">{s.data.blurb}</p>}
+    {
+      sponsors.length > 0 && (
+        <div class="pt-8 border-t border-[#3B0B16]">
+          <h3 class="font-heading text-2xl uppercase tracking-wider text-white text-center mb-8">
+            Current League Partners &amp; Sponsors
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {sponsors.map((s) => (
+              <div class="bg-[#1B1B1B] border border-[#282828] rounded-lg p-6 flex flex-col justify-between">
+                <div>
+                  <span class="text-[10px] font-heading uppercase tracking-widest text-[#E5A93C] bg-[#3B0B16] px-2 py-0.5 rounded inline-block mb-2">
+                    {s.data.tier.replace('-', ' ')}
+                  </span>
+                  <h4 class="font-heading text-xl text-white uppercase tracking-wider">
+                    {s.data.name}
+                  </h4>
+                  {s.data.blurb && <p class="text-xs text-gray-400 mt-2">{s.data.blurb}</p>}
+                </div>
+                {s.data.url && (
+                  <a
+                    href={s.data.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-4 text-xs font-heading uppercase text-[#E5A93C] hover:underline inline-flex items-center gap-1"
+                  >
+                    Visit Partner &rarr;
+                  </a>
+                )}
               </div>
-              {s.data.url && (
-                <a href={s.data.url} target="_blank" rel="noopener noreferrer" class="mt-4 text-xs font-heading uppercase text-[#E5A93C] hover:underline inline-flex items-center gap-1">
-                  Visit Partner &rarr;
-                </a>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    )}
-
+      )
+    }
   </div>
 </Layout>
