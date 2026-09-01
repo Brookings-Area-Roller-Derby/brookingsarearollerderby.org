@@ -1,0 +1,81 @@
+---
+interface Props {
+  targetDate: string; // ISO string e.g. "2026-05-16T17:30:00.000Z"
+  eventTitle: string;
+}
+
+const { targetDate, eventTitle } = Astro.props;
+---
+
+<div class="bg-[#181818] border border-[#2E2E2E] p-6 sm:p-8 rounded-xl shadow-2xl relative overflow-hidden" id="countdown-container" data-target={targetDate}>
+  <div class="flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
+    <div class="text-center lg:text-left">
+      <span class="inline-block px-3 py-1 bg-[#541221] text-white text-xs font-semibold tracking-wider uppercase rounded-full mb-2">
+        Next Upcoming Bout
+      </span>
+      <h3 class="font-heading text-3xl sm:text-4xl text-white uppercase tracking-wide">{eventTitle}</h3>
+      <p class="text-gray-400 text-sm mt-1">Saturday, May 16, 2026 • Brookings County Outdoor Adventure Center</p>
+    </div>
+
+    <!-- Countdown Timer Digits -->
+    <div class="flex items-center gap-3 text-center">
+      <div class="bg-[#101010] border border-[#2A2A2A] rounded-lg p-3 min-w-[70px] sm:min-w-[80px]">
+        <span id="countdown-days" class="font-heading text-4xl sm:text-5xl text-white block leading-none">--</span>
+        <span class="text-[10px] font-sans text-gray-400 uppercase tracking-widest font-medium">Days</span>
+      </div>
+      <span class="font-heading text-2xl text-gray-500">:</span>
+      <div class="bg-[#101010] border border-[#2A2A2A] rounded-lg p-3 min-w-[70px] sm:min-w-[80px]">
+        <span id="countdown-hours" class="font-heading text-4xl sm:text-5xl text-white block leading-none">--</span>
+        <span class="text-[10px] font-sans text-gray-400 uppercase tracking-widest font-medium">Hours</span>
+      </div>
+      <span class="font-heading text-2xl text-gray-500">:</span>
+      <div class="bg-[#101010] border border-[#2A2A2A] rounded-lg p-3 min-w-[70px] sm:min-w-[80px]">
+        <span id="countdown-minutes" class="font-heading text-4xl sm:text-5xl text-white block leading-none">--</span>
+        <span class="text-[10px] font-sans text-gray-400 uppercase tracking-widest font-medium">Mins</span>
+      </div>
+      <span class="font-heading text-2xl text-gray-500">:</span>
+      <div class="bg-[#101010] border border-[#2A2A2A] rounded-lg p-3 min-w-[70px] sm:min-w-[80px]">
+        <span id="countdown-seconds" class="font-heading text-4xl sm:text-5xl text-red-500 block leading-none">--</span>
+        <span class="text-[10px] font-sans text-gray-400 uppercase tracking-widest font-medium">Secs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateCountdown() {
+    const container = document.getElementById('countdown-container');
+    if (!container) return;
+
+    const targetStr = container.getAttribute('data-target');
+    if (!targetStr) return;
+
+    const target = new Date(targetStr).getTime();
+    const now = new Date().getTime();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      const daysEl = document.getElementById('countdown-days');
+      if (daysEl) daysEl.innerText = '00';
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const dEl = document.getElementById('countdown-days');
+    const hEl = document.getElementById('countdown-hours');
+    const mEl = document.getElementById('countdown-minutes');
+    const sEl = document.getElementById('countdown-seconds');
+
+    if (dEl) dEl.innerText = String(days).padStart(2, '0');
+    if (hEl) hEl.innerText = String(hours).padStart(2, '0');
+    if (mEl) mEl.innerText = String(minutes).padStart(2, '0');
+    if (sEl) sEl.innerText = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>

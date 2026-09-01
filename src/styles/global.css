@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Bebas Neue", "Oswald", sans-serif;
+  --font-subheading: "Oswald", sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --color-maroon-dark: #3B0B16;
+  --color-maroon-900: #25050C;
+  --color-maroon-800: #3B0B16;
+  --color-maroon-700: #541221;
+  --color-maroon-600: #7A1A30;
+  --color-maroon-500: #9E1F3D;
+  --color-gold-400: #E5A93C;
+  --color-gold-500: #D49228;
+  --color-charcoal-950: #0B0B0B;
+  --color-charcoal-900: #121212;
+  --color-charcoal-800: #1B1B1B;
+  --color-charcoal-700: #282828;
+}
+
+body {
+  background-color: #121212;
+  color: #F3F4F6;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+}
+
+.font-subheading {
+  font-family: var(--font-subheading);
+  letter-spacing: 0.02em;
+}
+
+/* Custom Gritty & Grunge utilities */
+.bg-grunge {
+  background-color: #121212;
+  background-image: 
+    radial-gradient(#3b0b16 1.5px, transparent 1.5px), 
+    radial-gradient(#25050c 1.5px, #121212 1.5px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+}
+
+.bg-maroon-mesh {
+  background: radial-gradient(circle at 50% 20%, #541221 0%, #3B0B16 40%, #121212 90%);
+}
+
+.grunge-border {
+  border: 2px solid #541221;
+  position: relative;
+}
+
+.grunge-border::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 1px dashed rgba(229, 169, 60, 0.35);
+  pointer-events: none;
+}

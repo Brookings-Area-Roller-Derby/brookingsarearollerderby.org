@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import defaultLogo from '../assets/logo.jpg';
+
+const roster = await getCollection('roster', ({ data }) => data.active);
+---
+
+<Layout title="Skater Roster" description="Meet the active blockers, jammers, pivots, referees, and officials of Brookings Area Roller Derby (BARD).">
+  
+  <!-- Header Banner -->
+  <section class="bg-[#121212] py-14 border-b border-[#252525]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-[#541221] text-white font-semibold uppercase text-xs tracking-wider rounded mb-3">
+        Team Roster
+      </span>
+      <h1 class="font-heading text-5xl sm:text-7xl uppercase tracking-wider text-white">
+        Meet the Pack
+      </h1>
+      <p class="text-gray-400 text-base sm:text-lg max-w-2xl mt-2">
+        The blockers, jammers, pivots, and zebra referees of Brookings Area Roller Derby.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!-- Skater Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {roster.map((member) => (
+        <div class="bg-[#181818] rounded-xl border border-[#2A2A2A] hover:border-[#541221] overflow-hidden shadow-lg transition-all duration-200 flex flex-col justify-between">
+          
+          <div>
+            <!-- Skater Image Container -->
+            <div class="bg-[#121212] p-6 text-center border-b border-[#252525] relative">
+              <div class="w-32 h-32 mx-auto bg-white rounded-full p-2 border-2 border-[#333] shadow-inner mb-3 flex items-center justify-center">
+                <Image 
+                  src={member.data.photo || defaultLogo} 
+                  alt={`${member.data.derbyName} - #${member.data.number}`} 
+                  class="w-full h-full object-contain" 
+                />
+              </div>
+
+              <!-- Derby Number Badge -->
+              <span class="inline-block px-3 py-0.5 bg-[#541221] text-white font-mono font-bold text-xs tracking-wider rounded-full">
+                #{member.data.number}
+              </span>
+            </div>
+
+            <!-- Skater Info Content -->
+            <div class="p-6 space-y-3">
+              <div>
+                <h3 class="font-heading text-3xl text-white uppercase tracking-wider leading-tight">
+                  {member.data.derbyName}
+                </h3>
+                {member.data.legalName && (
+                  <p class="text-xs text-gray-500 font-mono mt-0.5">
+                    ({member.data.legalName})
+                  </p>
+                )}
+              </div>
+
+              <!-- Positions Badges -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                {member.data.positions.map((pos) => {
+                  let badgeColor = "bg-[#252525] text-gray-300 border-[#333]";
+                  if (pos === 'Jammer') badgeColor = "bg-[#541221] text-white border-[#7A1A30]";
+                  if (pos === 'Pivot') badgeColor = "bg-[#1E1E1E] text-red-400 border-[#3B0B16]";
+                  
+                  return (
+                    <span class={`px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider rounded border ${badgeColor}`}>
+                      {pos}
+                    </span>
+                  );
+                })}
+              </div>
+
+              <p class="text-xs text-gray-300 leading-relaxed pt-2">
+                {member.data.bio}
+              </p>
+            </div>
+          </div>
+
+          <div class="p-3 bg-[#141414] border-t border-[#222] text-center">
+            <span class="text-[11px] font-sans uppercase text-gray-500 tracking-wider">
+              BARD Skater • Active
+            </span>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+    <!-- Callout for Recruitment -->
+    <div class="mt-16 bg-[#181818] p-8 sm:p-12 rounded-2xl border border-[#2E2E2E] text-center space-y-4 shadow-xl">
+      <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white">
+        Want to skate with BARD?
+      </h2>
+      <p class="text-gray-300 text-base max-w-xl mx-auto">
+        We teach complete beginners how to skate, hit, and play derby safely. Referees and non-skating officials are also in high demand!
+      </p>
+      <div class="pt-2">
+        <a 
+          href="/join" 
+          class="inline-block px-8 py-3 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider text-lg rounded-md transition-colors"
+        >
+          Join Fresh Meat Clinic &rarr;
+        </a>
+      </div>
+    </div>
+
+  </div>
+</Layout>
