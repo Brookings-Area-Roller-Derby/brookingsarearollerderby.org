@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { formatEventDate } from '../lib/events';
+import { siteConfig } from '../config/site';
 
 interface Props {
   bout: CollectionEntry<'bouts'>;
@@ -64,30 +65,28 @@ const year = formatEventDate(bout.data.date, { year: 'numeric' });
       </div>
     </div>
 
-    <div class="w-full md:w-auto flex-shrink-0">
-      {
-        bout.data.ticketLink ? (
-          <a
-            href={bout.data.ticketLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="block text-center px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider rounded border border-[#9E1F3D]"
-          >
-            Tickets / Event Info
-          </a>
-        ) : (
-          <span class="block text-center px-5 py-2 bg-[#252525] text-gray-400 font-heading uppercase tracking-wider rounded">
-            Tickets at the Door
-          </span>
-        )
-      }
+    <div class="w-full md:w-auto flex-shrink-0 flex flex-col sm:flex-row md:flex-col items-stretch md:items-end gap-2 text-center md:text-right">
+      <span class="inline-flex items-center justify-center gap-1.5 px-3 py-1 bg-[#1F1F1F] border border-[#333] text-gray-300 text-xs font-mono font-medium rounded tracking-wide">
+        🎟️ Tickets at the Door
+      </span>
+      <a
+        href={bout.data.facebookEventUrl || bout.data.ticketLink || siteConfig.facebookUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-1.5 px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider rounded border border-[#9E1F3D] transition-colors shadow-sm text-sm"
+      >
+        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+          <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"></path>
+        </svg>
+        Facebook Event &rarr;
+      </a>
     </div>
   </div>
 
   {
-    bout.data.details && (
+    bout.body && (
       <div class="bg-[#141414] px-6 py-3 border-t border-[#252525] text-xs text-gray-400 leading-relaxed">
-        <strong class="text-gray-300">Details:</strong> {bout.data.details}
+        <strong class="text-gray-300">Details:</strong> {bout.body}
       </div>
     )
   }

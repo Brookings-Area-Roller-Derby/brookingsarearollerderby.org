@@ -1,11 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import { siteConfig } from '../config/site';
+import { normalizeImageUrl } from '../lib/images';
 
 const sponsors = await getCollection('sponsors', ({ data }) => data.active);
-const sponsorshipInquiry = `mailto:${siteConfig.sponsorEmail}?subject=BARD%20Sponsorship%20Inquiry%20-%20Tier%20Interest`;
-const packetRequest = `mailto:${siteConfig.sponsorEmail}?subject=Request%20BARD%20Sponsorship%20Packet`;
+const grandSlamSponsors = sponsors.filter((s) => s.data.tier === 'grand-slam');
+const apexJumpSponsors = sponsors.filter((s) => s.data.tier === 'apex-jump');
+const rookieSponsors = sponsors.filter((s) => s.data.tier === 'rookie');
+const exclusiveSponsors = sponsors.filter((s) => s.data.tier === 'exclusive');
+
+const sponsorshipInquiry = `mailto:${siteConfig.email}?subject=BARD%20Sponsorship%20Inquiry%20-%20Tier%20Interest`;
+const packetRequest = `mailto:${siteConfig.email}?subject=Request%20BARD%20Sponsorship%20Packet`;
 
 const tiers = [
   {
@@ -213,7 +220,7 @@ const tiers = [
           href={packetRequest}
           class="px-8 py-3.5 bg-[#121212] hover:bg-[#282828] text-white font-heading uppercase tracking-wider text-lg rounded border border-gray-600 transition-colors"
         >
-          Email Sponsorship Coordinators
+          Email: {siteConfig.email}
         </a>
       </div>
     </div>
@@ -221,35 +228,263 @@ const tiers = [
     <!-- Current Active Sponsors List -->
     {
       sponsors.length > 0 && (
-        <div class="pt-8 border-t border-[#3B0B16]">
-          <h3 class="font-heading text-2xl uppercase tracking-wider text-white text-center mb-8">
-            Current League Partners &amp; Sponsors
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {sponsors.map((s) => (
-              <div class="bg-[#1B1B1B] border border-[#282828] rounded-lg p-6 flex flex-col justify-between">
-                <div>
-                  <span class="text-[10px] font-heading uppercase tracking-widest text-[#E5A93C] bg-[#3B0B16] px-2 py-0.5 rounded inline-block mb-2">
-                    {s.data.tier.replace('-', ' ')}
-                  </span>
-                  <h4 class="font-heading text-xl text-white uppercase tracking-wider">
-                    {s.data.name}
-                  </h4>
-                  {s.data.blurb && <p class="text-xs text-gray-400 mt-2">{s.data.blurb}</p>}
-                </div>
-                {s.data.url && (
-                  <a
-                    href={s.data.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="mt-4 text-xs font-heading uppercase text-[#E5A93C] hover:underline inline-flex items-center gap-1"
-                  >
-                    Visit Partner &rarr;
-                  </a>
-                )}
-              </div>
-            ))}
+        <div class="pt-12 border-t border-[#3B0B16] space-y-12">
+          <div class="text-center max-w-2xl mx-auto">
+            <span class="inline-block px-3 py-1 bg-[#3B0B16] text-[#E5A93C] font-heading uppercase text-xs tracking-widest rounded mb-3">
+              Our Community Backers
+            </span>
+            <h3 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white">
+              Current League Partners &amp; Sponsors
+            </h3>
+            <p class="text-gray-400 text-sm mt-2">
+              Huge thanks to the local businesses keeping roller derby thriving in Brookings!
+            </p>
           </div>
+
+          <!-- Grand Slam Tier (Featured Large Cards) -->
+          {grandSlamSponsors.length > 0 && (
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#E5A93C] text-black font-bold rounded">
+                  Grand Slam Tier
+                </span>
+                <span class="h-px flex-1 bg-gradient-to-r from-[#E5A93C]/40 to-transparent" />
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {grandSlamSponsors.map((s) => (
+                  <div class="bg-gradient-to-br from-[#1E1B13] to-[#141414] border-2 border-[#E5A93C] rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between shadow-2xl relative overflow-hidden group hover:border-[#F2BE63] transition-all">
+                    {s.data.logo && (
+                      <div class="w-36 h-28 sm:w-44 sm:h-32 flex-shrink-0 bg-white rounded-xl p-3 flex items-center justify-center shadow-inner border border-white/20">
+                        {typeof s.data.logo === 'string' ? (
+                          <img
+                            src={normalizeImageUrl(s.data.logo)}
+                            alt={`${s.data.name} logo`}
+                            class="w-full h-full object-contain"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <Image
+                            src={s.data.logo}
+                            alt={`${s.data.name} logo`}
+                            class="w-full h-full object-contain"
+                          />
+                        )}
+                      </div>
+                    )}
+                    <div class="flex-1 text-center sm:text-left flex flex-col justify-between h-full space-y-3">
+                      <div>
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1.5">
+                          <span class="text-[11px] font-heading uppercase tracking-widest text-[#E5A93C] bg-[#3B0B16] px-2.5 py-0.5 rounded font-bold">
+                            Premier Partner
+                          </span>
+                        </div>
+                        <h4 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider leading-tight">
+                          {s.data.name}
+                        </h4>
+                        {s.body && (
+                          <p class="text-sm text-gray-300 mt-2.5 leading-relaxed font-sans">
+                            {s.body}
+                          </p>
+                        )}
+                      </div>
+                      {s.data.url && (
+                        <div class="pt-2">
+                          <a
+                            href={s.data.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 px-5 py-2 bg-[#E5A93C] hover:bg-[#d6982b] text-black font-heading uppercase text-xs tracking-wider rounded font-bold transition-all shadow"
+                          >
+                            Visit Partner Website &rarr;
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Apex Jump Tier (Medium Cards) -->
+          {apexJumpSponsors.length > 0 && (
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#9E1F3D] text-white font-bold rounded">
+                  Apex Jump Tier
+                </span>
+                <span class="h-px flex-1 bg-gradient-to-r from-[#9E1F3D]/40 to-transparent" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {apexJumpSponsors.map((s) => (
+                  <div class="bg-gradient-to-br from-[#221015] to-[#151515] border border-[#9E1F3D] hover:border-red-500 rounded-xl p-6 flex flex-col justify-between shadow-lg transition-all">
+                    <div class="space-y-4">
+                      {s.data.logo && (
+                        <div class="w-full h-24 bg-white rounded-lg p-2.5 flex items-center justify-center shadow-inner">
+                          {typeof s.data.logo === 'string' ? (
+                            <img
+                              src={normalizeImageUrl(s.data.logo)}
+                              alt={`${s.data.name} logo`}
+                              class="w-full h-full object-contain"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : (
+                            <Image
+                              src={s.data.logo}
+                              alt={`${s.data.name} logo`}
+                              class="w-full h-full object-contain"
+                            />
+                          )}
+                        </div>
+                      )}
+                      <div>
+                        <h4 class="font-heading text-xl text-white uppercase tracking-wider">
+                          {s.data.name}
+                        </h4>
+                        {s.body && (
+                          <p class="text-xs text-gray-300 mt-2 leading-relaxed font-sans">
+                            {s.body}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    {s.data.url && (
+                      <div class="pt-4 mt-4 border-t border-[#3B0B16]">
+                        <a
+                          href={s.data.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-xs font-heading uppercase text-red-400 hover:text-red-300 tracking-wider inline-flex items-center gap-1"
+                        >
+                          Visit Partner &rarr;
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Rookie Tier (Compact Cards) -->
+          {rookieSponsors.length > 0 && (
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-gray-700 text-gray-200 font-bold rounded">
+                  Rookie Tier
+                </span>
+                <span class="h-px flex-1 bg-gradient-to-r from-gray-700/40 to-transparent" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                {rookieSponsors.map((s) => (
+                  <div class="bg-[#181818] border border-[#2E2E2E] hover:border-gray-500 rounded-xl p-5 flex flex-col justify-between shadow transition-all">
+                    <div>
+                      {s.data.logo && (
+                        <div class="w-full h-16 bg-white/90 rounded-md p-1.5 mb-3 flex items-center justify-center">
+                          {typeof s.data.logo === 'string' ? (
+                            <img
+                              src={normalizeImageUrl(s.data.logo)}
+                              alt={`${s.data.name} logo`}
+                              class="w-full h-full object-contain"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : (
+                            <Image
+                              src={s.data.logo}
+                              alt={`${s.data.name} logo`}
+                              class="w-full h-full object-contain"
+                            />
+                          )}
+                        </div>
+                      )}
+                      <h4 class="font-heading text-lg text-white uppercase tracking-wider">
+                        {s.data.name}
+                      </h4>
+                      {s.body && (
+                        <p class="text-xs text-gray-400 mt-1.5 leading-relaxed font-sans">
+                          {s.body}
+                        </p>
+                      )}
+                    </div>
+                    {s.data.url && (
+                      <div class="pt-3 mt-3 border-t border-[#252525]">
+                        <a
+                          href={s.data.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-[11px] font-heading uppercase text-gray-400 hover:text-white tracking-wider inline-flex items-center gap-1"
+                        >
+                          Visit Partner &rarr;
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Custom / Exclusive Tier (if any) -->
+          {exclusiveSponsors.length > 0 && (
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#541221] text-[#E5A93C] font-bold rounded">
+                  Exclusive / Title Sponsors
+                </span>
+                <span class="h-px flex-1 bg-gradient-to-r from-[#541221] to-transparent" />
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {exclusiveSponsors.map((s) => (
+                  <div class="bg-[#1B1B1B] border-2 border-[#541221] rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between shadow-xl">
+                    {s.data.logo && (
+                      <div class="w-36 h-28 flex-shrink-0 bg-white rounded-xl p-3 flex items-center justify-center shadow-inner">
+                        {typeof s.data.logo === 'string' ? (
+                          <img
+                            src={normalizeImageUrl(s.data.logo)}
+                            alt={`${s.data.name} logo`}
+                            class="w-full h-full object-contain"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <Image
+                            src={s.data.logo}
+                            alt={`${s.data.name} logo`}
+                            class="w-full h-full object-contain"
+                          />
+                        )}
+                      </div>
+                    )}
+                    <div class="flex-1 text-center sm:text-left flex flex-col justify-between h-full space-y-3">
+                      <div>
+                        <h4 class="font-heading text-2xl text-white uppercase tracking-wider">
+                          {s.data.name}
+                        </h4>
+                        {s.body && (
+                          <p class="text-sm text-gray-300 mt-2 leading-relaxed font-sans">
+                            {s.body}
+                          </p>
+                        )}
+                      </div>
+                      {s.data.url && (
+                        <a
+                          href={s.data.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="inline-flex items-center gap-2 px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase text-xs tracking-wider rounded border border-[#9E1F3D]"
+                        >
+                          Visit Partner &rarr;
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )
     }

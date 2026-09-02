@@ -42,7 +42,7 @@ const { event, status } = Astro.props;
       📍 {event.data.location}
       {event.data.time && `• ⏰ ${event.data.time}`}
     </p>
-    <p class="text-sm text-gray-300 leading-relaxed">{event.data.description}</p>
+    {event.body && <p class="text-sm text-gray-300 leading-relaxed">{event.body}</p>}
   </div>
 
   <div class="pt-3 border-t border-[#252525]">

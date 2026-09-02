@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logoImage from '../assets/logo.jpg';
+import { siteConfig } from '../config/site';
 
 const currentPath = Astro.url.pathname;
 const navLinks = [
@@ -9,6 +10,7 @@ const navLinks = [
   { href: '/roster', label: 'Roster' },
   { href: '/sponsors', label: 'Sponsors' },
   { href: '/join', label: 'Join / Fresh Meat' },
+  { href: siteConfig.merchUrl, label: 'Merch', external: true },
 ];
 ---
 
@@ -47,6 +49,8 @@ const navLinks = [
             return (
               <a
                 href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
                 class={`px-3.5 py-2 font-heading text-lg tracking-wider uppercase rounded-md transition-colors ${
                   isActive
                     ? 'text-white bg-[#541221] font-bold'
@@ -61,10 +65,12 @@ const navLinks = [
         }
 
         <a
-          href="/schedule"
-          class="ml-3 px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading text-lg uppercase tracking-wider rounded-md border border-[#9E1F3D] transition-colors shadow-sm"
+          href={siteConfig.donationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ml-3 px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading text-lg uppercase tracking-wider rounded-md border border-[#9E1F3D] transition-colors shadow-sm inline-flex items-center gap-1.5"
         >
-          Tickets
+          Donate
         </a>
       </nav>
 
@@ -101,6 +107,8 @@ const navLinks = [
         return (
           <a
             href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
             class={`block px-3 py-2.5 rounded font-heading text-xl uppercase tracking-wider ${
               isActive
                 ? 'bg-[#541221] text-white'
@@ -114,10 +122,12 @@ const navLinks = [
       })
     }
     <a
-      href="/schedule"
-      class="block mt-4 text-center py-3 bg-[#541221] text-white font-heading text-xl uppercase tracking-wider rounded"
+      href={siteConfig.donationUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block mt-4 text-center py-3 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading text-xl uppercase tracking-wider rounded"
     >
-      Tickets &amp; Bout Dates
+      Donate to BARD
     </a>
   </div>
 </header>
