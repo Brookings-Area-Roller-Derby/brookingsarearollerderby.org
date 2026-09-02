@@ -14,7 +14,7 @@ export const siteConfig = {
   youtubeUrl: 'https://www.youtube.com/@bardrollerderby',
   tiktokUrl: 'https://www.tiktok.com/@brookingsarearollerderby',
   merchUrl: 'https://www.bonfire.com/new-bard-merch/',
-  donationUrl: 'https://account.venmo.com/charity/donate?charity=4154770235327872163',
+  donationUrl: 'https://www.venmo.com/u/BrookingsAreaRollerDerby',
   homeVenue: {
     name: 'Brookings County Outdoor Adventure Center',
     address: '2810 22nd Ave S, Brookings, SD 57006',
