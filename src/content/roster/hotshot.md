@@ -1,11 +1,12 @@
 ---
-derbyName: 'Hotshot'
-number: '007'
+derbyName: 'Hot Shot'
+number: '000'
 positions:
   - 'Blocker'
   - 'Pivot'
-photo: '../../assets/logo.jpg'
+  - 'Jammer'
+photo: 'https://photos.smugmug.com/Unlisted-on-Website/BARDS/n-sfNGdC/BARDS-MediaDay-Selects/i-cqLwNhc/0/KDKRgbPbnkXCSvMKMGRShJDpwZkPPkvCWmDdzVK9Q/XL/20260401_hmo_00832-XL.jpg'
 active: true
 ---
 
-Anchor of the tripod wall. Heavy hits, tactical pack awareness, and unstoppable backward blocking that shuts down any breakaway jammers.
+Resident old man and ex team USA player.

@@ -6,12 +6,8 @@ import defaultLogo from '../assets/logo.jpg';
 import { normalizeImageUrl } from '../lib/images';
 
 const roster = await getCollection('roster', ({ data }) => data.active);
-const jammers = roster.filter((m) => m.data.positions.includes('Jammer'));
-const blockers = roster.filter((m) => m.data.positions.includes('Blocker'));
-const pivots = roster.filter((m) => m.data.positions.includes('Pivot'));
-const officials = roster.filter((m) =>
-  m.data.positions.some((p) => p === 'Ref' || p === 'NSO'),
-);
+const coaches = roster.filter((m) => m.data.positions.includes('Coach'));
+const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
 ---
 
 <Layout
@@ -21,40 +17,18 @@ const officials = roster.filter((m) =>
   <!-- Hero Section -->
   <section class="bg-[#121212] py-12 sm:py-16 border-b border-[#252525]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <span
-            class="inline-block px-3 py-1 bg-[#541221] text-white font-semibold uppercase text-xs tracking-wider rounded mb-3"
-          >
-            {roster.length} Active League Members
-          </span>
-          <h1 class="font-heading text-5xl sm:text-7xl uppercase tracking-wider text-white">
-            Meet the Pack
-          </h1>
-          <p class="text-gray-400 text-base sm:text-lg max-w-2xl mt-2">
-            The competitive skaters, pivots, blockers, jammers, and zebra referees of BARD.
-          </p>
-        </div>
-
-        <!-- Quick Summary Stats -->
-        <div class="flex items-center gap-3 text-center">
-          <div class="bg-[#181818] border border-[#2A2A2A] rounded-lg px-3.5 py-2">
-            <span class="font-heading text-2xl text-red-500 block leading-none">{jammers.length}</span>
-            <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Jammers</span>
-          </div>
-          <div class="bg-[#181818] border border-[#2A2A2A] rounded-lg px-3.5 py-2">
-            <span class="font-heading text-2xl text-gray-200 block leading-none">{blockers.length}</span>
-            <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Blockers</span>
-          </div>
-          <div class="bg-[#181818] border border-[#2A2A2A] rounded-lg px-3.5 py-2">
-            <span class="font-heading text-2xl text-[#E5A93C] block leading-none">{pivots.length}</span>
-            <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Pivots</span>
-          </div>
-          <div class="bg-[#181818] border border-[#2A2A2A] rounded-lg px-3.5 py-2">
-            <span class="font-heading text-2xl text-white block leading-none">{officials.length}</span>
-            <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Officials</span>
-          </div>
-        </div>
+      <div>
+        <span
+          class="inline-block px-3 py-1 bg-[#541221] text-white font-semibold uppercase text-xs tracking-wider rounded mb-3"
+        >
+          Official League Roster
+        </span>
+        <h1 class="font-heading text-5xl sm:text-7xl uppercase tracking-wider text-white">
+          Meet the Pack
+        </h1>
+        <p class="text-gray-400 text-base sm:text-lg max-w-2xl mt-2">
+          The competitive skaters, pivots, blockers, jammers, and zebra referees of BARD.
+        </p>
       </div>
     </div>
   </section>
@@ -78,21 +52,16 @@ const officials = roster.filter((m) =>
             <span class="absolute left-3 top-2.5 text-gray-500 text-xs pointer-events-none">🔍</span>
           </div>
 
-          <!-- Sort Selector & Visible Counter -->
-          <div class="flex items-center justify-between sm:justify-end gap-4">
-            <div class="flex items-center gap-2">
-              <label for="roster-sort" class="text-xs text-gray-400 font-medium whitespace-nowrap">Sort:</label>
-              <select
-                id="roster-sort"
-                class="bg-[#1A1A1A] border border-[#333] text-gray-300 text-xs rounded-md px-2.5 py-1.5 focus:outline-none focus:border-[#E5A93C]"
-              >
-                <option value="number">Jersey # (0-9)</option>
-                <option value="name">Name (A-Z)</option>
-              </select>
-            </div>
-            <div class="text-xs font-mono text-gray-400 whitespace-nowrap">
-              Showing <span id="visible-count" class="text-[#E5A93C] font-bold">{roster.length}</span> of {roster.length}
-            </div>
+          <!-- Sort Selector -->
+          <div class="flex items-center justify-end gap-2">
+            <label for="roster-sort" class="text-xs text-gray-400 font-medium whitespace-nowrap">Sort:</label>
+            <select
+              id="roster-sort"
+              class="bg-[#1A1A1A] border border-[#333] text-gray-300 text-xs rounded-md px-2.5 py-1.5 focus:outline-none focus:border-[#E5A93C]"
+            >
+              <option value="number">Jersey # (0-9)</option>
+              <option value="name">Name (A-Z)</option>
+            </select>
           </div>
         </div>
 
@@ -101,38 +70,60 @@ const officials = roster.filter((m) =>
           <button
             type="button"
             data-filter="all"
-            class="roster-filter-btn px-3 py-1 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#541221] text-white border-[#7A1A30]"
+            class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#541221] text-white border-[#7A1A30]"
           >
-            All ({roster.length})
+            All
           </button>
           <button
             type="button"
             data-filter="Jammer"
-            class="roster-filter-btn px-3 py-1 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
+            class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
           >
-            Jammers ({jammers.length})
+            Jammers
           </button>
           <button
             type="button"
             data-filter="Blocker"
-            class="roster-filter-btn px-3 py-1 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
+            class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
           >
-            Blockers ({blockers.length})
+            Blockers
           </button>
           <button
             type="button"
             data-filter="Pivot"
-            class="roster-filter-btn px-3 py-1 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
+            class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
           >
-            Pivots ({pivots.length})
+            Pivots
           </button>
           <button
             type="button"
             data-filter="Official"
-            class="roster-filter-btn px-3 py-1 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
+            class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
           >
-            Officials &amp; Refs ({officials.length})
+            Officials &amp; Refs
           </button>
+          {
+            coaches.length > 0 && (
+              <button
+                type="button"
+                data-filter="Coach"
+                class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
+              >
+                Coaches
+              </button>
+            )
+          }
+          {
+            freshMeat.length > 0 && (
+              <button
+                type="button"
+                data-filter="Fresh Meat"
+                class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-emerald-400 border-[#333] hover:border-emerald-500"
+              >
+                Fresh Meat
+              </button>
+            )
+          }
         </div>
       </div>
     </div>
@@ -166,7 +157,7 @@ const officials = roster.filter((m) =>
           <div
             class="roster-card bg-[#181818] rounded-xl border border-[#2A2A2A] hover:border-[#541221] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-200 flex flex-col justify-between group"
             data-name={member.data.derbyName.toLowerCase()}
-            data-number={member.data.number.toLowerCase()}
+            data-number={member.data.number ? member.data.number.toLowerCase() : ''}
             data-positions={member.data.positions.join(',')}
             data-is-official={
               member.data.positions.some((p) => p === 'Ref' || p === 'NSO') ? 'true' : 'false'
@@ -179,7 +170,7 @@ const officials = roster.filter((m) =>
                     typeof member.data.photo === 'string' ? (
                       <img
                         src={normalizeImageUrl(member.data.photo)}
-                        alt={`${member.data.derbyName} - #${member.data.number}`}
+                        alt={member.data.number ? `${member.data.derbyName} - #${member.data.number}` : member.data.derbyName}
                         class="w-full h-full object-cover object-top"
                         loading="lazy"
                         decoding="async"
@@ -187,22 +178,28 @@ const officials = roster.filter((m) =>
                     ) : member.data.photo ? (
                       <Image
                         src={member.data.photo}
-                        alt={`${member.data.derbyName} - #${member.data.number}`}
+                        alt={member.data.number ? `${member.data.derbyName} - #${member.data.number}` : member.data.derbyName}
                         class="w-full h-full object-cover object-top"
                       />
                     ) : (
                       <Image
                         src={defaultLogo}
-                        alt={`${member.data.derbyName} - #${member.data.number}`}
+                        alt={member.data.number ? `${member.data.derbyName} - #${member.data.number}` : member.data.derbyName}
                         class="w-full h-full object-contain p-2"
                       />
                     )
                   }
                 </div>
 
-                <span class="inline-block px-3 py-0.5 bg-[#541221] text-white font-mono font-bold text-xs tracking-wider rounded-full shadow">
-                  #{member.data.number}
-                </span>
+                {member.data.number ? (
+                  <span class="inline-block px-3 py-0.5 bg-[#541221] text-white font-mono font-bold text-xs tracking-wider rounded-full shadow">
+                    #{member.data.number}
+                  </span>
+                ) : (
+                  <span class="inline-block px-3 py-0.5 bg-[#1F1F1F] text-[#E5A93C] font-mono font-bold text-xs tracking-wider rounded-full border border-[#E5A93C]/40 shadow">
+                    COACH
+                  </span>
+                )}
               </div>
 
               <div class="p-5 space-y-2.5">
@@ -217,6 +214,8 @@ const officials = roster.filter((m) =>
                     let badgeColor = 'bg-[#252525] text-gray-300 border-[#333]';
                     if (pos === 'Jammer') badgeColor = 'bg-[#541221] text-white border-[#7A1A30]';
                     if (pos === 'Pivot') badgeColor = 'bg-[#1E1E1E] text-red-400 border-[#3B0B16]';
+                    if (pos === 'Coach') badgeColor = 'bg-[#1E1E1E] text-[#E5A93C] border-[#E5A93C]/40';
+                    if (pos === 'Fresh Meat') badgeColor = 'bg-[#0F291E] text-emerald-400 border-emerald-500/40';
                     if (pos === 'Ref' || pos === 'NSO')
                       badgeColor = 'bg-[#2A2A2A] text-[#E5A93C] border-[#E5A93C]/40';
 
@@ -240,9 +239,13 @@ const officials = roster.filter((m) =>
 
             <div class="p-2.5 bg-[#141414] border-t border-[#222] text-center">
               <span class="text-[11px] font-sans uppercase text-gray-500 tracking-wider">
-                {member.data.positions.some((p) => p === 'Ref' || p === 'NSO')
-                  ? 'BARD Official • Active'
-                  : 'BARD Skater • Active'}
+                {member.data.positions.includes('Fresh Meat')
+                  ? 'BARD Fresh Meat • Active'
+                  : member.data.positions.includes('Coach')
+                    ? 'BARD Bench Coach • Active'
+                    : member.data.positions.some((p) => p === 'Ref' || p === 'NSO')
+                      ? 'BARD Official • Active'
+                      : 'BARD Skater • Active'}
               </span>
             </div>
           </div>
@@ -309,9 +312,10 @@ const officials = roster.filter((m) =>
         if (sortBy === 'name') {
           return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
         }
-        // numeric / string comparison for numbers
         const numA = a.dataset.number ?? '';
         const numB = b.dataset.number ?? '';
+        if (!numA && numB) return 1;
+        if (numA && !numB) return -1;
         return numA.localeCompare(numB, undefined, { numeric: true, sensitivity: 'base' });
       });
 

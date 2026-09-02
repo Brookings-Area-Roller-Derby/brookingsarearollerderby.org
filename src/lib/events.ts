@@ -125,13 +125,19 @@ export function findNextEntry<T extends DatedEntry>(
 
 export function formatEventDate(
   date: Date | string,
-  options: Intl.DateTimeFormatOptions = {},
+  options?: Intl.DateTimeFormatOptions,
 ): string {
+  const d = typeof date === 'string' ? new Date(date) : date;
+  if (options && Object.keys(options).length > 0) {
+    return new Intl.DateTimeFormat('en-US', {
+      timeZone: siteConfig.timeZone,
+      ...options,
+    }).format(d);
+  }
   return new Intl.DateTimeFormat('en-US', {
     timeZone: siteConfig.timeZone,
     month: 'long',
     day: 'numeric',
     year: 'numeric',
-    ...options,
-  }).format(typeof date === 'string' ? new Date(date) : date);
+  }).format(d);
 }

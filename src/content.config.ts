@@ -8,8 +8,8 @@ const roster = defineCollection({
   schema: ({ image }) =>
     z.object({
       derbyName: z.string(),
-      number: z.string(),
-      positions: z.array(z.enum(['Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO'])),
+      number: z.string().optional(),
+      positions: z.array(z.enum(['Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat'])),
       photo: z.union([image(), z.string()]).optional(),
       active: z.boolean().default(true),
     }),
@@ -28,6 +28,7 @@ const bouts = defineCollection({
       ticketLink: z.url().optional(),
       time: z.string().default('Doors 5:30 PM | Whistle 6:30 PM'),
       highlight: z.boolean().default(false),
+      canceled: z.boolean().default(false),
     })
     .transform((data) => ({
       ...data,
@@ -44,6 +45,7 @@ const events = defineCollection({
       location: z.string(),
       category: z.enum(['community', 'fundraiser']),
       time: z.string().optional(),
+      facebookEventUrl: z.url().optional(),
     })
     .transform((data) => ({
       ...data,

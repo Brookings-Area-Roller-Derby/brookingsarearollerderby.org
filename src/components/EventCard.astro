@@ -47,12 +47,12 @@ const { event, status } = Astro.props;
 
   <div class="pt-3 border-t border-[#252525]">
     <a
-      href={siteConfig.facebookUrl}
+      href={event.data.facebookEventUrl || siteConfig.facebookUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-xs font-medium text-gray-400 hover:text-white inline-flex items-center gap-1"
+      class="text-xs font-semibold text-[#E5A93C] hover:text-amber-300 inline-flex items-center gap-1 uppercase tracking-wider font-heading"
     >
-      Event Updates on Facebook &rarr;
+      Details &rarr;
     </a>
   </div>
 </article>

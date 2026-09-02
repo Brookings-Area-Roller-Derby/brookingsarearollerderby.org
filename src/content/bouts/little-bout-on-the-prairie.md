@@ -1,12 +1,13 @@
 ---
-title: 'Little Bout on the Prairie Doubleheader'
-date: 2026-05-16
-opponent: 'Sioux Falls Roller Dollz & Junior Roller Derby'
-location: 'Brookings County Outdoor Adventure Center, Brookings, SD'
-homeOrAway: 'home'
-facebookEventUrl: 'https://www.facebook.com/midwestmaidens'
-time: 'Doors 5:00 PM | Juniors 5:45 PM | Main Bout 7:00 PM'
-highlight: true
+title: "Little Bout on the Prairie"
+date: 2026-08-29
+opponent: "Home Bout"
+location: "Brookings County Outdoor Adventure Center, Brookings, SD"
+homeOrAway: "home"
+facebookEventUrl: "https://www.facebook.com/events/2114399029102557/"
+time: "Doors 5:00 PM | Action 6:00 PM"
+highlight: false
+canceled: true
 ---
 
-Full evening doubleheader featuring Brookings Junior Derby opening match followed by BARD adult league main event. Concessions, bake sale, and team merchandise available.
+This event was canceled.

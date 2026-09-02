@@ -18,56 +18,57 @@ const tiers = [
   {
     id: 'grand-slam',
     name: 'Grand Slam Sponsor',
-    price: '$300 / Season',
+    price: '$300 Contribution',
     color: 'border-[#E5A93C] bg-[#1E1B13]',
     badge: 'bg-[#E5A93C] text-black',
     perks: [
-      'Prominent banner display at all home bouts at the Outdoor Adventure Center',
-      'Dedicated shout-outs and announcer mentions during every home bout and tournament',
-      'Logo + live link featured at top of BARD website and Facebook match promo graphics',
-      '4 complimentary VIP season passes to all home doubleheaders',
-      'Framed team appreciation photo & certificate',
+      '6 season home tickets ($180 value)',
+      '8 dedicated Facebook mentions & promo posts',
+      'Banner display at all home bouts (sponsor provides banner)',
+      'Quarter-page ad in official printed bout program',
+      'Live announcer sponsorship mentions at all home bouts',
     ],
   },
   {
     id: 'apex-jump',
     name: 'Apex Jump Sponsor',
-    price: '$200 / Season',
+    price: '$200 Contribution',
     color: 'border-[#9E1F3D] bg-[#221015]',
     badge: 'bg-[#9E1F3D] text-white',
     perks: [
-      'Logo placement on official game-day printed bout programs',
-      'Announcer sponsor thank-yous during half-time scrimmages',
-      'Logo on website sponsors directory with direct link',
-      '2 complimentary season passes to all home bouts',
-      'Team signed commemorative poster',
+      '4 season home tickets ($120 value)',
+      '4 dedicated Facebook mentions & promo posts',
+      'Banner display at all home bouts (sponsor provides banner)',
+      'Eighth-page ad in official printed bout program',
+      'Live announcer sponsorship mentions at home bouts',
     ],
   },
   {
     id: 'rookie',
-    name: 'Rookie Supporter',
-    price: '$100 / Season',
+    name: 'Rookie Sponsor',
+    price: '$100 Contribution',
     color: 'border-gray-600 bg-[#1B1B1B]',
     badge: 'bg-gray-700 text-gray-200',
     perks: [
-      'Business listing in home bout programs and tournament schedules',
-      'Listing on website sponsor directory',
-      '1 complimentary ticket to any home bout of your choice',
-      'Tax-deductible non-profit contribution receipt',
+      '2 season home tickets ($60 value)',
+      '2 dedicated Facebook mentions & promo posts',
+      'Banner display at all home bouts (sponsor provides banner)',
+      'Logo in official printed bout program',
+      'Live announcer sponsorship mentions at home bouts',
     ],
   },
   {
     id: 'exclusive',
-    name: 'Custom / Exclusive Packages',
-    price: 'Custom In-Kind or Cash',
+    name: 'Exclusive Packages',
+    price: '$500 Each',
     color: 'border-[#541221] bg-[#181818]',
     badge: 'bg-[#541221] text-[#E5A93C]',
     perks: [
-      'Official Track Title Sponsor or Penalty Box Naming Rights',
-      'Junior Derby scholarship funding & youth gear subsidies',
-      'Bout Half-Time activity host & vendor pop-up booth',
-      'Custom cross-promotional social media campaigns',
-      'Tailored community event partnerships',
+      'Only one sponsor available per exclusive package',
+      'Jammer Package: Grand Slam package + Jam Line Sponsor for all home bouts',
+      'Blocker Package: Grand Slam package + Penalty Box Sponsor for all home bouts',
+      'Bench Coach Package: Grand Slam package + Danger Zone Seating Sponsor for all home bouts',
+      'Includes 6 home tickets ($180 value), 8 FB mentions, banner, 1/4 page ad & live announcements',
     ],
   },
 ];
@@ -98,35 +99,41 @@ const tiers = [
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-16">
     <!-- Why Sponsor Section -->
     <div class="bg-[#1B1B1B] border border-[#3B0B16] rounded-xl p-8 sm:p-10">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center sm:text-left">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
         <div>
           <span class="font-heading text-4xl text-[#E5A93C] block mb-1">501(c)(3)</span>
           <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">
-            Tax-Deductible Support
+            Tax-Deductible
           </h3>
           <p class="text-sm text-gray-400">
-            All sponsorships qualify as tax-deductible non-profit contributions supporting amateur
-            athletics and youth recreation.
+            Registered 501(c)(3) non-profit and the only open gender flat track roller derby team in the Brookings area.
           </p>
         </div>
         <div>
-          <span class="font-heading text-4xl text-[#E5A93C] block mb-1">500+</span>
+          <span class="font-heading text-4xl text-[#E5A93C] block mb-1">125–200</span>
           <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">
-            Engaged Local Fans
+            Bout Attendance
           </h3>
           <p class="text-sm text-gray-400">
-            Our family-friendly bouts pack the bleachers with passionate, loyal community members
-            who support local businesses.
+            Average attendees per home bout, drawing passionate sports fans and families from across SD, MN, ND, and IA.
           </p>
         </div>
         <div>
-          <span class="font-heading text-4xl text-[#E5A93C] block mb-1">100%</span>
+          <span class="font-heading text-4xl text-[#E5A93C] block mb-1">1,700+</span>
           <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">
-            Skater-Owned &amp; Driven
+            Social Followers
           </h3>
           <p class="text-sm text-gray-400">
-            Your funds directly pay for track rental, safety equipment, referee insurance, and youth
-            junior derby gear.
+            Active digital fan community with dedicated sponsor shout-outs, promotional graphics, and online visibility.
+          </p>
+        </div>
+        <div>
+          <span class="font-heading text-4xl text-[#E5A93C] block mb-1">2nd Place</span>
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider mb-2">
+            MRDA Tournament
+          </h3>
+          <p class="text-sm text-gray-400">
+            Sanctioned MRDA team playing by WFTDA rules; recently took 2nd place at the national Clover Cup in Dallas, TX!
           </p>
         </div>
       </div>
@@ -198,31 +205,53 @@ const tiers = [
 
     <!-- Sponsor Packet Download & Action Box -->
     <div
-      class="bg-gradient-to-r from-[#1B1B1B] via-[#3B0B16] to-[#1B1B1B] border-2 border-[#E5A93C] rounded-2xl p-8 sm:p-12 text-center space-y-6"
+      class="bg-gradient-to-r from-[#1B1B1B] via-[#3B0B16] to-[#1B1B1B] border-2 border-[#E5A93C] rounded-2xl p-8 sm:p-12 text-center space-y-6 shadow-2xl"
     >
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#3B0B16] border border-[#E5A93C]/40 text-[#E5A93C] font-heading uppercase tracking-widest text-xs rounded-full">
+        📄 Official {siteConfig.season} Partnership Form
+      </div>
       <h2 class="font-heading text-3xl sm:text-5xl uppercase tracking-wider text-white">
-        Download {siteConfig.season} Sponsor Agreement Packet
+        Download {siteConfig.season} Sponsorship Agreement
       </h2>
-      <p class="text-gray-200 text-base max-w-2xl mx-auto">
-        Need a formal PDF invoice, W-9, or breakdown for your marketing team or board of directors?
-        Request our complete {siteConfig.season} BARD Partnership Packet.
+      <p class="text-gray-200 text-base max-w-2xl mx-auto leading-relaxed">
+        Download our official partnership document and agreement form. Includes full package breakdown, ticket benefits, banner requirements, and sign-off form.
       </p>
-      <div class="flex flex-wrap justify-center gap-4 pt-2">
+
+      <!-- 2026 Home Game Dates Highlight -->
+      <div class="bg-[#121212]/80 border border-[#333] rounded-xl p-4 max-w-2xl mx-auto">
+        <span class="text-xs uppercase font-mono text-[#E5A93C] font-bold block mb-1">
+          🗓️ 2026 BARD Home Bouts Schedule
+        </span>
+        <p class="text-sm text-gray-300">
+          February 14 • July 11 • August 29 • September 26
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center items-center gap-4 pt-2">
         <a
-          href={siteConfig.facebookUrl}
+          href="/2026-sponsor-packet.pdf"
+          download="BARD-2026-Sponsor-Packet.pdf"
           target="_blank"
-          rel="noopener noreferrer"
-          class="px-8 py-3.5 bg-[#E5A93C] hover:bg-[#d6982b] text-black font-heading uppercase tracking-wider text-lg rounded font-bold shadow-lg transition-transform active:scale-95"
+          class="px-8 py-4 bg-[#E5A93C] hover:bg-[#d6982b] text-black font-heading uppercase tracking-wider text-lg rounded-xl font-bold shadow-xl transition-transform active:scale-95 flex items-center gap-2.5"
         >
-          Message BARD on Facebook
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"></path>
+          </svg>
+          Download Sponsor Packet (PDF)
         </a>
         <a
           href={packetRequest}
-          class="px-8 py-3.5 bg-[#121212] hover:bg-[#282828] text-white font-heading uppercase tracking-wider text-lg rounded border border-gray-600 transition-colors"
+          class="px-8 py-4 bg-[#141414] hover:bg-[#252525] text-white font-heading uppercase tracking-wider text-lg rounded-xl border border-gray-600 transition-colors flex items-center gap-2"
         >
-          Email: {siteConfig.email}
+          ✉️ Email: {siteConfig.email}
         </a>
       </div>
+      <p class="text-xs text-gray-400 max-w-lg mx-auto">
+        Completed agreements and high-resolution logo artwork can be sent directly to{' '}
+        <a href={`mailto:${siteConfig.email}`} class="text-[#E5A93C] underline">
+          {siteConfig.email}
+        </a>.
+      </p>
     </div>
 
     <!-- Current Active Sponsors List -->

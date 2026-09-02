@@ -5,88 +5,102 @@ import { siteConfig } from '../config/site';
 
 interface Props {
   bout: CollectionEntry<'bouts'>;
-  status: 'upcoming' | 'past';
+  status?: 'upcoming' | 'past';
 }
 
-const { bout, status } = Astro.props;
+const { bout } = Astro.props;
 const isHome = bout.data.homeOrAway === 'home';
+const isCanceled = bout.data.canceled;
 const month = formatEventDate(bout.data.date, { month: 'short' });
-const day = formatEventDate(bout.data.date, { day: '2-digit' });
+const day = formatEventDate(bout.data.date, { day: 'numeric' });
 const year = formatEventDate(bout.data.date, { year: 'numeric' });
 ---
 
 <article
-  class={`bg-[#181818] rounded-xl border ${isHome ? 'border-[#541221]' : 'border-[#2A2A2A]'} overflow-hidden shadow-md`}
+  class={`bg-[#181818] rounded-xl border ${isCanceled ? 'border-red-950/80 opacity-80' : isHome ? 'border-[#541221]' : 'border-[#2A2A2A]'} overflow-hidden shadow-md`}
   data-event-card
   data-event-type="bouts"
   data-event-date={bout.data.date.toISOString()}
 >
-  <div class="p-6 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
-    <div class="flex items-center gap-5">
+  <div class="p-5 sm:p-6 flex flex-col md:flex-row gap-5 items-start md:items-center justify-between">
+    <div class="flex items-center gap-4 sm:gap-5 min-w-0">
       <time
         datetime={bout.data.date.toISOString()}
-        class={`text-center rounded-lg p-3 w-20 flex-shrink-0 ${isHome ? 'bg-[#541221] text-white' : 'bg-[#222] text-gray-300'}`}
+        class={`text-center rounded-lg py-2.5 px-3 w-16 sm:w-20 flex-shrink-0 flex flex-col items-center justify-center ${isCanceled ? 'bg-[#2A1015] text-gray-400' : isHome ? 'bg-[#541221] text-white' : 'bg-[#222] text-gray-300'}`}
       >
-        <span class="block text-xs uppercase font-sans font-bold tracking-wider">{month}</span>
-        <span class="block font-heading text-4xl leading-none my-0.5">{day}</span>
-        <span class="block text-[11px] opacity-75 font-mono">{year}</span>
+        <span class="block text-xs uppercase font-heading tracking-widest leading-tight">{month}</span>
+        <span class="block font-heading text-3xl sm:text-4xl leading-none my-0.5">{day}</span>
+        <span class="block text-[10px] opacity-75 font-mono leading-none">{year}</span>
       </time>
 
-      <div>
-        <div class="flex flex-wrap items-center gap-2 mb-1.5">
-          <span
-            class={`px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider rounded ${isHome ? 'bg-[#541221] text-white' : 'bg-[#282828] text-gray-300'}`}
-          >
-            {isHome ? 'Home Bout' : 'Away Match'}
-          </span>
-          <span
-            class="px-2 py-0.5 text-xs font-semibold uppercase tracking-wider rounded bg-[#252525] text-gray-300"
-            data-event-status
-          >
-            {status === 'past' ? 'Completed' : 'Upcoming'}
-          </span>
+      <div class="min-w-0">
+        <div class="flex flex-wrap items-center gap-2 mb-1">
           {
-            bout.data.highlight && (
-              <span class="px-2 py-0.5 text-xs font-semibold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded">
-                Doubleheader Feature
+            isCanceled ? (
+              <span class="px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider rounded bg-red-950/90 text-red-400 border border-red-800/80">
+                ⚠️ Bout Canceled
+              </span>
+            ) : (
+              <span
+                class={`px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider rounded ${isHome ? 'bg-[#541221] text-white' : 'bg-[#282828] text-gray-300'}`}
+              >
+                {isHome ? 'Home Bout' : 'Away Match'}
+              </span>
+            )
+          }
+          {
+            bout.data.highlight && !isCanceled && (
+              <span class="px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded">
+                Doubleheader
               </span>
             )
           }
         </div>
 
-        <h3 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+        <h3
+          class={`font-heading text-2xl sm:text-3xl uppercase tracking-wider leading-tight ${isCanceled ? 'text-gray-400 line-through' : 'text-white'}`}
+        >
           {bout.data.title}
         </h3>
-        <p class="text-sm text-gray-400 mt-0.5">
-          Opponent: <span class="text-gray-200 font-medium">{bout.data.opponent}</span>
+        <p class="text-sm text-gray-300 mt-0.5">
+          vs. <span class="text-white font-medium">{bout.data.opponent}</span>
         </p>
-        <p class="text-xs text-gray-400 mt-2">📍 {bout.data.location}</p>
-        <p class="text-xs text-gray-400 mt-1">⏰ {bout.data.time}</p>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-400 mt-1.5">
+          <span>📍 {bout.data.location}</span>
+          {bout.data.time && <span>⏰ {bout.data.time}</span>}
+        </div>
       </div>
     </div>
 
-    <div class="w-full md:w-auto flex-shrink-0 flex flex-col sm:flex-row md:flex-col items-stretch md:items-end gap-2 text-center md:text-right">
-      <span class="inline-flex items-center justify-center gap-1.5 px-3 py-1 bg-[#1F1F1F] border border-[#333] text-gray-300 text-xs font-mono font-medium rounded tracking-wide">
-        🎟️ Tickets at the Door
-      </span>
-      <a
-        href={bout.data.facebookEventUrl || bout.data.ticketLink || siteConfig.facebookUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center justify-center gap-1.5 px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider rounded border border-[#9E1F3D] transition-colors shadow-sm text-sm"
-      >
-        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-          <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"></path>
-        </svg>
-        Facebook Event &rarr;
-      </a>
+    <div class="w-full md:w-auto flex-shrink-0 flex flex-col sm:flex-row md:flex-col items-stretch md:items-end gap-2 text-center md:text-right pt-2 md:pt-0 border-t md:border-t-0 border-[#252525]">
+      {
+        isCanceled ? (
+          <span class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-red-950/40 border border-red-900/60 text-red-400 text-xs font-mono font-medium rounded">
+            Match Canceled
+          </span>
+        ) : (
+          <>
+            <span class="inline-flex items-center justify-center gap-1.5 px-3 py-1 bg-[#1F1F1F] border border-[#333] text-gray-300 text-xs font-mono font-medium rounded tracking-wide">
+              🎟️ Tickets at the Door
+            </span>
+            <a
+              href={bout.data.facebookEventUrl || bout.data.ticketLink || siteConfig.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-1.5 px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider rounded border border-[#9E1F3D] transition-colors shadow-sm text-sm font-semibold"
+            >
+              Details &rarr;
+            </a>
+          </>
+        )
+      }
     </div>
   </div>
 
   {
     bout.body && (
-      <div class="bg-[#141414] px-6 py-3 border-t border-[#252525] text-xs text-gray-400 leading-relaxed">
-        <strong class="text-gray-300">Details:</strong> {bout.body}
+      <div class="bg-[#141414] px-6 py-2.5 border-t border-[#252525] text-xs text-gray-400 leading-relaxed">
+        {bout.body}
       </div>
     )
   }

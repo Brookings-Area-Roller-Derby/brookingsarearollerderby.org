@@ -1,12 +1,13 @@
 ---
-title: 'BARD vs North Star Orbitals'
-date: 2026-06-20
-opponent: 'North Star Roller Derby Orbitals'
-location: 'Lee & Rose Warner Coliseum, St. Paul, MN'
-homeOrAway: 'away'
-facebookEventUrl: 'https://www.facebook.com/midwestmaidens'
-time: 'Doors 5:30 PM | Whistle 6:30 PM'
+title: 'BARD Midwest Mayhem vs North Star Orbitals'
+date: 2026-09-26
+opponent: 'North Star Orbitals'
+location: 'Brookings County Outdoor Adventure Center, Brookings, SD'
+homeOrAway: 'home'
+facebookEventUrl: 'https://www.facebook.com/events/1587754242289887/'
+time: 'Doors 5:00 PM | Action 6:00 PM'
 highlight: false
 ---
 
-Traveling road bout against Twin Cities powerhouse North Star Orbitals. Live stream links will be shared on our Facebook page.
+BARD welcomes Twin Cities competitors the North Star Orbitals to Brookings for Midwest Mayhem! Join us at the Brookings County Outdoor Adventure Center for fast-paced, hard-hitting flat track roller derby. Tickets available at the door!
+
