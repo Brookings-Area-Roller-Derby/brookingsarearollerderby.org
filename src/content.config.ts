@@ -8,9 +8,16 @@ const roster = defineCollection({
   schema: ({ image }) =>
     z.object({
       derbyName: z.string(),
-      number: z.string().optional(),
-      positions: z.array(z.enum(['Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat'])),
+      realName: z.string().optional(),
+      number: z
+        .union([z.string(), z.number()])
+        .transform((v) => String(v))
+        .optional(),
+      positions: z.array(
+        z.enum(['Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat']),
+      ),
       photo: z.union([image(), z.string()]).optional(),
+      photoUrl: z.string().optional(),
       active: z.boolean().default(true),
     }),
 });

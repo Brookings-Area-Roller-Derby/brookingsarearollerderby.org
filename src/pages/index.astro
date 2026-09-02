@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 import logoImage from '../assets/logo.jpg';
 import { siteConfig } from '../config/site';
 
-const bouts = await getCollection('bouts');
+const bouts = await getCollection('bouts', ({ data }) => !data.canceled);
 const countdownEvents = bouts.map((bout) => ({
   title: bout.data.title,
   date: bout.data.date.toISOString(),
@@ -134,11 +134,10 @@ const countdownEvents = bouts.map((bout) => ({
               </svg>
             </div>
             <h3 class="font-heading text-2xl text-white uppercase tracking-wider mb-2">
-              Adult Derby &amp; Youth Referrals
+              Adult Derby &amp; Junior Bouts
             </h3>
             <p class="text-gray-400 text-sm leading-relaxed mb-6">
-              We operate competitive full-contact adult squads and connect youth skaters with SoDAK
-              Attack junior roller derby in Sioux Falls.
+              We operate competitive full-contact adult squads, and BARD proudly hosts and supports SoDAK Attack junior bouts at home games.
             </p>
           </div>
           <a

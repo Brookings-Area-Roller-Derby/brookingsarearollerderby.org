@@ -25,6 +25,21 @@ const formatDate = (value: string) =>
     day: 'numeric',
     year: 'numeric',
   }).format(new Date(value));
+
+const now = Date.now();
+const target = initialEvent ? new Date(initialEvent.date).getTime() : now;
+const initialDiff = Math.max(0, target - now);
+const initialDays = Math.floor(initialDiff / 86_400_000);
+const initialHours = Math.floor((initialDiff % 86_400_000) / 3_600_000);
+const initialMinutes = Math.floor((initialDiff % 3_600_000) / 60_000);
+const initialSeconds = Math.floor((initialDiff % 60_000) / 1_000);
+
+const initialValues: Record<string, string> = {
+  days: String(initialDays).padStart(2, '0'),
+  hours: String(initialHours).padStart(2, '0'),
+  minutes: String(initialMinutes).padStart(2, '0'),
+  seconds: String(initialSeconds).padStart(2, '0'),
+};
 ---
 
 <section
@@ -78,7 +93,7 @@ const formatDate = (value: string) =>
                 id={`countdown-${unit}`}
                 class={`font-heading text-4xl sm:text-5xl block leading-none ${unit === 'seconds' ? 'text-red-500' : 'text-white'}`}
               >
-                00
+                {initialValues[unit] ?? '00'}
               </span>
               <span class="text-[10px] font-sans text-gray-400 uppercase tracking-widest font-medium">
                 {label}
