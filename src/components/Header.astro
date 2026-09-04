@@ -11,7 +11,6 @@ const navLinks = [
   { href: '/roster', label: 'Roster' },
   { href: '/sponsors', label: 'Sponsors' },
   { href: '/join', label: 'Join / Fresh Meat' },
-  { href: siteConfig.merchUrl, label: 'Merch', external: true },
 ];
 ---
 
@@ -50,8 +49,6 @@ const navLinks = [
             return (
               <a
                 href={link.href}
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noopener noreferrer' : undefined}
                 class={`px-3.5 py-2 font-heading text-lg tracking-wider uppercase rounded-md transition-colors ${
                   isActive
                     ? 'text-white bg-[#541221] font-bold'
@@ -65,14 +62,109 @@ const navLinks = [
           })
         }
 
-        <a
-          href={siteConfig.donationUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="ml-3 px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading text-lg uppercase tracking-wider rounded-md border border-[#9E1F3D] transition-colors shadow-sm inline-flex items-center gap-1.5"
-        >
-          Donate
-        </a>
+        <!-- Donate Dropdown -->
+        <div class="relative ml-2" id="donate-dropdown-container">
+          <button
+            id="donate-menu-btn"
+            type="button"
+            class="px-4 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading text-lg uppercase tracking-wider rounded-md border border-[#9E1F3D] transition-colors shadow-sm inline-flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E5A93C] cursor-pointer"
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-controls="donate-dropdown-menu"
+          >
+            <span>Donate</span>
+            <svg
+              id="donate-dropdown-chevron"
+              class="w-4 h-4 transition-transform duration-200"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+
+          <!-- Dropdown Card -->
+          <div
+            id="donate-dropdown-menu"
+            class="hidden absolute right-0 mt-2 w-80 bg-[#161616] border border-[#3A141D] rounded-xl shadow-2xl p-2.5 z-50 transition-all duration-150 backdrop-blur-md"
+            role="menu"
+            aria-labelledby="donate-menu-btn"
+          >
+            <div class="px-3 py-2 border-b border-[#262626] mb-1.5">
+              <span class="font-heading text-xs uppercase tracking-widest text-[#E5A93C]">Ways to Support BARD</span>
+              <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">
+                Every contribution directly funds our skater-owned 501(c)(3) league!
+              </p>
+            </div>
+
+            <!-- Venmo Charity -->
+            <a
+              href={siteConfig.donationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              role="menuitem"
+              class="group/item flex items-start gap-3 p-2.5 rounded-lg hover:bg-[#222222] transition-colors"
+            >
+              <div
+                class="w-9 h-9 rounded-lg bg-[#008CFF]/15 border border-[#008CFF]/30 flex items-center justify-center text-[#008CFF] shrink-0 mt-0.5 group-hover/item:bg-[#008CFF]/25 transition-colors"
+                aria-hidden="true"
+              >
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.5 4c.6 1 .9 2.2.9 3.5 0 4.4-3.8 10.1-6.9 14.2H8.3L5.4 4.5l5.2-.5 1.7 12.3c1.7-2.7 3.5-6.8 3.5-9.6 0-1.5-.3-2.4-.7-3.1L19.5 4z" />
+                </svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="font-heading text-base text-white group-hover/item:text-[#E5A93C] transition-colors uppercase tracking-wide">
+                    Venmo Charity
+                  </span>
+                  <span class="text-[10px] font-sans font-semibold uppercase px-1.5 py-0.5 bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 rounded">
+                    501(c)(3)
+                  </span>
+                </div>
+                <p class="text-xs text-gray-300 mt-0.5 leading-snug">
+                  Direct tax-deductible cash donation. Zero platform fees for 501(c)(3) charities.
+                </p>
+              </div>
+            </a>
+
+            <!-- Merch Store -->
+            <a
+              href={siteConfig.merchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              role="menuitem"
+              class="group/item flex items-start gap-3 p-2.5 rounded-lg hover:bg-[#222222] transition-colors mt-1"
+            >
+              <div
+                class="w-9 h-9 rounded-lg bg-[#E5A93C]/15 border border-[#E5A93C]/30 flex items-center justify-center text-[#E5A93C] shrink-0 mt-0.5 group-hover/item:bg-[#E5A93C]/25 transition-colors"
+                aria-hidden="true"
+              >
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="font-heading text-base text-white group-hover/item:text-[#E5A93C] transition-colors uppercase tracking-wide">
+                    Merch (Bonfire)
+                  </span>
+                  <span class="text-[10px] font-sans font-semibold uppercase px-1.5 py-0.5 bg-[#541221] text-[#E5A93C] border border-[#9E1F3D]/60 rounded">
+                    Valid Donation
+                  </span>
+                </div>
+                <p class="text-xs text-gray-300 mt-0.5 leading-snug">
+                  100% of campaign profits go to BARD, plus you can add an optional direct donation at checkout!
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
       </nav>
 
       <!-- Mobile Menu Button -->
@@ -108,8 +200,6 @@ const navLinks = [
         return (
           <a
             href={link.href}
-            target={link.external ? '_blank' : undefined}
-            rel={link.external ? 'noopener noreferrer' : undefined}
             class={`block px-3 py-2.5 rounded font-heading text-xl uppercase tracking-wider ${
               isActive
                 ? 'bg-[#541221] text-white'
@@ -122,47 +212,155 @@ const navLinks = [
         );
       })
     }
-    <a
-      href={siteConfig.donationUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="block mt-4 text-center py-3 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading text-xl uppercase tracking-wider rounded"
-    >
-      Donate to BARD
-    </a>
+
+    <!-- Mobile Support Section -->
+    <div class="mt-4 pt-3 border-t border-[#2A2A2A] space-y-2">
+      <div class="px-2 flex items-center justify-between">
+        <span class="font-heading text-base uppercase tracking-widest text-[#E5A93C]">Donate & Support BARD</span>
+        <span class="text-[10px] font-sans font-semibold uppercase px-2 py-0.5 bg-[#252525] text-gray-300 rounded border border-[#3A3A3A]">501(c)(3)</span>
+      </div>
+
+      <!-- Venmo Charity (Mobile) -->
+      <a
+        href={siteConfig.donationUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-start gap-3 p-3 bg-[#202020] hover:bg-[#282828] border border-[#333] rounded-lg transition-colors"
+      >
+        <div class="w-9 h-9 rounded-lg bg-[#008CFF]/20 border border-[#008CFF]/40 flex items-center justify-center text-[#008CFF] shrink-0 mt-0.5">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.5 4c.6 1 .9 2.2.9 3.5 0 4.4-3.8 10.1-6.9 14.2H8.3L5.4 4.5l5.2-.5 1.7 12.3c1.7-2.7 3.5-6.8 3.5-9.6 0-1.5-.3-2.4-.7-3.1L19.5 4z"/>
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-heading text-lg text-white uppercase tracking-wide">Venmo Charity</span>
+            <span class="text-[10px] font-sans font-semibold uppercase px-1.5 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-800/50 rounded">Direct</span>
+          </div>
+          <p class="text-xs text-gray-300 mt-0.5">Direct tax-deductible contribution to our non-profit.</p>
+        </div>
+      </a>
+
+      <!-- Official Merch (Mobile) -->
+      <a
+        href={siteConfig.merchUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-start gap-3 p-3 bg-[#202020] hover:bg-[#282828] border border-[#333] rounded-lg transition-colors"
+      >
+        <div class="w-9 h-9 rounded-lg bg-[#E5A93C]/20 border border-[#E5A93C]/40 flex items-center justify-center text-[#E5A93C] shrink-0 mt-0.5">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-heading text-lg text-white uppercase tracking-wide">Merch (Bonfire)</span>
+            <span class="text-[10px] font-sans font-semibold uppercase px-1.5 py-0.5 bg-[#541221] text-[#E5A93C] border border-[#9E1F3D]/50 rounded">Valid Donation</span>
+          </div>
+          <p class="text-xs text-gray-300 mt-0.5">100% of campaign profits fund BARD, plus you can add an extra donation at checkout!</p>
+        </div>
+      </a>
+    </div>
   </div>
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
+  // Mobile menu toggle
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
   const header = document.querySelector('[data-site-header]');
 
-  if (btn && menu) {
-    const setOpen = (isOpen: boolean) => {
-      menu.classList.toggle('hidden', !isOpen);
-      btn.setAttribute('aria-expanded', String(isOpen));
+  if (mobileBtn && mobileMenu) {
+    const setMobileOpen = (isOpen: boolean) => {
+      mobileMenu.classList.toggle('hidden', !isOpen);
+      mobileBtn.setAttribute('aria-expanded', String(isOpen));
     };
 
-    btn.addEventListener('click', () => {
-      setOpen(btn.getAttribute('aria-expanded') !== 'true');
+    mobileBtn.addEventListener('click', () => {
+      setMobileOpen(mobileBtn.getAttribute('aria-expanded') !== 'true');
     });
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
-        setOpen(false);
-        btn.focus();
+      if (event.key === 'Escape' && mobileBtn.getAttribute('aria-expanded') === 'true') {
+        setMobileOpen(false);
+        mobileBtn.focus();
       }
     });
 
     document.addEventListener('click', (event) => {
       if (
-        btn.getAttribute('aria-expanded') === 'true' &&
+        mobileBtn.getAttribute('aria-expanded') === 'true' &&
         event.target instanceof Node &&
         header &&
         !header.contains(event.target)
       ) {
-        setOpen(false);
+        setMobileOpen(false);
+      }
+    });
+  }
+
+  // Desktop Donate dropdown
+  const donateContainer = document.getElementById('donate-dropdown-container');
+  const donateBtn = document.getElementById('donate-menu-btn');
+  const donateMenu = document.getElementById('donate-dropdown-menu');
+  const donateChevron = document.getElementById('donate-dropdown-chevron');
+
+  if (donateContainer && donateBtn && donateMenu) {
+    let closeTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const setDonateOpen = (isOpen: boolean) => {
+      donateMenu.classList.toggle('hidden', !isOpen);
+      donateBtn.setAttribute('aria-expanded', String(isOpen));
+      if (donateChevron) {
+        donateChevron.classList.toggle('rotate-180', isOpen);
+      }
+    };
+
+    // Toggle on button click
+    donateBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isCurrentlyOpen = donateBtn.getAttribute('aria-expanded') === 'true';
+      setDonateOpen(!isCurrentlyOpen);
+    });
+
+    // Hover interactions with grace period
+    donateContainer.addEventListener('mouseenter', () => {
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      setDonateOpen(true);
+    });
+
+    donateContainer.addEventListener('mouseleave', () => {
+      closeTimer = setTimeout(() => {
+        setDonateOpen(false);
+      }, 200);
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (e.target instanceof Node && !donateContainer.contains(e.target)) {
+        setDonateOpen(false);
+      }
+    });
+
+    // Keyboard support: Escape closes and refocuses button
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && donateBtn.getAttribute('aria-expanded') === 'true') {
+        setDonateOpen(false);
+        donateBtn.focus();
+      }
+    });
+
+    // Focusout handling (when tabbing away)
+    donateContainer.addEventListener('focusout', (e) => {
+      if (
+        e.relatedTarget instanceof Node &&
+        !donateContainer.contains(e.relatedTarget)
+      ) {
+        setDonateOpen(false);
       }
     });
   }
