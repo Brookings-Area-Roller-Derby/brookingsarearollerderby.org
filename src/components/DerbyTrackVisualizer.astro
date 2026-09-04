@@ -1,0 +1,1039 @@
+---
+// src/components/DerbyTrackVisualizer.astro
+---
+
+<div
+  class="w-full bg-[#161616] border border-[#2B2B2B] rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden"
+  id="derby-visualizer-container"
+>
+  <!-- Background Glow & Grid Accents -->
+  <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#541221]/30 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#E5A93C]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Component Header -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#282828] relative z-10">
+    <div>
+      <div class="flex items-center gap-2 mb-1">
+        <span class="px-2.5 py-0.5 rounded-full bg-[#541221] text-red-300 font-mono text-xs uppercase font-bold tracking-wider border border-[#7A1A30]">
+          Interactive Simulator
+        </span>
+        <span class="text-xs text-gray-400 font-mono">WFTDA Regulation Flat Track</span>
+      </div>
+      <h3 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+        Roller Derby Track Simulator
+      </h3>
+      <p class="text-xs sm:text-sm text-gray-400">
+        Step through a typical 2-minute jam to see how the pack works, who scores, and how jams are called off.
+      </p>
+    </div>
+  </div>
+
+  <!-- Step Navigation Pills -->
+  <div class="py-4 border-b border-[#252525] relative z-10" role="tablist" aria-label="Roller derby game phases">
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="vis-step-pills">
+      <button
+        type="button"
+        role="tab"
+        aria-selected="true"
+        data-step="1"
+        class="step-pill active px-3 py-2.5 rounded-lg text-left transition-all border border-[#541221] bg-[#541221]/30 text-white"
+      >
+        <span class="text-[10px] font-mono text-[#E5A93C] block uppercase font-bold">Step 1</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block">1. The Pack</span>
+      </button>
+
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-step="2"
+        class="step-pill px-3 py-2.5 rounded-lg text-left transition-all border border-[#2A2A2A] bg-[#1B1B1B] text-gray-400 hover:text-gray-200 hover:border-[#383838]"
+      >
+        <span class="text-[10px] font-mono text-gray-500 block uppercase font-bold">Step 2</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block">2. The Breakout</span>
+      </button>
+
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-step="3"
+        class="step-pill px-3 py-2.5 rounded-lg text-left transition-all border border-[#2A2A2A] bg-[#1B1B1B] text-gray-400 hover:text-gray-200 hover:border-[#383838]"
+      >
+        <span class="text-[10px] font-mono text-gray-500 block uppercase font-bold">Step 3</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block">3. Lead Jammer</span>
+      </button>
+
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-step="4"
+        class="step-pill px-3 py-2.5 rounded-lg text-left transition-all border border-[#2A2A2A] bg-[#1B1B1B] text-gray-400 hover:text-gray-200 hover:border-[#383838]"
+      >
+        <span class="text-[10px] font-mono text-gray-500 block uppercase font-bold">Step 4</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block">4. Both Teams Score</span>
+      </button>
+
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-step="5"
+        class="step-pill col-span-2 sm:col-span-1 px-3 py-2.5 rounded-lg text-left transition-all border border-[#2A2A2A] bg-[#1B1B1B] text-gray-400 hover:text-gray-200 hover:border-[#383838]"
+      >
+        <span class="text-[10px] font-mono text-gray-500 block uppercase font-bold">Step 5</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block">5. The Call-Off</span>
+      </button>
+    </div>
+
+    <!-- Auto-Play Progress Bar -->
+    <div class="w-full bg-[#202020] h-1 rounded-full mt-3 overflow-hidden">
+      <div id="vis-progress-bar" class="h-full bg-gradient-to-r from-[#541221] to-[#E5A93C] w-1/5 transition-all duration-300"></div>
+    </div>
+  </div>
+
+  <!-- Visual Track Canvas Section -->
+  <div class="relative mt-4 bg-[#0D0D0D] rounded-xl border border-[#222] p-2 sm:p-4 overflow-hidden">
+    <!-- Live Match Status HUD Bar -->
+    <div class="flex items-center justify-between px-3 py-2 bg-[#141414] border border-[#282828] rounded-lg mb-3 text-xs font-mono">
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
+          <span class="text-gray-300 font-bold uppercase tracking-wider">Jam Clock:</span>
+          <span id="vis-hud-clock" class="text-[#E5A93C] font-bold">0:00 / 2:00</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-1.5 text-gray-400">
+          <span>Direction:</span>
+          <span class="text-white font-bold inline-flex items-center gap-1">
+            Counter-Clockwise ↺
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded-full bg-[#7A1A30] border border-[#E5A93C]"></span>
+          <span class="text-white font-semibold">BARD:</span>
+          <span id="vis-bard-score" class="text-white font-bold">0</span>
+        </div>
+        <span class="text-gray-600">vs</span>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded-full bg-[#0284C7] border border-white"></span>
+          <span class="text-white font-semibold">AWAY:</span>
+          <span id="vis-away-score" class="text-white font-bold">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SVG Track Arena -->
+    <div class="w-full relative aspect-[16/9] sm:aspect-[2/1] max-h-[460px]">
+      <svg
+        id="derby-svg-track"
+        viewBox="0 0 900 480"
+        class="w-full h-full select-none"
+        role="img"
+        aria-label="Illustration of a flat track roller derby oval with skater positions"
+      >
+        <defs>
+          <!-- Track Floor Texture Gradient -->
+          <radialGradient id="infieldGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#141416" />
+            <stop offset="100%" stop-color="#0E0E10" />
+          </radialGradient>
+
+          <linearGradient id="trackFloorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#232328" />
+            <stop offset="50%" stop-color="#1E1E23" />
+            <stop offset="100%" stop-color="#222227" />
+          </linearGradient>
+
+          <!-- Glow Filter for Lead Jammer -->
+          <filter id="leadGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          <!-- Shadow Filter for Skaters -->
+          <filter id="skaterShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.7" />
+          </filter>
+        </defs>
+
+        <!-- Outer Infield Floor -->
+        <rect width="900" height="480" fill="#0C0C0E" rx="14" />
+
+        <!-- Track Lane Surface -->
+        <path
+          d="M 260 45 L 640 45 A 195 195 0 0 1 640 435 L 260 435 A 195 195 0 0 1 260 45 Z"
+          fill="url(#trackFloorGrad)"
+          stroke="#38383F"
+          stroke-width="3"
+        />
+
+        <!-- Infield (Center Area of Track) -->
+        <path
+          d="M 260 135 L 640 135 A 105 105 0 0 1 640 345 L 260 345 A 105 105 0 0 1 260 135 Z"
+          fill="url(#infieldGrad)"
+          stroke="#38383F"
+          stroke-width="3"
+        />
+
+        <!-- Track Centerline Guide Dash (Counter-Clockwise: Bottom-Left -> Bottom-Right -> Right Turn UP -> Top-Right -> Top-Left -> Left Turn DOWN) -->
+        <path
+          id="trackGuidePath"
+          d="M 260 390 L 640 390 A 150 150 0 0 0 640 90 L 260 90 A 150 150 0 0 0 260 390 Z"
+          fill="none"
+          stroke="#2F2F36"
+          stroke-width="1.5"
+          stroke-dasharray="6 8"
+        />
+
+        <!-- Infield Label & Watermark -->
+        <g opacity="0.15" transform="translate(450, 240)">
+          <circle r="60" fill="none" stroke="#E5A93C" stroke-width="2" stroke-dasharray="4 6" />
+          <text text-anchor="middle" y="-10" font-family="'Bebas Neue', sans-serif" font-size="34" fill="#FFFFFF" letter-spacing="4">
+            BARD INFIELD
+          </text>
+          <text text-anchor="middle" y="20" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" fill="#E5A93C" letter-spacing="2">
+            OFFICIALS &amp; PENALTY BOX
+          </text>
+        </g>
+
+        <!-- Direction Indicators (Counter-Clockwise Arrows: Bottom moves Right, Right moves Up, Top moves Left, Left moves Down) -->
+        <g stroke="#E5A93C" stroke-width="2" fill="none" opacity="0.4">
+          <!-- Bottom straight: Left to Right -->
+          <path d="M 440 390 L 480 390 M 465 383 L 480 390 L 465 397" />
+          <!-- Right turn: Down to Up -->
+          <path d="M 790 260 L 790 220 M 783 235 L 790 220 L 797 235" />
+          <!-- Top straight: Right to Left -->
+          <path d="M 470 90 L 430 90 M 445 83 L 430 90 L 445 97" />
+          <!-- Left turn: Up to Down -->
+          <path d="M 110 220 L 110 260 M 103 245 L 110 260 L 117 245" />
+        </g>
+
+        <!-- Jammer Line (Rear of Pack Start) at x=340 on bottom straightaway (Left-to-Right counter-clockwise flow) -->
+        <g id="track-jammer-line">
+          <line x1="340" y1="345" x2="340" y2="435" stroke="#E5A93C" stroke-width="3.5" stroke-dasharray="8 4" />
+          <text x="340" y="455" text-anchor="middle" fill="#E5A93C" font-family="'Inter', sans-serif" font-size="10" font-weight="700" letter-spacing="1">
+            JAMMER LINE
+          </text>
+        </g>
+
+        <!-- Pivot Line (Front of Pack Start) at x=560 on bottom straightaway -->
+        <g id="track-pivot-line">
+          <line x1="560" y1="345" x2="560" y2="435" stroke="#FFFFFF" stroke-width="3.5" />
+          <text x="560" y="455" text-anchor="middle" fill="#A0A0A0" font-family="'Inter', sans-serif" font-size="10" font-weight="700" letter-spacing="1">
+            PIVOT LINE
+          </text>
+        </g>
+
+        <!-- Dynamic Visual Annotations (Pack Zone between x=350 and 550) -->
+        <g id="vis-pack-bracket" class="transition-opacity duration-500" opacity="1">
+          <rect x="350" y="347" width="200" height="86" rx="8" fill="#E5A93C" fill-opacity="0.08" stroke="#E5A93C" stroke-width="1.5" stroke-dasharray="4 4" />
+          <text x="450" y="337" text-anchor="middle" fill="#E5A93C" font-family="'Bebas Neue', sans-serif" font-size="15" letter-spacing="1.5">
+            ★ THE PACK ZONE (All 8 Blockers) ★
+          </text>
+        </g>
+
+        <!-- Whistle Announcement Visual Bubble -->
+        <g id="vis-whistle-bubble" class="transition-all duration-300" opacity="0" transform="translate(450, 40) scale(0.9)">
+          <rect id="vis-whistle-bg" x="-130" y="-18" width="260" height="36" rx="18" fill="#541221" stroke="#9E1F3D" stroke-width="2" />
+          <text id="vis-whistle-text" text-anchor="middle" y="5" fill="#FFFFFF" font-family="'Bebas Neue', sans-serif" font-size="16" letter-spacing="1">
+            📢 TWEEEEET! (Jam Starts)
+          </text>
+        </g>
+
+        <!-- Score Popups (+1, +2, +3, +4) -->
+        <g id="vis-score-popups" class="pointer-events-none"></g>
+
+        <!-- Skaters Layer (Clean, non-hoverable tokens) -->
+        <g id="vis-skaters-layer" class="pointer-events-none">
+          <!-- BARD TEAM (Maroon #7A1A30, Accent Gold/White) -->
+          <g id="skater-bard-jammer" filter="url(#skaterShadow)">
+            <circle id="halo-bard-jammer" r="24" fill="#E5A93C" opacity="0" class="transition-opacity duration-300" filter="url(#leadGlow)" />
+            <circle r="15" fill="#7A1A30" stroke="#E5A93C" stroke-width="2.5" />
+            <polygon points="0,-9 2.7,-2.7 9.4,-2.7 4,1.8 6.1,8.1 0,4.2 -6.1,8.1 -4,1.8 -9.4,-2.7 -2.7,-2.7" fill="#FFFFFF" />
+            <text y="26" text-anchor="middle" fill="#FFFFFF" font-size="9" font-family="'Inter', sans-serif" font-weight="bold">BARD ⭐</text>
+          </g>
+
+          <g id="skater-bard-pivot" filter="url(#skaterShadow)">
+            <circle r="14" fill="#7A1A30" stroke="#FFFFFF" stroke-width="2" />
+            <rect x="-2.5" y="-10" width="5" height="20" rx="1.5" fill="#FFFFFF" />
+            <text y="24" text-anchor="middle" fill="#D1D5DB" font-size="8" font-family="'Inter', sans-serif">Pivot</text>
+          </g>
+
+          <g id="skater-bard-b1" filter="url(#skaterShadow)">
+            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2" />
+            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">B1</text>
+          </g>
+
+          <g id="skater-bard-b2" filter="url(#skaterShadow)">
+            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2" />
+            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">B2</text>
+          </g>
+
+          <g id="skater-bard-b3" filter="url(#skaterShadow)">
+            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2" />
+            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">B3</text>
+          </g>
+
+          <!-- AWAY TEAM (Teal #0284C7, Accent White) -->
+          <g id="skater-away-jammer" filter="url(#skaterShadow)">
+            <circle id="halo-away-jammer" r="24" fill="#38BDF8" opacity="0" class="transition-opacity duration-300" filter="url(#leadGlow)" />
+            <circle r="15" fill="#0284C7" stroke="#FFFFFF" stroke-width="2.5" />
+            <polygon points="0,-9 2.7,-2.7 9.4,-2.7 4,1.8 6.1,8.1 0,4.2 -6.1,8.1 -4,1.8 -9.4,-2.7 -2.7,-2.7" fill="#FFFFFF" />
+            <text y="26" text-anchor="middle" fill="#FFFFFF" font-size="9" font-family="'Inter', sans-serif" font-weight="bold">AWAY ⭐</text>
+          </g>
+
+          <g id="skater-away-pivot" filter="url(#skaterShadow)">
+            <circle r="14" fill="#0284C7" stroke="#FFFFFF" stroke-width="2" />
+            <rect x="-2.5" y="-10" width="5" height="20" rx="1.5" fill="#FFFFFF" />
+            <text y="24" text-anchor="middle" fill="#D1D5DB" font-size="8" font-family="'Inter', sans-serif">Pivot</text>
+          </g>
+
+          <g id="skater-away-b1" filter="url(#skaterShadow)">
+            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2" />
+            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">A1</text>
+          </g>
+
+          <g id="skater-away-b2" filter="url(#skaterShadow)">
+            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2" />
+            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">A2</text>
+          </g>
+
+          <g id="skater-away-b3" filter="url(#skaterShadow)">
+            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2" />
+            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">A3</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Live Legend -->
+    <div class="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-400 pt-2 border-t border-[#1F1F1F]">
+      <div class="flex flex-wrap items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 text-gray-300">
+          <span class="w-4 h-4 rounded-full bg-[#7A1A30] border border-[#E5A93C] flex items-center justify-center text-[9px] text-white">⭐</span>
+          Jammer (Scorer)
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-gray-300">
+          <span class="w-4 h-4 rounded-full bg-[#7A1A30] border border-white flex items-center justify-center text-[9px] text-white font-bold">▌</span>
+          Pivot (Pace &amp; Star Pass)
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-gray-300">
+          <span class="w-4 h-4 rounded-full bg-[#7A1A30] border border-[#9E1F3D]"></span>
+          Blocker (Defense &amp; Offense)
+        </span>
+      </div>
+
+      <div class="text-[11px] text-gray-400 font-mono">
+        ↺ Counter-clockwise skating direction
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Step Explanation Card -->
+  <div class="mt-6 bg-[#1A1A1A] border-2 border-[#541221] rounded-xl p-5 sm:p-6 transition-all duration-300 relative">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div class="lg:col-span-8 space-y-3">
+        <div class="flex items-center gap-2">
+          <span id="vis-card-badge" class="px-2.5 py-0.5 bg-[#541221] text-red-200 font-mono text-xs uppercase font-bold rounded">
+            Step 1 of 5
+          </span>
+          <h4 id="vis-card-title" class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+            The Pack &amp; The Starting Lineup
+          </h4>
+        </div>
+
+        <p id="vis-card-description" class="text-gray-300 text-sm sm:text-base leading-relaxed">
+          Unlike most sports, roller derby has no ball or puck! Both teams share the track simultaneously.
+          The 4 blockers from each team line up between the Pivot Line and the Jammer Line to form <strong>The Pack</strong>.
+          The two <strong>Jammers</strong> (wearing the star covers) line up 30 feet behind the pack.
+        </p>
+
+        <div class="p-3.5 bg-[#121212] border-l-4 border-[#E5A93C] rounded-r-lg">
+          <strong class="text-white text-xs sm:text-sm uppercase tracking-wider block mb-0.5">
+            👀 What Spectators Should Watch For:
+          </strong>
+          <span id="vis-card-spectator-tip" class="text-xs sm:text-sm text-gray-300">
+            Notice how blockers from opposing teams stand right next to each other. Their goal is to stay together as a defined pack while positioning themselves to help their own jammer and trap the opponent.
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick Concept Stats Box -->
+      <div class="lg:col-span-4 bg-[#141414] border border-[#2D2D2D] p-4 rounded-xl space-y-3">
+        <h5 class="text-xs font-mono uppercase tracking-widest text-[#E5A93C] font-bold">
+          Key Rule Takeaway
+        </h5>
+        <div id="vis-card-takeaway" class="text-xs sm:text-sm text-gray-200 space-y-2">
+          <p class="flex items-start gap-2">
+            <span class="text-red-400 font-bold">✔</span>
+            <span><strong>Pack Definition:</strong> Largest group of in-bounds blockers skating within 10 feet of each other.</span>
+          </p>
+          <p class="flex items-start gap-2">
+            <span class="text-red-400 font-bold">✔</span>
+            <span><strong>Skater Count:</strong> 5 skaters per team on the track (1 Jammer + 4 Blockers).</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Playback Navigation Controls Bar inside explanation card -->
+    <div class="mt-5 pt-4 border-t border-[#2A2A2A] flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
+        <span class="w-2 h-2 rounded-full bg-[#E5A93C] animate-pulse"></span>
+        <span class="text-gray-300 font-semibold uppercase tracking-wider">Jam Walkthrough</span>
+        <span class="text-gray-600 hidden sm:inline">•</span>
+        <span class="hidden sm:inline">Click Next or Auto-Play to advance the action</span>
+      </div>
+
+      <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+        <button
+          id="vis-prev-btn"
+          type="button"
+          class="px-4 py-2.5 bg-[#222] hover:bg-[#2F2F2F] text-gray-200 hover:text-white rounded-lg border border-[#3A3A3A] transition-colors text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-[#E5A93C]"
+          aria-label="Previous step"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          <span>Prev</span>
+        </button>
+
+        <button
+          id="vis-play-toggle"
+          type="button"
+          class="px-5 py-2.5 bg-[#541221] hover:bg-[#7A1A30] text-white rounded-lg border border-[#9E1F3D] transition-colors text-xs font-heading tracking-wider uppercase flex items-center gap-2 shadow-md focus-visible:outline-2 focus-visible:outline-[#E5A93C]"
+          aria-label="Toggle auto-play animation"
+        >
+          <svg id="vis-play-icon" class="w-4 h-4 text-[#E5A93C]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg id="vis-pause-icon" class="w-4 h-4 hidden text-[#E5A93C]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+          <span id="vis-play-text">Auto-Play</span>
+        </button>
+
+        <button
+          id="vis-next-btn"
+          type="button"
+          class="px-4 py-2.5 bg-[#222] hover:bg-[#2F2F2F] text-gray-200 hover:text-white rounded-lg border border-[#3A3A3A] transition-colors text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-[#E5A93C]"
+          aria-label="Next step"
+        >
+          <span>Next</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  interface SkaterTrackState {
+    dist: number; // distance in px along the track centerline path
+    lane: number; // offset in px from centerline (-20 outside, +20 inside towards infield)
+  }
+
+  type SkaterKey =
+    | 'bardJammer'
+    | 'bardPivot'
+    | 'bardB1'
+    | 'bardB2'
+    | 'bardB3'
+    | 'awayJammer'
+    | 'awayPivot'
+    | 'awayB1'
+    | 'awayB2'
+    | 'awayB3';
+
+  interface StepConfig {
+    step: number;
+    clock: string;
+    bardScore: number;
+    awayScore: number;
+    title: string;
+    badge: string;
+    description: string;
+    spectatorTip: string;
+    takeawayHtml: string;
+    whistleText: string;
+    showWhistle: boolean;
+    showPackBracket: boolean;
+    showLeadHalo: 'none' | 'bard' | 'away';
+    scoresToShow: Array<{ dist: number; lane: number; text: string; team?: 'bard' | 'away' }>;
+    positions: Record<SkaterKey, SkaterTrackState>;
+  }
+
+  // Base positions defined in track distances (0 to totalLength, counter-clockwise)
+  // Landmarks along ~1702px path:
+  // s=0: (260, 390) bottom straight start (moves left to right)
+  // s=80: Jammer Line (x=340, y=390)
+  // s=300: Pivot Line (x=560, y=390)
+  // s=380: Turn 1 start (x=640, y=390) -> Right Turn curves UP
+  // s=615: Turn 1/2 apex (x=790, y=240)
+  // s=851: Top straight start (x=640, y=90) -> Top moves RIGHT TO LEFT
+  // s=1231: Turn 3/4 start (x=260, y=90) -> Left Turn curves DOWN
+  // s=1467: Turn 3/4 apex (x=110, y=240)
+  // s=1702: Back to start
+  const stepsConfig: StepConfig[] = [
+    {
+      step: 1,
+      clock: '0:00 / 2:00',
+      bardScore: 0,
+      awayScore: 0,
+      title: 'The Starting Lineup & The Pack',
+      badge: 'Step 1 of 5',
+      description:
+        'Roller derby has no ball or puck! Both teams share the track simultaneously. The 4 blockers from each team line up between the Pivot Line and the Jammer Line to form <strong>The Pack</strong>. The two <strong>Jammers</strong> (wearing the star covers) line up 30 feet behind the pack.',
+      spectatorTip:
+        'Notice how blockers from opposing teams stand right next to each other. Their goal is to stay together as a defined pack while positioning themselves to help their own jammer and trap the opponent.',
+      takeawayHtml: `
+        <p class="flex items-start gap-2"><span class="text-red-400 font-bold">✔</span><span><strong>Pack Definition:</strong> Largest group of in-bounds blockers skating within 10 feet of each other.</span></p>
+        <p class="flex items-start gap-2"><span class="text-red-400 font-bold">✔</span><span><strong>Skater Count:</strong> 5 skaters per team on the track (1 Jammer + 4 Blockers).</span></p>
+      `,
+      whistleText: '',
+      showWhistle: false,
+      showPackBracket: true,
+      showLeadHalo: 'none',
+      scoresToShow: [],
+      positions: {
+        bardJammer: { dist: 40, lane: 15 },
+        bardPivot: { dist: 270, lane: 15 },
+        bardB1: { dist: 225, lane: 15 },
+        bardB2: { dist: 180, lane: 15 },
+        bardB3: { dist: 135, lane: 15 },
+        awayJammer: { dist: 40, lane: -15 },
+        awayPivot: { dist: 270, lane: -15 },
+        awayB1: { dist: 225, lane: -15 },
+        awayB2: { dist: 180, lane: -15 },
+        awayB3: { dist: 135, lane: -15 },
+      },
+    },
+    {
+      step: 2,
+      clock: '0:12 / 2:00',
+      bardScore: 0,
+      awayScore: 0,
+      title: 'The Whistle & The Breakout (Initial Pass)',
+      badge: 'Step 2 of 5',
+      description:
+        'The referee blows a single loud whistle blast! The pack of 8 blockers rolls smoothly forward as a single tight unit into the turn. Jammers charge in from behind and battle through blocker walls. <strong>Crucial Rule:</strong> The first pass through the pack scores <strong>0 points</strong>!',
+      spectatorTip:
+        'Watch the tight pack: all 8 blockers stay together within proximity while jostling for position. Blockers use their hips, shoulders, and chest (never elbows or tripping) to control the jammers.',
+      takeawayHtml: `
+        <p class="flex items-start gap-2"><span class="text-red-400 font-bold">✔</span><span><strong>Initial Pass:</strong> 0 points scored. It is purely a race to break through the pack first!</span></p>
+        <p class="flex items-start gap-2"><span class="text-red-400 font-bold">✔</span><span><strong>Unified Pack:</strong> All 8 blockers stay grouped together as one cohesive pack.</span></p>
+      `,
+      whistleText: '📢 TWEEEEET! (Jam Starts)',
+      showWhistle: true,
+      showPackBracket: false,
+      showLeadHalo: 'none',
+      scoresToShow: [],
+      positions: {
+        bardJammer: { dist: 410, lane: 2 }, // Wedging through the pack
+        bardPivot: { dist: 435, lane: 12 },
+        bardB1: { dist: 410, lane: 12 },
+        bardB2: { dist: 385, lane: 12 },
+        bardB3: { dist: 360, lane: 12 },
+        awayJammer: { dist: 380, lane: -8 }, // Trapped inside pack
+        awayPivot: { dist: 430, lane: -12 },
+        awayB1: { dist: 405, lane: -12 },
+        awayB2: { dist: 380, lane: -12 },
+        awayB3: { dist: 355, lane: -12 },
+      },
+    },
+    {
+      step: 3,
+      clock: '0:25 / 2:00',
+      bardScore: 0,
+      awayScore: 0,
+      title: 'Lead Jammer: BARD Exits Just Before Away',
+      badge: 'Step 3 of 5',
+      description:
+        'BARD Jammer bursts through the front of the pack into the turn to earn <strong>LEAD JAMMER</strong>! Just behind her, Away Jammer also fights free through the front of the pack—completing her initial breakout pass (0 points). Both jammers are now out of the pack in pursuit, while all 8 blockers remain in their tight pack formation.',
+      spectatorTip:
+        'Notice how BARD Jammer exits the pack just before the opposing jammer. That split-second lead earns BARD the coveted Lead Jammer status!',
+      takeawayHtml: `
+        <p class="flex items-start gap-2"><span class="text-[#E5A93C] font-bold">⭐</span><span><strong>Lead Jammer:</strong> BARD exits the pack first cleanly and earns jam control.</span></p>
+        <p class="flex items-start gap-2"><span class="text-[#38BDF8] font-bold">✔</span><span><strong>Breakout Complete:</strong> Away Jammer exits right behind (0 pts) on a scoring pass!</span></p>
+      `,
+      whistleText: '✌️ LEAD JAMMER SIGNALED!',
+      showWhistle: true,
+      showPackBracket: false,
+      showLeadHalo: 'bard',
+      scoresToShow: [],
+      positions: {
+        bardJammer: { dist: 630, lane: -16 }, // Ahead in Turn 1/2
+        bardPivot: { dist: 525, lane: 12 },
+        bardB1: { dist: 500, lane: 12 },
+        bardB2: { dist: 475, lane: 12 },
+        bardB3: { dist: 450, lane: 12 },
+        awayJammer: { dist: 570, lane: -14 }, // Exits pack just behind BARD!
+        awayPivot: { dist: 520, lane: -12 },
+        awayB1: { dist: 495, lane: -12 },
+        awayB2: { dist: 470, lane: -12 },
+        awayB3: { dist: 445, lane: -12 },
+      },
+    },
+    {
+      step: 4,
+      clock: '0:50 / 2:00',
+      bardScore: 4,
+      awayScore: 2,
+      title: 'The Scoring Pass: BARD +4, Away +2 (Then Blocked!)',
+      badge: 'Step 4 of 5',
+      description:
+        'Both jammers complete a full lap in pursuit! BARD Jammer stays in front, powers through the pack, and passes all 4 Away blockers to score <strong>+4 Points</strong>. Pursuing right behind, Away Jammer passes 2 BARD blockers for <strong>+2 Points</strong>—but then gets <strong>blocked and stopped dead by BARD\'s 2-blocker wall</strong>!',
+      spectatorTip:
+        'Notice how all 8 blockers stay grouped in the pack! Scoring badges appear directly beside each blocker passed: Away badges on the inside, BARD badges on the outside.',
+      takeawayHtml: `
+        <p class="flex items-start gap-2"><span class="text-[#E5A93C] font-bold">✔</span><span><strong>BARD Scores 4:</strong> BARD Jammer passes all 4 opposing blockers.</span></p>
+        <p class="flex items-start gap-2"><span class="text-[#38BDF8] font-bold">✔</span><span><strong>Away Passes 2, Blocked by 2:</strong> BARD blockers trap the Away Jammer inside the pack!</span></p>
+      `,
+      whistleText: '🎯 BARD +4 | AWAY +2 (BLOCKED!)',
+      showWhistle: true,
+      showPackBracket: false,
+      showLeadHalo: 'bard',
+      scoresToShow: [
+        { dist: 490, lane: 50, text: 'AWAY +1', team: 'away' }, // Inside track, beside bardB3
+        { dist: 530, lane: 64, text: 'AWAY +2', team: 'away' }, // Inside track, beside bardB2
+        { dist: 500, lane: -62, text: 'BARD +1', team: 'bard' }, // Outside track, beside awayB3
+        { dist: 526, lane: -70, text: 'BARD +2', team: 'bard' }, // Outside track, beside awayB2
+        { dist: 552, lane: -62, text: 'BARD +3', team: 'bard' }, // Outside track, beside awayB1
+        { dist: 578, lane: -70, text: 'BARD +4', team: 'bard' }, // Outside track, beside awayPivot
+      ],
+      positions: {
+        bardJammer: { dist: 620, lane: -18 }, // Past all 4 Away blockers, clear of pack!
+        bardB3: { dist: 500, lane: 12 }, // In pack: passed by Away Jammer (AWAY +1)
+        bardB2: { dist: 525, lane: 12 }, // In pack: passed by Away Jammer (AWAY +2)
+        bardB1: { dist: 555, lane: 6 }, // In pack: 2-wall blocking Away Jammer!
+        bardPivot: { dist: 555, lane: -4 }, // In pack: 2-wall blocking Away Jammer!
+        awayJammer: { dist: 540, lane: 1 }, // Trapped inside pack behind BARD's 2-wall at 555!
+        awayB3: { dist: 505, lane: -12 }, // In pack: passed by BARD Jammer (BARD +1)
+        awayB2: { dist: 525, lane: -12 }, // In pack: passed by BARD Jammer (BARD +2)
+        awayB1: { dist: 550, lane: -12 }, // In pack: passed by BARD Jammer (BARD +3)
+        awayPivot: { dist: 570, lane: -12 }, // In pack: passed by BARD Jammer (BARD +4)
+      },
+    },
+    {
+      step: 5,
+      clock: '1:10 / 2:00 (Called Off)',
+      bardScore: 4,
+      awayScore: 2,
+      title: 'The Strategic Call-Off (Opponent Blocked!)',
+      badge: 'Step 5 of 5',
+      description:
+        'With Away Jammer trapped and blocked by BARD\'s 2-wall inside the pack, BARD holds a 4–2 lead (+2 net points). Rather than risk Away breaking free or continuing the jam, BARD\'s Lead Jammer <strong>taps both hands to her hips</strong>! The referee blows 4 quick whistles to end the jam, banking the 4–2 win while the opposing jammer is completely blocked.',
+      spectatorTip:
+        'This is masterclass derby strategy: the Lead Jammer calls off the jam while the opponent is trapped, preventing any further points from being scored!',
+      takeawayHtml: `
+        <p class="flex items-start gap-2"><span class="text-[#E5A93C] font-bold">⭐</span><span><strong>Opponent Contained:</strong> Away Jammer is still trapped inside the pack.</span></p>
+        <p class="flex items-start gap-2"><span class="text-[#E5A93C] font-bold">⭐</span><span><strong>Jam Called Off:</strong> Lead Jammer ends the jam to lock in the +2 net point lead!</span></p>
+      `,
+      whistleText: '🛑 4 WHISTLES! (Jam Called Off - BARD 4, AWAY 2)',
+      showWhistle: true,
+      showPackBracket: false,
+      showLeadHalo: 'bard',
+      scoresToShow: [],
+      positions: {
+        bardJammer: { dist: 700, lane: -16 }, // Ahead in Turn 1/2, hip-tapping
+        bardB3: { dist: 540, lane: 12 }, // In pack
+        bardB2: { dist: 565, lane: 12 }, // In pack
+        bardB1: { dist: 595, lane: 6 }, // In pack: 2-wall holding Away Jammer
+        bardPivot: { dist: 595, lane: -4 }, // In pack: 2-wall holding Away Jammer
+        awayJammer: { dist: 580, lane: 1 }, // Trapped inside pack!
+        awayB3: { dist: 545, lane: -12 }, // In pack
+        awayB2: { dist: 565, lane: -12 }, // In pack
+        awayB1: { dist: 590, lane: -12 }, // In pack
+        awayPivot: { dist: 610, lane: -12 }, // In pack
+      },
+    },
+  ];
+
+  const skaterDomIds: Record<SkaterKey, string> = {
+    bardJammer: 'skater-bard-jammer',
+    bardPivot: 'skater-bard-pivot',
+    bardB1: 'skater-bard-b1',
+    bardB2: 'skater-bard-b2',
+    bardB3: 'skater-bard-b3',
+    awayJammer: 'skater-away-jammer',
+    awayPivot: 'skater-away-pivot',
+    awayB1: 'skater-away-b1',
+    awayB2: 'skater-away-b2',
+    awayB3: 'skater-away-b3',
+  };
+
+  let currentStepIndex = 0;
+  let isAutoPlaying = false;
+  let autoPlayTimer: number | null = null;
+  const STEP_AUTO_DELAY = 6000; // 6s per step
+
+  // Animation Engine State
+  let guidePathEl: SVGPathElement | null = null;
+  let totalTrackLength = 1702;
+  let animFrameId: number | null = null;
+
+  // Track each skater's current rendering position (continuous distance & lane)
+  const currentSkatersState: Record<SkaterKey, SkaterTrackState> = {
+    bardJammer: { dist: 40, lane: 15 },
+    bardPivot: { dist: 270, lane: 15 },
+    bardB1: { dist: 225, lane: 15 },
+    bardB2: { dist: 180, lane: 15 },
+    bardB3: { dist: 135, lane: 15 },
+    awayJammer: { dist: 40, lane: -15 },
+    awayPivot: { dist: 270, lane: -15 },
+    awayB1: { dist: 225, lane: -15 },
+    awayB2: { dist: 180, lane: -15 },
+    awayB3: { dist: 135, lane: -15 },
+  };
+
+  function easeInOutCubic(t: number): number {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function getTrackCoords(dist: number, lane: number) {
+    if (!guidePathEl) return { x: 450, y: 390 };
+    const s = ((dist % totalTrackLength) + totalTrackLength) % totalTrackLength;
+    const pt = guidePathEl.getPointAtLength(s);
+    const nextS = (s + 1) % totalTrackLength;
+    const nextPt = guidePathEl.getPointAtLength(nextS);
+
+    const tx = nextPt.x - pt.x;
+    const ty = nextPt.y - pt.y;
+    const len = Math.hypot(tx, ty) || 1;
+    // Inward normal towards track infield in counter-clockwise flow
+    const nx = ty / len;
+    const ny = -tx / len;
+
+    return {
+      x: pt.x + nx * lane,
+      y: pt.y + ny * lane,
+    };
+  }
+
+  function updateSkaterElement(id: string, dist: number, lane: number) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const coords = getTrackCoords(dist, lane);
+    el.setAttribute('transform', `translate(${coords.x.toFixed(1)}, ${coords.y.toFixed(1)})`);
+  }
+
+  function animateToStep(targetIndex: number) {
+    const fromIndex = currentStepIndex;
+    currentStepIndex = targetIndex;
+    const targetConfig = stepsConfig[targetIndex];
+
+    // Cancel any active animation frame
+    if (animFrameId) {
+      cancelAnimationFrame(animFrameId);
+      animFrameId = null;
+    }
+
+    // 1. Update UI Elements immediately
+    updateUI(targetConfig, targetIndex);
+
+    // 2. Prepare animation targets
+    // For smooth forward motion:
+    // If going forward (or looping from 4 to 0), ensure skaters advance forward counter-clockwise
+    const startStates: Record<SkaterKey, SkaterTrackState> = {} as any;
+    const targetDistances: Record<SkaterKey, { dist: number; lane: number }> = {} as any;
+
+    const isForward = targetIndex > fromIndex || (fromIndex === 4 && targetIndex === 0);
+    const animDuration = targetIndex === 3 && fromIndex === 2 ? 1900 : 1300; // Smooth 1-lap scoring sprint
+
+    (Object.keys(targetConfig.positions) as SkaterKey[]).forEach((key) => {
+      const current = currentSkatersState[key];
+      const target = targetConfig.positions[key];
+      startStates[key] = { dist: current.dist, lane: current.lane };
+
+      let targetD = target.dist;
+      if (isForward) {
+        // Find forward distance: normalize current to base loop, then ensure target >= current
+        const currentMod = ((current.dist % totalTrackLength) + totalTrackLength) % totalTrackLength;
+        let diff = targetD - currentMod;
+        if (diff < 0) {
+          diff += totalTrackLength;
+        }
+        targetDistances[key] = {
+          dist: current.dist + diff,
+          lane: target.lane,
+        };
+      } else {
+        // Moving backward (e.g. clicking prev): take shortest direct distance
+        const currentMod = ((current.dist % totalTrackLength) + totalTrackLength) % totalTrackLength;
+        let diff = targetD - currentMod;
+        if (diff > totalTrackLength / 2) diff -= totalTrackLength;
+        if (diff < -totalTrackLength / 2) diff += totalTrackLength;
+        targetDistances[key] = {
+          dist: current.dist + diff,
+          lane: target.lane,
+        };
+      }
+    });
+
+    // Score popups: render with smooth fade-in as jammers complete the scoring pass
+    const popupsContainer = document.getElementById('vis-score-popups');
+    if (popupsContainer) {
+      popupsContainer.innerHTML = '';
+      if (targetConfig.scoresToShow.length > 0) {
+        targetConfig.scoresToShow.forEach((item, idx) => {
+          const coords = getTrackCoords(item.dist, item.lane);
+          const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          g.setAttribute('transform', `translate(${coords.x.toFixed(1)}, ${coords.y.toFixed(1)})`);
+          g.setAttribute('opacity', '0');
+          g.setAttribute('class', 'score-pop');
+          const delayBase = targetIndex === 3 ? 0.9 : 0.4;
+          g.style.transition = `opacity 0.35s ease-out ${delayBase + idx * 0.18}s`;
+
+          const isAway = item.team === 'away';
+          const textLength = item.text.length;
+          // Dynamic width sizing so text NEVER outsizes the callout box:
+          const badgeWidth = Math.max(74, textLength * 7.5 + 22);
+          const badgeHeight = 22;
+
+          const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          bg.setAttribute('x', String(-badgeWidth / 2));
+          bg.setAttribute('y', String(-badgeHeight / 2));
+          bg.setAttribute('width', String(badgeWidth));
+          bg.setAttribute('height', String(badgeHeight));
+          bg.setAttribute('rx', '11');
+          bg.setAttribute('fill', isAway ? '#0284C7' : '#E5A93C');
+          bg.setAttribute('stroke', isAway ? '#38BDF8' : '#FFFFFF');
+          bg.setAttribute('stroke-width', '1.5');
+          bg.setAttribute('filter', 'url(#skaterShadow)');
+
+          const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          txt.setAttribute('text-anchor', 'middle');
+          txt.setAttribute('y', '4');
+          txt.setAttribute('fill', isAway ? '#FFFFFF' : '#000000');
+          txt.setAttribute('font-family', "'Bebas Neue', sans-serif");
+          txt.setAttribute('font-size', '12');
+          txt.setAttribute('letter-spacing', '0.5');
+          txt.textContent = item.text;
+
+          g.appendChild(bg);
+          g.appendChild(txt);
+          popupsContainer.appendChild(g);
+
+          // Trigger opacity transition
+          setTimeout(() => {
+            g.setAttribute('opacity', '1');
+          }, 50);
+        });
+      }
+    }
+
+    const startTime = performance.now();
+
+    function stepAnimation(now: number) {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / animDuration);
+      const ease = easeInOutCubic(progress);
+
+      (Object.keys(startStates) as SkaterKey[]).forEach((key) => {
+        const start = startStates[key];
+        const target = targetDistances[key];
+        const currentDist = start.dist + (target.dist - start.dist) * ease;
+        const currentLane = start.lane + (target.lane - start.lane) * ease;
+
+        currentSkatersState[key].dist = currentDist;
+        currentSkatersState[key].lane = currentLane;
+
+        updateSkaterElement(skaterDomIds[key], currentDist, currentLane);
+      });
+
+      if (progress < 1) {
+        animFrameId = requestAnimationFrame(stepAnimation);
+      } else {
+        animFrameId = null;
+      }
+    }
+
+    animFrameId = requestAnimationFrame(stepAnimation);
+  }
+
+  function updateUI(data: StepConfig, index: number) {
+    // 1. Update HUD
+    const clockEl = document.getElementById('vis-hud-clock');
+    const bardScoreEl = document.getElementById('vis-bard-score');
+    const awayScoreEl = document.getElementById('vis-away-score');
+    if (clockEl) clockEl.textContent = data.clock;
+    if (bardScoreEl) bardScoreEl.textContent = String(data.bardScore);
+    if (awayScoreEl) awayScoreEl.textContent = String(data.awayScore);
+
+    // 2. Update Pills
+    const pills = document.querySelectorAll('.step-pill');
+    pills.forEach((pill, i) => {
+      if (i === index) {
+        pill.classList.add('active', 'border-[#541221]', 'bg-[#541221]/30', 'text-white');
+        pill.classList.remove('border-[#2A2A2A]', 'bg-[#1B1B1B]', 'text-gray-400');
+        pill.setAttribute('aria-selected', 'true');
+      } else {
+        pill.classList.remove('active', 'border-[#541221]', 'bg-[#541221]/30', 'text-white');
+        pill.classList.add('border-[#2A2A2A]', 'bg-[#1B1B1B]', 'text-gray-400');
+        pill.setAttribute('aria-selected', 'false');
+      }
+    });
+
+    // 3. Update Progress Bar
+    const progressBar = document.getElementById('vis-progress-bar');
+    if (progressBar) {
+      progressBar.style.width = `${((index + 1) / stepsConfig.length) * 100}%`;
+    }
+
+    // 4. Update Halos (Lead Jammer)
+    const bardHalo = document.getElementById('halo-bard-jammer');
+    const awayHalo = document.getElementById('halo-away-jammer');
+    if (bardHalo) bardHalo.setAttribute('opacity', data.showLeadHalo === 'bard' ? '0.85' : '0');
+    if (awayHalo) awayHalo.setAttribute('opacity', data.showLeadHalo === 'away' ? '0.85' : '0');
+
+    // 5. Update Pack Bracket
+    const bracketEl = document.getElementById('vis-pack-bracket');
+    if (bracketEl) bracketEl.setAttribute('opacity', data.showPackBracket ? '1' : '0');
+
+    // 6. Update Whistle Bubble
+    const whistleBubble = document.getElementById('vis-whistle-bubble');
+    const whistleBg = document.getElementById('vis-whistle-bg') as SVGRectElement | null;
+    const whistleText = document.getElementById('vis-whistle-text') as SVGTextElement | null;
+    if (whistleBubble && whistleText) {
+      if (data.showWhistle) {
+        whistleText.textContent = data.whistleText;
+        let measuredWidth = 0;
+        try {
+          measuredWidth = whistleText.getComputedTextLength();
+        } catch (e) {
+          measuredWidth = data.whistleText.length * 10;
+        }
+        if (!measuredWidth || measuredWidth < 50) {
+          measuredWidth = data.whistleText.length * 10;
+        }
+        const bubbleWidth = Math.max(260, Math.ceil(measuredWidth + 56));
+        if (whistleBg) {
+          whistleBg.setAttribute('x', String(-bubbleWidth / 2));
+          whistleBg.setAttribute('width', String(bubbleWidth));
+        }
+        whistleBubble.setAttribute('opacity', '1');
+        whistleBubble.setAttribute('transform', 'translate(450, 40) scale(1)');
+      } else {
+        whistleBubble.setAttribute('opacity', '0');
+        whistleBubble.setAttribute('transform', 'translate(450, 40) scale(0.9)');
+      }
+    }
+
+    // 7. Update Explanation Card
+    const cardBadge = document.getElementById('vis-card-badge');
+    const cardTitle = document.getElementById('vis-card-title');
+    const cardDesc = document.getElementById('vis-card-description');
+    const cardTip = document.getElementById('vis-card-spectator-tip');
+    const cardTakeaway = document.getElementById('vis-card-takeaway');
+
+    if (cardBadge) cardBadge.textContent = data.badge;
+    if (cardTitle) cardTitle.textContent = data.title;
+    if (cardDesc) cardDesc.innerHTML = data.description;
+    if (cardTip) cardTip.textContent = data.spectatorTip;
+    if (cardTakeaway) cardTakeaway.innerHTML = data.takeawayHtml;
+  }
+
+  function nextStep() {
+    const nextIdx = (currentStepIndex + 1) % stepsConfig.length;
+    animateToStep(nextIdx);
+  }
+
+  function prevStep() {
+    const prevIdx = (currentStepIndex - 1 + stepsConfig.length) % stepsConfig.length;
+    animateToStep(prevIdx);
+  }
+
+  function toggleAutoPlay() {
+    isAutoPlaying = !isAutoPlaying;
+    const playIcon = document.getElementById('vis-play-icon');
+    const pauseIcon = document.getElementById('vis-pause-icon');
+    const playText = document.getElementById('vis-play-text');
+
+    if (isAutoPlaying) {
+      if (playIcon) playIcon.classList.add('hidden');
+      if (pauseIcon) pauseIcon.classList.remove('hidden');
+      if (playText) playText.textContent = 'Pause';
+      autoPlayTimer = window.setInterval(nextStep, STEP_AUTO_DELAY);
+    } else {
+      if (playIcon) playIcon.classList.remove('hidden');
+      if (pauseIcon) pauseIcon.classList.add('hidden');
+      if (playText) playText.textContent = 'Auto-Play';
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    }
+  }
+
+  function initVisualizer() {
+    guidePathEl = document.getElementById('trackGuidePath') as SVGPathElement | null;
+    if (guidePathEl) {
+      totalTrackLength = guidePathEl.getTotalLength() || 1702;
+    }
+
+    // Attach Step Pills Click
+    const pills = document.querySelectorAll('.step-pill');
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const stepNum = parseInt(pill.getAttribute('data-step') || '1', 10);
+        if (isAutoPlaying) toggleAutoPlay();
+        animateToStep(stepNum - 1);
+      });
+    });
+
+    // Prev / Next buttons
+    const prevBtn = document.getElementById('vis-prev-btn');
+    const nextBtn = document.getElementById('vis-next-btn');
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (isAutoPlaying) toggleAutoPlay();
+        prevStep();
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        if (isAutoPlaying) toggleAutoPlay();
+        nextStep();
+      });
+    }
+
+    // Play / Pause toggle
+    const playBtn = document.getElementById('vis-play-toggle');
+    if (playBtn) {
+      playBtn.addEventListener('click', toggleAutoPlay);
+    }
+
+    // Initial positioning
+    const initialConfig = stepsConfig[0];
+    (Object.keys(initialConfig.positions) as SkaterKey[]).forEach((key) => {
+      const pos = initialConfig.positions[key];
+      currentSkatersState[key] = { dist: pos.dist, lane: pos.lane };
+      updateSkaterElement(skaterDomIds[key], pos.dist, pos.lane);
+    });
+
+    updateUI(initialConfig, 0);
+  }
+
+  // Handle standard page loads or Astro View Transitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVisualizer);
+  } else {
+    initVisualizer();
+  }
+  document.addEventListener('astro:page-load', initVisualizer);
+</script>
+
+<style>
+  .step-pill.active {
+    box-shadow: 0 0 15px rgba(84, 18, 33, 0.5);
+  }
+</style>

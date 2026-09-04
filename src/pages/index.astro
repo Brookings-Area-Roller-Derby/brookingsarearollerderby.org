@@ -51,6 +51,12 @@ const countdownEvents = bouts.map((bout) => ({
               {siteConfig.season} Bout Schedule
             </a>
             <a
+              href="/derby-101"
+              class="px-6 py-3.5 bg-[#1F1F1F] hover:bg-[#2A2A2A] text-[#E5A93C] hover:text-white font-heading text-xl uppercase tracking-wider rounded-md border border-[#541221] transition-colors inline-flex items-center gap-1.5"
+            >
+              <span>⭐</span> Derby 101 Guide
+            </a>
+            <a
               href="/join"
               class="px-8 py-3.5 bg-[#1F1F1F] hover:bg-[#2A2A2A] text-white font-heading text-xl uppercase tracking-wider rounded-md border border-[#3A3A3A] transition-colors"
             >
@@ -100,6 +106,34 @@ const countdownEvents = bouts.map((bout) => ({
           </div>
         )
       }
+
+      <!-- Derby 101 Spectator Teaser Banner -->
+      <div
+        class="mt-10 bg-gradient-to-r from-[#200B11] via-[#181818] to-[#200B11] border border-[#541221] rounded-xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl"
+      >
+        <div class="flex items-center gap-4 text-center sm:text-left">
+          <div
+            class="w-12 h-12 rounded-xl bg-[#541221] border border-[#9E1F3D] flex items-center justify-center text-2xl flex-shrink-0 text-[#E5A93C]"
+          >
+            ⭐
+          </div>
+          <div>
+            <h3 class="font-heading text-xl sm:text-2xl text-white uppercase tracking-wider">
+              New to Roller Derby?
+            </h3>
+            <p class="text-gray-300 text-xs sm:text-sm">
+              Understand the pack, jammers, scoring, and call-offs in 60 seconds with our interactive track simulator.
+            </p>
+          </div>
+        </div>
+        <a
+          href="/derby-101"
+          class="flex-shrink-0 px-5 py-2.5 bg-[#E5A93C] hover:bg-[#D49228] text-black font-heading text-base uppercase tracking-wider rounded-md font-bold transition-colors shadow inline-flex items-center gap-1.5"
+        >
+          <span>Derby 101 Guide</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
     </div>
   </section>
 

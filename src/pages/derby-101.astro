@@ -1,0 +1,563 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DerbyTrackVisualizer from '../components/DerbyTrackVisualizer.astro';
+import { siteConfig } from '../config/site';
+---
+
+<Layout
+  title="Derby 101: How Roller Derby Works | Spectator Guide"
+  description="New to roller derby? Learn how the game works in 60 seconds. Interactive track simulator, skater positions, scoring rules, and spectator cheat sheet."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-[#121212] py-14 lg:py-20 border-b border-[#252525] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-3xl space-y-5">
+        <div
+          class="inline-flex items-center gap-2 px-3.5 py-1 bg-[#1E1E1E] border border-[#333] rounded-full text-xs font-semibold uppercase text-gray-300 tracking-wider"
+        >
+          <span class="w-2.5 h-2.5 rounded-full bg-[#E5A93C] animate-pulse"></span>
+          Spectator Guide &bull; Flat-Track Roller Derby
+        </div>
+
+        <h1
+          class="font-heading text-5xl sm:text-6xl lg:text-7xl uppercase tracking-tight text-white leading-none"
+        >
+          How Roller Derby Works: <br />
+          <span class="text-red-500">Derby 101 in 60 Seconds</span>
+        </h1>
+
+        <p class="text-base sm:text-lg text-gray-300 font-normal leading-relaxed">
+          Full-contact athletic chess on eight wheels. There is no ball, no puck, and no separate offense or defense.
+          Both teams are trying to score and prevent the other team from scoring at the exact same moment!
+        </p>
+
+        <!-- Quick Jump Anchor Pills -->
+        <div class="flex flex-wrap gap-2 pt-2">
+          <a
+            href="#track-simulator"
+            class="px-3 py-1.5 bg-[#1F1F1F] hover:bg-[#2C2C2C] text-gray-300 hover:text-white rounded-lg border border-[#333] text-xs font-heading uppercase tracking-wider transition-colors"
+          >
+            🎮 Track Simulator
+          </a>
+          <a
+            href="#positions"
+            class="px-3 py-1.5 bg-[#1F1F1F] hover:bg-[#2C2C2C] text-gray-300 hover:text-white rounded-lg border border-[#333] text-xs font-heading uppercase tracking-wider transition-colors"
+          >
+            ⭐ Who's Who (Positions)
+          </a>
+          <a
+            href="#rules-scoring"
+            class="px-3 py-1.5 bg-[#1F1F1F] hover:bg-[#2C2C2C] text-gray-300 hover:text-white rounded-lg border border-[#333] text-xs font-heading uppercase tracking-wider transition-colors"
+          >
+            ⏱️ Jams &amp; Scoring
+          </a>
+          <a
+            href="#penalties"
+            class="px-3 py-1.5 bg-[#1F1F1F] hover:bg-[#2C2C2C] text-gray-300 hover:text-white rounded-lg border border-[#333] text-xs font-heading uppercase tracking-wider transition-colors"
+          >
+            🛑 Penalties &amp; Hits
+          </a>
+          <a
+            href="#derby-lingo"
+            class="px-3 py-1.5 bg-[#1F1F1F] hover:bg-[#2C2C2C] text-gray-300 hover:text-white rounded-lg border border-[#333] text-xs font-heading uppercase tracking-wider transition-colors"
+          >
+            💬 Derby Lingo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Interactive Track Simulator -->
+  <section id="track-simulator" class="py-12 lg:py-16 bg-[#0E0E0E] border-b border-[#222]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="text-xs font-mono uppercase tracking-widest text-[#E5A93C] font-bold block mb-1">
+          Visual Walkthrough
+        </span>
+        <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white">
+          The Anatomy of a 2-Minute Jam
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-2">
+          Click through the 5 steps or hit <strong class="text-white">Auto-Play</strong> to watch a complete jam cycle from the opening whistle to the hip-tap call-off.
+        </p>
+      </div>
+
+      <DerbyTrackVisualizer />
+    </div>
+  </section>
+
+  <!-- Section 2: Who's Who on the Track (Positions) -->
+  <section id="positions" class="py-16 bg-[#141414] border-b border-[#252525]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-mono uppercase tracking-widest text-red-500 font-bold block mb-1">
+          Roster Breakdown
+        </span>
+        <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white">
+          Who's Who on the Track
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-2">
+          Each team fields exactly <strong>5 skaters</strong> at a time: 1 Jammer and 4 Blockers (one of whom may be designated as the Pivot).
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- The Jammer -->
+        <div
+          class="bg-[#1A1A1A] border-2 border-[#7A1A30] hover:border-red-500 rounded-2xl p-7 transition-all flex flex-col justify-between shadow-lg relative overflow-hidden group"
+        >
+          <div class="absolute -top-12 -right-12 w-32 h-32 bg-[#541221]/40 rounded-full blur-2xl group-hover:scale-125 transition-transform"></div>
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div
+                class="w-14 h-14 rounded-2xl bg-[#541221] border border-[#9E1F3D] flex items-center justify-center text-2xl text-[#E5A93C] shadow-inner"
+              >
+                ⭐
+              </div>
+              <span class="px-3 py-1 bg-[#242424] text-gray-300 font-mono text-xs uppercase font-bold rounded-full">
+                1 Per Team
+              </span>
+            </div>
+
+            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">
+              The Jammer
+            </h3>
+            <p class="text-xs font-mono uppercase text-[#E5A93C] font-semibold tracking-wider mb-4">
+              Helmet Cover: Star (⭐)
+            </p>
+
+            <p class="text-gray-300 text-sm leading-relaxed mb-4">
+              The <strong>only skater who can score points</strong>! Jammers start 30 feet behind the pack at the Jammer Line. They must fight through the pack using speed, agile footwork, and sheer grit.
+            </p>
+
+            <div class="space-y-2 pt-2 border-t border-[#2A2A2A] text-xs text-gray-400">
+              <p><strong class="text-white uppercase tracking-wider">Mission:</strong> Lap opposing blockers to score points.</p>
+              <p><strong class="text-white uppercase tracking-wider">Superpower:</strong> Earning "Lead Jammer" to end the jam early.</p>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-[#262626]">
+            <span class="text-[11px] font-mono text-gray-500 block uppercase font-bold">Spectator Cue:</span>
+            <span class="text-xs text-red-300 font-medium">Follow the stars to follow the score!</span>
+          </div>
+        </div>
+
+        <!-- The Pivot -->
+        <div
+          class="bg-[#1A1A1A] border border-[#2B2B2B] hover:border-gray-500 rounded-2xl p-7 transition-all flex flex-col justify-between shadow-lg relative overflow-hidden group"
+        >
+          <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/5 rounded-full blur-2xl group-hover:scale-125 transition-transform"></div>
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div
+                class="w-14 h-14 rounded-2xl bg-[#282828] border border-gray-600 flex items-center justify-center text-xl text-white shadow-inner font-bold"
+              >
+                ▌
+              </div>
+              <span class="px-3 py-1 bg-[#242424] text-gray-300 font-mono text-xs uppercase font-bold rounded-full">
+                1 Per Team
+              </span>
+            </div>
+
+            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">
+              The Pivot
+            </h3>
+            <p class="text-xs font-mono uppercase text-gray-300 font-semibold tracking-wider mb-4">
+              Helmet Cover: Solid Stripe (▌)
+            </p>
+
+            <p class="text-gray-300 text-sm leading-relaxed mb-4">
+              The field general of the pack. Pivots line up right at the front on the Pivot Line. They direct defensive walls, dictate pack speed, and have the special ability to receive a <strong>Star Pass</strong>.
+            </p>
+
+            <div class="space-y-2 pt-2 border-t border-[#2A2A2A] text-xs text-gray-400">
+              <p><strong class="text-white uppercase tracking-wider">Mission:</strong> Direct the blockers and control the tempo.</p>
+              <p><strong class="text-white uppercase tracking-wider">Superpower:</strong> Can take the jammer helmet cover and become the new Jammer!</p>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-[#262626]">
+            <span class="text-[11px] font-mono text-gray-500 block uppercase font-bold">Spectator Cue:</span>
+            <span class="text-xs text-gray-300 font-medium">Look for the stripe calling out the plays.</span>
+          </div>
+        </div>
+
+        <!-- The Blockers -->
+        <div
+          class="bg-[#1A1A1A] border border-[#2B2B2B] hover:border-[#541221] rounded-2xl p-7 transition-all flex flex-col justify-between shadow-lg relative overflow-hidden group"
+        >
+          <div class="absolute -top-12 -right-12 w-32 h-32 bg-[#541221]/20 rounded-full blur-2xl group-hover:scale-125 transition-transform"></div>
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div
+                class="w-14 h-14 rounded-2xl bg-[#541221]/60 border border-[#9E1F3D] flex items-center justify-center text-xl text-white shadow-inner"
+              >
+                🛡️
+              </div>
+              <span class="px-3 py-1 bg-[#242424] text-gray-300 font-mono text-xs uppercase font-bold rounded-full">
+                3 Per Team (+ Pivot = 4)
+              </span>
+            </div>
+
+            <h3 class="font-heading text-3xl text-white uppercase tracking-wider mb-2">
+              The Blockers
+            </h3>
+            <p class="text-xs font-mono uppercase text-gray-400 font-semibold tracking-wider mb-4">
+              Helmet Cover: Plain / League Helmet
+            </p>
+
+            <p class="text-gray-300 text-sm leading-relaxed mb-4">
+              The heavy hitters and defensive anchors. Blockers perform <strong>offense and defense at the same time</strong>: forming multi-skater walls to trap the opposing jammer while hitting opponents to open lanes for their own jammer.
+            </p>
+
+            <div class="space-y-2 pt-2 border-t border-[#2A2A2A] text-xs text-gray-400">
+              <p><strong class="text-white uppercase tracking-wider">Mission:</strong> Hold the opposing jammer back, plow paths for their own.</p>
+              <p><strong class="text-white uppercase tracking-wider">Superpower:</strong> Seamless triangular "tripod" walls and hip checks.</p>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-[#262626]">
+            <span class="text-[11px] font-mono text-gray-500 block uppercase font-bold">Spectator Cue:</span>
+            <span class="text-xs text-red-300 font-medium">Watch the teamwork—walls move as one organism!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Jams, Timing & Scoring -->
+  <section id="rules-scoring" class="py-16 bg-[#111] border-b border-[#252525]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-mono uppercase tracking-widest text-[#E5A93C] font-bold block mb-1">
+          Game Flow
+        </span>
+        <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white">
+          Timing, Jams &amp; Scoring
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-2">
+          How points are earned and why the clock is the most strategic weapon on the track.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Stat Card 1 -->
+        <div class="bg-[#181818] border border-[#2B2B2B] p-6 rounded-xl space-y-3">
+          <div class="font-heading text-5xl text-[#E5A93C] leading-none">
+            60 <span class="text-xl text-gray-400">MIN</span>
+          </div>
+          <h3 class="font-heading text-2xl text-white uppercase tracking-wider">
+            Match Duration
+          </h3>
+          <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+            A bout consists of <strong>two 30-minute halves</strong>. Between halves, teams take a 10-15 minute intermission to re-group.
+          </p>
+        </div>
+
+        <!-- Stat Card 2 -->
+        <div class="bg-[#181818] border border-[#2B2B2B] p-6 rounded-xl space-y-3">
+          <div class="font-heading text-5xl text-red-500 leading-none">
+            2 <span class="text-xl text-gray-400">MIN MAX</span>
+          </div>
+          <h3 class="font-heading text-2xl text-white uppercase tracking-wider">
+            Jam Duration
+          </h3>
+          <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+            The game is divided into mini-periods called <strong>Jams</strong> lasting up to 2 minutes. There are 30 seconds between jams to substitute skaters.
+          </p>
+        </div>
+
+        <!-- Stat Card 3 -->
+        <div class="bg-[#181818] border border-[#2B2B2B] p-6 rounded-xl space-y-3">
+          <div class="font-heading text-5xl text-[#E5A93C] leading-none">
+            +1 <span class="text-xl text-gray-400">PT</span>
+          </div>
+          <h3 class="font-heading text-2xl text-white uppercase tracking-wider">
+            Per Opponent Passed
+          </h3>
+          <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+            The initial pass scores 0 points. On every subsequent lap, the jammer earns <strong>1 point for each opposing skater</strong> they legally pass in-bounds.
+          </p>
+        </div>
+
+        <!-- Stat Card 4 -->
+        <div class="bg-[#181818] border border-[#2B2B2B] p-6 rounded-xl space-y-3">
+          <div class="font-heading text-5xl text-red-500 leading-none">
+            4-5 <span class="text-xl text-gray-400">PTS</span>
+          </div>
+          <h3 class="font-heading text-2xl text-white uppercase tracking-wider">
+            Grand Slam Pass
+          </h3>
+          <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+            Passing all 4 opposing blockers awards 4 points. If the jammer also laps the opposing jammer, they score a maximum <strong>5-point Grand Slam</strong>!
+          </p>
+        </div>
+      </div>
+
+      <!-- Lead Jammer Call Off Deep Dive -->
+      <div class="mt-10 bg-[#161616] border-2 border-[#541221] rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6">
+        <div class="w-16 h-16 rounded-full bg-[#541221] border border-[#9E1F3D] flex items-center justify-center text-3xl flex-shrink-0">
+          👋
+        </div>
+        <div class="space-y-2">
+          <h3 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+            Why Do Jams End Early? (Momentum, Defense &amp; The Hip-Tap)
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            New spectators often wonder why a jam suddenly ends when there are still 60 or 90 seconds left on the clock! The <strong>Lead Jammer</strong> has the legal authority to call off the jam at any moment by repeatedly tapping both hands against their hips.
+          </p>
+          <p class="text-gray-400 text-xs sm:text-sm">
+            <strong>The Golden Rule of Derby Strategy:</strong> When the Lead Jammer is scoring freely, they keep the jam rolling. But the second their forward momentum stalls against an opposing blocker wall—while the opposing jammer is charging up the track with speed—the Lead Jammer calls off the jam immediately. This prevents the opponent from scoring while preserving their team's net lead!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Legal Hits vs Penalties -->
+  <section id="penalties" class="py-16 bg-[#141414] border-b border-[#252525]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-mono uppercase tracking-widest text-red-500 font-bold block mb-1">
+          Safety &amp; Strategy
+        </span>
+        <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white">
+          Contact Rules &amp; The Penalty Box
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-2">
+          Roller derby is full-contact, but strictly governed. You can't just throw elbows or trip people like in 1970s TV wrestling!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Legal Contact Card -->
+        <div class="bg-[#181818] border border-green-900/50 rounded-xl p-6 sm:p-8 space-y-4">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-full bg-green-900/50 text-green-400 flex items-center justify-center font-bold text-lg">
+              ✓
+            </span>
+            <h3 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+              Legal Target &amp; Blocking Zones
+            </h3>
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Contact may only be initiated using authorized blocking zones against authorized target zones:
+          </p>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-gray-300">
+            <li class="flex items-start gap-2">
+              <span class="text-green-400 font-bold">✔</span>
+              <span><strong>Hips &amp; Buttocks:</strong> The primary weapon in derby for delivering devastating lateral hits.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-400 font-bold">✔</span>
+              <span><strong>Torso &amp; Chest:</strong> Used for positional blocking and bracing in defensive walls.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-400 font-bold">✔</span>
+              <span><strong>Upper Arms &amp; Shoulders:</strong> Legal when arms are held close to the body (not swinging).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-400 font-bold">✔</span>
+              <span><strong>Thighs:</strong> Pushing and driving opponent skaters off their skating line.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Illegal Hits & Penalties Card -->
+        <div class="bg-[#181818] border border-red-900/50 rounded-xl p-6 sm:p-8 space-y-4">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-full bg-red-900/50 text-red-400 flex items-center justify-center font-bold text-lg">
+              ✕
+            </span>
+            <h3 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+              Illegal Contact &amp; Major Penalties
+            </h3>
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Committing any of these actions sends a skater to the <strong>Penalty Box for 30 seconds</strong>:
+          </p>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-gray-300">
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">✕</span>
+              <span><strong>No Elbows or Forearms:</strong> Pushing, hooking, or chicken-winging with arms.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">✕</span>
+              <span><strong>No Head, Neck or Back Hits:</strong> Hitting the spine or neck is strictly illegal.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">✕</span>
+              <span><strong>No Tripping or Low Blocks:</strong> Sliding into legs or using skates to trip.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">✕</span>
+              <span><strong>No Track Cuts:</strong> Going out of bounds and re-entering ahead of an opponent.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">✕</span>
+              <span><strong>No Clockwise Blocking:</strong> Hitting someone while skating in the reverse direction.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Power Jam Highlight Box -->
+      <div class="mt-8 bg-[#181818] border border-[#E5A93C]/40 rounded-xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#E5A93C]/20 text-[#E5A93C] font-mono text-xs font-bold uppercase tracking-wider">
+            ⚡ Game-Changing Moment
+          </div>
+          <h3 class="font-heading text-3xl text-white uppercase tracking-wider">
+            What is a "Power Jam"?
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed max-w-3xl">
+            When a <strong>Jammer</strong> commits a penalty and sits in the penalty box for 30 seconds, their team has NO point scorer on the track! The opposing team enters a <strong>Power Jam</strong>, giving their jammer free rein to lap the pack repeatedly and run up a massive scoring streak uncontested.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Referee Whistles Guide -->
+  <section class="py-14 bg-[#111] border-b border-[#252525]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-mono uppercase tracking-widest text-[#E5A93C] font-bold block mb-1">
+          Track Audio
+        </span>
+        <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white">
+          Deciphering the Whistles
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-1">
+          Referees communicate with skaters and scorekeepers using distinct whistle codes:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="bg-[#181818] border border-[#2B2B2B] p-5 rounded-xl text-center space-y-2">
+          <span class="font-mono text-2xl text-[#E5A93C] font-bold block">1 Blast</span>
+          <span class="font-heading text-xl text-white uppercase tracking-wider block">"TWEEEEEET!"</span>
+          <p class="text-xs text-gray-400">Jam starts. The pack and jammers are officially released to roll!</p>
+        </div>
+
+        <div class="bg-[#181818] border border-[#2B2B2B] p-5 rounded-xl text-center space-y-2">
+          <span class="font-mono text-2xl text-[#E5A93C] font-bold block">2 Rapid Blasts</span>
+          <span class="font-heading text-xl text-white uppercase tracking-wider block">"TWEET-TWEET!"</span>
+          <p class="text-xs text-gray-400">Lead Jammer awarded, or referee warning for an out-of-play pack.</p>
+        </div>
+
+        <div class="bg-[#181818] border border-[#2B2B2B] p-5 rounded-xl text-center space-y-2">
+          <span class="font-mono text-2xl text-red-500 font-bold block">4 Rapid Blasts</span>
+          <span class="font-heading text-xl text-white uppercase tracking-wider block">"TWEET-TWEET-TWEET-TWEET!"</span>
+          <p class="text-xs text-gray-400">Jam over! Either called off by the Lead Jammer or the 2-minute clock expired.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Derby Lingo Cheat Sheet -->
+  <section id="derby-lingo" class="py-16 bg-[#141414] border-b border-[#252525]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-mono uppercase tracking-widest text-[#E5A93C] font-bold block mb-1">
+          Glossary
+        </span>
+        <h2 class="font-heading text-4xl sm:text-5xl uppercase tracking-wider text-white">
+          Derby Lingo Cheat Sheet
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-2">
+          Hear something yelled from the bench or announcers? Here's what they mean:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-[#1A1A1A] border border-[#282828] p-5 rounded-xl space-y-2">
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider text-[#E5A93C]">
+            Apex Jump
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+            When a jammer jumps through the air over the inside track boundary around a turn, landing back in-bounds without touching the floor out of bounds. One of the most athletic moves in all of sports!
+          </p>
+        </div>
+
+        <div class="bg-[#1A1A1A] border border-[#282828] p-5 rounded-xl space-y-2">
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider text-[#E5A93C]">
+            Star Pass
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+            If a jammer is exhausted or trapped, they can peel off the star helmet cover and hand it directly to their Pivot. The Pivot now becomes the Jammer and continues the scoring attempt!
+          </p>
+        </div>
+
+        <div class="bg-[#1A1A1A] border border-[#282828] p-5 rounded-xl space-y-2">
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider text-[#E5A93C]">
+            The Goat
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+            Intentionally trapping a single opposing blocker at the front of your wall and slowing to a crawl. Because blockers must stay within 10 feet to maintain the pack, the opponent is stuck while your jammer laps them!
+          </p>
+        </div>
+
+        <div class="bg-[#1A1A1A] border border-[#282828] p-5 rounded-xl space-y-2">
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider text-[#E5A93C]">
+            No Pack!
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+            Yelled by the referee when blockers spread out farther than 10 feet apart. In a "No Pack" situation, blockers cannot legally hit each other until they hustle to reform a defined pack.
+          </p>
+        </div>
+
+        <div class="bg-[#1A1A1A] border border-[#282828] p-5 rounded-xl space-y-2">
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider text-[#E5A93C]">
+            Track Cut
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+            Getting hit or stepping out of bounds and rolling back onto the track ahead of any opponent who was in front of you. Results in an instant 30-second penalty visit!
+          </p>
+        </div>
+
+        <div class="bg-[#1A1A1A] border border-[#282828] p-5 rounded-xl space-y-2">
+          <h3 class="font-heading text-xl text-white uppercase tracking-wider text-[#E5A93C]">
+            Fresh Meat
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+            An affectionate, traditional roller derby term for rookie skaters in their first training sessions learning basic skating, falling safely, and pack dynamics.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Ready to Watch Live CTA -->
+  <section class="py-16 bg-gradient-to-r from-[#541221] via-[#3B0B16] to-[#1F070C] text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+      <span class="inline-block px-4 py-1 bg-black/40 text-[#E5A93C] font-semibold uppercase tracking-wider text-xs rounded-full border border-[#E5A93C]/30">
+        Experience It in Person
+      </span>
+
+      <h2 class="font-heading text-4xl sm:text-5xl lg:text-6xl uppercase tracking-wider leading-none">
+        Now You're Ready to Watch Live!
+      </h2>
+
+      <p class="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto leading-relaxed">
+        Nothing compares to the sound of eight wheels squeaking on hardwood, thunderous hip checks, and crowd cheers at the Brookings County Outdoor Adventure Center.
+      </p>
+
+      <div class="pt-2 flex flex-wrap justify-center gap-4">
+        <a
+          href="/schedule"
+          class="px-8 py-4 bg-[#E5A93C] hover:bg-[#D49228] text-black font-heading text-xl uppercase tracking-wider rounded-md font-bold transition-colors shadow-xl"
+        >
+          View {siteConfig.season} Bout Schedule &rarr;
+        </a>
+        <a
+          href="/join"
+          class="px-8 py-4 bg-[#141414] hover:bg-black text-white font-heading text-xl uppercase tracking-wider rounded-md border border-[#444] transition-colors"
+        >
+          Join BARD (Skaters, Refs &amp; NSOs)
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
