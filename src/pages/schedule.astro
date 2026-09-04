@@ -147,6 +147,56 @@ const hasPast = bouts.past.length > 0 || events.past.length > 0;
       </div>
     </section>
   </div>
+
+  <!-- Poster Lightbox Modal -->
+  <div
+    id="poster-lightbox-modal"
+    class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-6"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="poster-modal-title"
+  >
+    <div class="relative max-w-2xl w-full max-h-[90vh] flex flex-col bg-[#141414] border-2 border-[#541221] rounded-2xl overflow-hidden shadow-2xl">
+      <!-- Modal Header -->
+      <div class="px-5 py-3.5 bg-[#1B1B1B] border-b border-[#282828] flex items-center justify-between gap-4">
+        <h3 id="poster-modal-title" class="font-heading text-xl uppercase tracking-wider text-white truncate">
+          Official Event Poster
+        </h3>
+        <button
+          type="button"
+          id="poster-modal-close"
+          class="w-9 h-9 rounded-full bg-[#252525] hover:bg-[#541221] text-gray-300 hover:text-white transition-colors flex items-center justify-center font-bold text-lg flex-shrink-0 cursor-pointer"
+          aria-label="Close poster view"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body / Poster Image -->
+      <div class="flex-1 overflow-auto p-4 flex items-center justify-center bg-black/60">
+        <img
+          id="poster-modal-img"
+          src=""
+          alt="BARD Bout Poster"
+          class="max-h-[75vh] w-auto max-w-full object-contain rounded-lg shadow-xl"
+        />
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-2.5 bg-[#181818] border-t border-[#252525] flex items-center justify-between text-xs text-gray-400 font-mono">
+        <span>Brookings Area Roller Derby • Event Art</span>
+        <a
+          id="poster-modal-download"
+          href=""
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[#E5A93C] hover:underline inline-flex items-center gap-1 font-semibold"
+        >
+          Open Full Image ↗
+        </a>
+      </div>
+    </div>
+  </div>
 </Layout>
 
 <script>
@@ -201,4 +251,48 @@ const hasPast = bouts.past.length > 0 || events.past.length > 0;
     if (pastSection) pastSection.hidden = pastCount === 0;
     if (noUpcoming) noUpcoming.hidden = upcomingCount > 0;
   }
+
+  // Poster Lightbox Logic
+  const posterModal = document.getElementById('poster-lightbox-modal');
+  const posterModalImg = document.getElementById('poster-modal-img') as HTMLImageElement | null;
+  const posterModalTitle = document.getElementById('poster-modal-title');
+  const posterModalClose = document.getElementById('poster-modal-close');
+  const posterModalDownload = document.getElementById('poster-modal-download') as HTMLAnchorElement | null;
+
+  function openPosterModal(src: string, title: string) {
+    if (!posterModal || !posterModalImg) return;
+    posterModalImg.src = src;
+    if (posterModalTitle) posterModalTitle.textContent = `${title} — Official Poster`;
+    if (posterModalDownload) posterModalDownload.href = src;
+    posterModal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+  }
+
+  function closePosterModal() {
+    if (!posterModal) return;
+    posterModal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  document.addEventListener('click', (e) => {
+    const trigger = (e.target as HTMLElement)?.closest('.bout-poster-trigger') as HTMLElement | null;
+    if (trigger) {
+      e.preventDefault();
+      const src = trigger.dataset.posterSrc;
+      const title = trigger.dataset.posterTitle || 'BARD Bout';
+      if (src) openPosterModal(src, title);
+    }
+  });
+
+  if (posterModalClose) posterModalClose.addEventListener('click', closePosterModal);
+  if (posterModal) {
+    posterModal.addEventListener('click', (e) => {
+      if (e.target === posterModal) closePosterModal();
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && posterModal && !posterModal.classList.contains('hidden')) {
+      closePosterModal();
+    }
+  });
 </script>

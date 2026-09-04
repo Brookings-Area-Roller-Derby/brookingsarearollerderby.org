@@ -6,4 +6,4 @@ category: 'community'
 time: '12:00 PM - 5:00 PM'
 ---
 
-BARD is proud to support our LGBTQIA+ community. Stop by our booth for helmet decorating, derby trivia, sticker giveaways, and signups for our open-gender recruitment clinic.
+BARD is proud to support our LGBTQIA+ community. Stop by our booth for helmet decorating, derby trivia, sticker giveaways, and info on joining our league.

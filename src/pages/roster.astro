@@ -3,7 +3,18 @@ import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import DerbyCard from '../components/DerbyCard.astro';
 
-const roster = await getCollection('roster', ({ data }) => data.active);
+const roster = (await getCollection('roster', ({ data }) => data.active)).sort((a, b) => {
+  const numA = a.data.number ? String(a.data.number).trim() : '';
+  const numB = b.data.number ? String(b.data.number).trim() : '';
+  if (numA && numB) {
+    const cmp = numA.localeCompare(numB, undefined, { numeric: true, sensitivity: 'base' });
+    if (cmp !== 0) return cmp;
+    return a.data.derbyName.localeCompare(b.data.derbyName);
+  }
+  if (numA && !numB) return -1;
+  if (!numA && numB) return 1;
+  return a.data.derbyName.localeCompare(b.data.derbyName);
+});
 const coaches = roster.filter((m) => m.data.positions.includes('Coach'));
 const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
 ---
@@ -203,9 +214,9 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
       <div class="pt-2">
         <a
           href="/join"
-          class="inline-block px-8 py-3.5 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider text-lg rounded-md transition-colors"
+          class="px-6 py-3 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider text-base rounded-lg border border-[#9E1F3D] transition-colors whitespace-nowrap"
         >
-          Join Fresh Meat Clinic &rarr;
+          Join the Pack &rarr;
         </a>
       </div>
     </div>
@@ -342,23 +353,31 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
     let currentModalIndex = 0;
 
     function getVisibleCards(): HTMLElement[] {
-      return cards.filter((card) => card.style.display !== 'none');
+      if (!grid) return [];
+      return Array.from(grid.querySelectorAll<HTMLElement>('.roster-card')).filter(
+        (card) => card.style.display !== 'none'
+      );
     }
 
     function sortAndFilterCards() {
       let visible = 0;
       const sortBy = sortSelect?.value ?? 'number';
 
-      // Sort
+      // Sort: based on jersey number, then by alphanumeric name if no jersey number
       const sorted = [...cards].sort((a, b) => {
         if (sortBy === 'name') {
           return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
         }
-        const numA = a.dataset.number ?? '';
-        const numB = b.dataset.number ?? '';
-        if (!numA && numB) return 1;
+        const numA = (a.dataset.number ?? '').trim();
+        const numB = (b.dataset.number ?? '').trim();
+        if (numA && numB) {
+          const cmp = numA.localeCompare(numB, undefined, { numeric: true, sensitivity: 'base' });
+          if (cmp !== 0) return cmp;
+          return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
+        }
         if (numA && !numB) return -1;
-        return numA.localeCompare(numB, undefined, { numeric: true, sensitivity: 'base' });
+        if (!numA && numB) return 1;
+        return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
       });
 
       if (grid) {

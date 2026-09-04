@@ -14,6 +14,9 @@ const isCanceled = bout.data.canceled;
 const month = formatEventDate(bout.data.date, { month: 'short' });
 const day = formatEventDate(bout.data.date, { day: 'numeric' });
 const year = formatEventDate(bout.data.date, { year: 'numeric' });
+const posterSrc = typeof bout.data.poster === 'string'
+  ? bout.data.poster
+  : (bout.data.poster as any)?.src || bout.data.posterUrl;
 ---
 
 <article
@@ -32,6 +35,28 @@ const year = formatEventDate(bout.data.date, { year: 'numeric' });
         <span class="block font-heading text-3xl sm:text-4xl leading-none my-0.5">{day}</span>
         <span class="block text-[10px] opacity-75 font-mono leading-none">{year}</span>
       </time>
+
+      {
+        posterSrc && (
+          <button
+            type="button"
+            class="bout-poster-trigger relative group/poster flex-shrink-0 w-16 sm:w-20 aspect-[3/4] rounded-lg overflow-hidden border border-[#3A3A3A] hover:border-[#E5A93C] shadow-md transition-all cursor-zoom-in self-center hidden xs:block"
+            data-poster-src={posterSrc}
+            data-poster-title={bout.data.title}
+            aria-label={`View full poster for ${bout.data.title}`}
+          >
+            <img
+              src={posterSrc}
+              alt={`${bout.data.title} Event Poster`}
+              class="w-full h-full object-cover group-hover/poster:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/poster:opacity-100 transition-opacity flex flex-col items-center justify-center text-[10px] font-mono text-[#E5A93C] font-bold uppercase tracking-wider backdrop-blur-[1px]">
+              <span>🔍 Zoom</span>
+            </div>
+          </button>
+        )
+      }
 
       <div class="min-w-0">
         <div class="flex flex-wrap items-center gap-2 mb-1">
@@ -80,9 +105,21 @@ const year = formatEventDate(bout.data.date, { year: 'numeric' });
           </span>
         ) : (
           <>
-            <span class="inline-flex items-center justify-center gap-1.5 px-3 py-1 bg-[#1F1F1F] border border-[#333] text-gray-300 text-xs font-mono font-medium rounded tracking-wide">
-              🎟️ Tickets at the Door
-            </span>
+            <div class="flex items-center gap-2 justify-end">
+              {posterSrc && (
+                <button
+                  type="button"
+                  class="bout-poster-trigger inline-flex items-center justify-center gap-1 px-2.5 py-1.5 bg-[#1F1F1F] hover:bg-[#282828] text-[#E5A93C] hover:text-amber-300 border border-[#3E2D32] hover:border-[#E5A93C]/40 text-xs font-mono font-semibold uppercase tracking-wider rounded transition-colors"
+                  data-poster-src={posterSrc}
+                  data-poster-title={bout.data.title}
+                >
+                  🖼️ Poster
+                </button>
+              )}
+              <span class="inline-flex items-center justify-center gap-1.5 px-3 py-1 bg-[#1F1F1F] border border-[#333] text-gray-300 text-xs font-mono font-medium rounded tracking-wide">
+                🎟️ Tickets at the Door
+              </span>
+            </div>
             <a
               href={bout.data.facebookEventUrl || bout.data.ticketLink || siteConfig.facebookUrl}
               target="_blank"

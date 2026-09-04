@@ -7,6 +7,7 @@ homeOrAway: 'home'
 facebookEventUrl: 'https://www.facebook.com/events/1587754242289887/'
 time: 'Doors 5:00 PM | Action 6:00 PM'
 highlight: false
+poster: '../../assets/posters/north-star-orbitals.jpg'
 ---
 
 BARD welcomes Twin Cities competitors the North Star Orbitals to Brookings for Midwest Mayhem! Join us at the Brookings County Outdoor Adventure Center for fast-paced, hard-hitting flat track roller derby. Tickets available at the door!

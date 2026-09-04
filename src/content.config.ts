@@ -24,23 +24,26 @@ const roster = defineCollection({
 
 const bouts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/bouts' }),
-  schema: z
-    .object({
-      title: z.string(),
-      date: z.union([z.string(), z.date()]),
-      opponent: z.string(),
-      location: z.string(),
-      homeOrAway: z.enum(['home', 'away']),
-      facebookEventUrl: z.url().optional(),
-      ticketLink: z.url().optional(),
-      time: z.string().default('Doors 5:30 PM | Whistle 6:30 PM'),
-      highlight: z.boolean().default(false),
-      canceled: z.boolean().default(false),
-    })
-    .transform((data) => ({
-      ...data,
-      date: parseCentralDateTime(data.date, data.time),
-    })),
+  schema: ({ image }) =>
+    z
+      .object({
+        title: z.string(),
+        date: z.union([z.string(), z.date()]),
+        opponent: z.string(),
+        location: z.string(),
+        homeOrAway: z.enum(['home', 'away']),
+        facebookEventUrl: z.url().optional(),
+        ticketLink: z.url().optional(),
+        time: z.string().default('Doors 5:30 PM | Whistle 6:30 PM'),
+        highlight: z.boolean().default(false),
+        canceled: z.boolean().default(false),
+        poster: z.union([image(), z.string()]).optional(),
+        posterUrl: z.string().optional(),
+      })
+      .transform((data) => ({
+        ...data,
+        date: parseCentralDateTime(data.date, data.time),
+      })),
 });
 
 const events = defineCollection({

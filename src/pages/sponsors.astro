@@ -11,8 +11,7 @@ const apexJumpSponsors = sponsors.filter((s) => s.data.tier === 'apex-jump');
 const rookieSponsors = sponsors.filter((s) => s.data.tier === 'rookie');
 const exclusiveSponsors = sponsors.filter((s) => s.data.tier === 'exclusive');
 
-const sponsorshipInquiry = `mailto:${siteConfig.email}?subject=BARD%20Sponsorship%20Inquiry%20-%20Tier%20Interest`;
-const packetRequest = `mailto:${siteConfig.email}?subject=Request%20BARD%20Sponsorship%20Packet`;
+const packetInquiry = `mailto:${siteConfig.email}?subject=Inquiry%20About%20BARD%20Sponsorship%20Packet`;
 
 const tiers = [
   {
@@ -191,10 +190,10 @@ const tiers = [
 
               <div class="pt-4 border-t border-[#282828]">
                 <a
-                  href={sponsorshipInquiry}
+                  href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(`BARD Sponsorship Inquiry - ${tier.name}`)}`}
                   class="block w-full py-2.5 text-center bg-[#3B0B16] hover:bg-[#541221] text-white font-heading uppercase text-sm tracking-wider rounded border border-[#7A1A30] transition-colors"
                 >
-                  Select Package
+                  Select {tier.name.split(' ')[0]} Package
                 </a>
               </div>
             </div>
@@ -240,7 +239,7 @@ const tiers = [
           Download Sponsor Packet (PDF)
         </a>
         <a
-          href={packetRequest}
+          href={packetInquiry}
           class="px-8 py-4 bg-[#141414] hover:bg-[#252525] text-white font-heading uppercase tracking-wider text-lg rounded-xl border border-gray-600 transition-colors flex items-center gap-2"
         >
           ✉️ Email: {siteConfig.email}
