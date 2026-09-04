@@ -5,7 +5,7 @@ opponent: 'North Star Orbitals'
 location: 'Brookings County Outdoor Adventure Center, Brookings, SD'
 homeOrAway: 'home'
 facebookEventUrl: 'https://www.facebook.com/events/1587754242289887/'
-time: 'Doors 5:00 PM | Action 6:00 PM'
+time: 'Doors 4:00 PM | First Whistle 5:00 PM'
 highlight: false
 poster: '../../assets/posters/north-star-orbitals.jpg'
 ---
