@@ -10,32 +10,10 @@ interface Props {
 }
 
 const { member, index } = Astro.props;
-
-const primaryPosition = member.data.positions[0] ?? 'Skater';
-
-let posBadgeColor = 'bg-[#222] text-gray-200 border-[#444]';
-let posIcon = '🛡️';
-
-if (member.data.positions.includes('Jammer')) {
-  posBadgeColor = 'bg-[#541221] text-white border-[#7A1A30]';
-  posIcon = '★';
-} else if (member.data.positions.includes('Pivot')) {
-  posBadgeColor = 'bg-[#3B0B16] text-red-300 border-[#7A1A30]';
-  posIcon = '⚡';
-} else if (member.data.positions.includes('Coach')) {
-  posBadgeColor = 'bg-[#1E1E1E] text-[#E5A93C] border-[#E5A93C]/40';
-  posIcon = '📋';
-} else if (member.data.positions.includes('Ref') || member.data.positions.includes('NSO')) {
-  posBadgeColor = 'bg-[#1E1E1E] text-[#E5A93C] border-[#E5A93C]/40';
-  posIcon = '⚖️';
-} else if (member.data.positions.includes('Fresh Meat')) {
-  posBadgeColor = 'bg-[#0F291E] text-emerald-400 border-emerald-500/40';
-  posIcon = '🌱';
-}
 ---
 
 <article
-  class="roster-card derby-trading-card bg-gradient-to-b from-[#1C1C1C] via-[#161616] to-[#121212] rounded-2xl border-2 border-[#2A2A2A] hover:border-[#E5A93C] overflow-hidden shadow-xl hover:shadow-[0_12px_35px_rgba(229,169,60,0.22)] transition-all duration-300 flex flex-col justify-between group relative cursor-pointer min-h-[480px] select-none"
+  class="roster-card derby-trading-card bg-gradient-to-b from-[#1C1C1C] via-[#161616] to-[#121212] rounded-2xl border-2 border-[#2A2A2A] hover:border-[#E5A93C] overflow-hidden shadow-xl hover:shadow-[0_12px_35px_rgba(229,169,60,0.22)] transition-all duration-300 flex flex-col justify-between group relative cursor-pointer min-h-[460px] select-none"
   data-name={member.data.derbyName.toLowerCase()}
   data-number={member.data.number ? member.data.number.toLowerCase() : ''}
   data-positions={member.data.positions.join(',')}
@@ -108,21 +86,6 @@ if (member.data.positions.includes('Jammer')) {
         </div>
       )
     }
-
-    <!-- Position Badge in Art Corner -->
-    <div class="absolute bottom-2.5 left-2.5 z-10">
-      <span class={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-heading uppercase tracking-wider rounded-md shadow-md border ${posBadgeColor}`}>
-        <span>{posIcon}</span>
-        <span>{primaryPosition}</span>
-      </span>
-    </div>
-
-    <!-- Official BARD Series Chip in Top Right Corner -->
-    <div class="absolute top-2.5 right-2.5 z-10">
-      <span class="px-2 py-0.5 bg-black/75 backdrop-blur-sm text-[#E5A93C] font-mono text-[9px] uppercase tracking-widest font-bold rounded border border-white/10">
-        BARD 2026
-      </span>
-    </div>
   </div>
 
   <!-- Card Details & Body -->
@@ -136,17 +99,6 @@ if (member.data.positions.includes('Jammer')) {
         <span class="text-[10px] font-mono text-gray-400 uppercase tracking-wider">
           Series 1
         </span>
-      </div>
-
-      <!-- Position Tags -->
-      <div class="flex flex-wrap gap-1 mb-2.5">
-        {
-          member.data.positions.map((pos) => (
-            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider rounded bg-[#202020] text-gray-300 border border-[#333]">
-              {pos}
-            </span>
-          ))
-        }
       </div>
 
       <!-- Biography Text -->
@@ -163,12 +115,15 @@ if (member.data.positions.includes('Jammer')) {
       }
     </div>
 
-    <!-- Card Bottom Plaque -->
-    <div class="pt-2 border-t border-[#222] flex items-center justify-between text-[10px] font-mono text-gray-400">
-      <span>CARD #{String(index + 1).padStart(2, '0')}</span>
-      <span class="text-[#E5A93C] group-hover:text-amber-300 font-sans font-semibold tracking-wider flex items-center gap-1 group-hover:underline uppercase text-[11px]">
-        Inspect Card 🔍
-      </span>
+    <!-- Card Bottom Footer: Positions -->
+    <div class="pt-2.5 border-t border-[#222] flex flex-wrap items-center gap-1.5">
+      {
+        member.data.positions.map((pos) => (
+          <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider rounded bg-[#202020] text-[#E5A93C] border border-[#333]">
+            {pos}
+          </span>
+        ))
+      }
     </div>
   </div>
 </article>
