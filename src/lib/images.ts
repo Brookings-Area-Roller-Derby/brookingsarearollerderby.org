@@ -10,7 +10,9 @@ export function normalizeImageUrl(url?: string | null): string | undefined {
   }
 
   // Google Drive open/uc link: https://drive.google.com/open?id=FILE_ID or uc?id=FILE_ID
-  const driveIdMatch = trimmed.match(/drive\.google\.com\/(?:open|uc)\?(?:.*&)?id=([a-zA-Z0-9_-]+)/);
+  const driveIdMatch = trimmed.match(
+    /drive\.google\.com\/(?:open|uc)\?(?:.*&)?id=([a-zA-Z0-9_-]+)/,
+  );
   if (driveIdMatch) {
     return `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}`;
   }

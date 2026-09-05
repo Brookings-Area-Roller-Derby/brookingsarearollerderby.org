@@ -34,34 +34,6 @@ const hasPast = bouts.past.length > 0 || events.past.length > 0;
   </section>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12" data-schedule>
-    <!-- At-The-Door Ticketing Banner -->
-    <div class="bg-[#181818] border border-[#2A2A2A] rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
-      <div class="flex items-center gap-3.5">
-        <div class="w-10 h-10 rounded-lg bg-[#541221] text-white flex items-center justify-center text-xl flex-shrink-0">
-          🎟️
-        </div>
-        <div>
-          <h3 class="font-heading text-xl text-white uppercase tracking-wider leading-tight">
-            Tickets Sold Exclusively at the Door
-          </h3>
-          <p class="text-xs text-gray-400 mt-0.5">
-            Online tickets are not sold yet. All bout admissions are purchased at the venue entrance. Click any bout below to RSVP and get live event updates on Facebook!
-          </p>
-        </div>
-      </div>
-      <a
-        href={siteConfig.facebookUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 bg-[#222] hover:bg-[#541221] text-gray-300 hover:text-white text-xs font-heading uppercase tracking-wider rounded border border-[#333] transition-colors"
-      >
-        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-          <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"></path>
-        </svg>
-        BARD Facebook Page &rarr;
-      </a>
-    </div>
-
     <section data-schedule-section="upcoming" hidden={!hasUpcoming}>
       <div class="mb-8 pb-3 border-b border-[#252525]">
         <h2 class="font-heading text-3xl sm:text-4xl uppercase tracking-wider text-white">
@@ -156,10 +128,17 @@ const hasPast = bouts.past.length > 0 || events.past.length > 0;
     aria-modal="true"
     aria-labelledby="poster-modal-title"
   >
-    <div class="relative max-w-2xl w-full max-h-[90vh] flex flex-col bg-[#141414] border-2 border-[#541221] rounded-2xl overflow-hidden shadow-2xl">
+    <div
+      class="relative max-w-2xl w-full max-h-[90vh] flex flex-col bg-[#141414] border-2 border-[#541221] rounded-2xl overflow-hidden shadow-2xl"
+    >
       <!-- Modal Header -->
-      <div class="px-5 py-3.5 bg-[#1B1B1B] border-b border-[#282828] flex items-center justify-between gap-4">
-        <h3 id="poster-modal-title" class="font-heading text-xl uppercase tracking-wider text-white truncate">
+      <div
+        class="px-5 py-3.5 bg-[#1B1B1B] border-b border-[#282828] flex items-center justify-between gap-4"
+      >
+        <h3
+          id="poster-modal-title"
+          class="font-heading text-xl uppercase tracking-wider text-white truncate"
+        >
           Official Event Poster
         </h3>
         <button
@@ -183,7 +162,9 @@ const hasPast = bouts.past.length > 0 || events.past.length > 0;
       </div>
 
       <!-- Modal Footer -->
-      <div class="px-5 py-2.5 bg-[#181818] border-t border-[#252525] flex items-center justify-between text-xs text-gray-400 font-mono">
+      <div
+        class="px-5 py-2.5 bg-[#181818] border-t border-[#252525] flex items-center justify-between text-xs text-gray-400 font-mono"
+      >
         <span>Brookings Area Roller Derby • Event Art</span>
         <a
           id="poster-modal-download"
@@ -257,7 +238,9 @@ const hasPast = bouts.past.length > 0 || events.past.length > 0;
   const posterModalImg = document.getElementById('poster-modal-img') as HTMLImageElement | null;
   const posterModalTitle = document.getElementById('poster-modal-title');
   const posterModalClose = document.getElementById('poster-modal-close');
-  const posterModalDownload = document.getElementById('poster-modal-download') as HTMLAnchorElement | null;
+  const posterModalDownload = document.getElementById(
+    'poster-modal-download',
+  ) as HTMLAnchorElement | null;
 
   function openPosterModal(src: string, title: string) {
     if (!posterModal || !posterModalImg) return;
@@ -275,7 +258,9 @@ const hasPast = bouts.past.length > 0 || events.past.length > 0;
   }
 
   document.addEventListener('click', (e) => {
-    const trigger = (e.target as HTMLElement)?.closest('.bout-poster-trigger') as HTMLElement | null;
+    const trigger = (e.target as HTMLElement)?.closest(
+      '.bout-poster-trigger',
+    ) as HTMLElement | null;
     if (trigger) {
       e.preventDefault();
       const src = trigger.dataset.posterSrc;

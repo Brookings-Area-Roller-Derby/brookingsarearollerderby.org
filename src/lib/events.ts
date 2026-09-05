@@ -123,10 +123,7 @@ export function findNextEntry<T extends DatedEntry>(
   return sortByDate(entries).find((entry) => entry.data.date.getTime() > now.getTime());
 }
 
-export function formatEventDate(
-  date: Date | string,
-  options?: Intl.DateTimeFormatOptions,
-): string {
+export function formatEventDate(date: Date | string, options?: Intl.DateTimeFormatOptions): string {
   const d = typeof date === 'string' ? new Date(date) : date;
   if (options && Object.keys(options).length > 0) {
     return new Intl.DateTimeFormat('en-US', {

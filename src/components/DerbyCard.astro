@@ -10,6 +10,19 @@ interface Props {
 }
 
 const { member, index } = Astro.props;
+
+const isDefaultLogo =
+  !member.data.photo ||
+  (typeof member.data.photo === 'string'
+    ? member.data.photo.includes('logo')
+    : member.data.photo.src.includes('logo'));
+
+const photoSrc =
+  typeof member.data.photo === 'string'
+    ? normalizeImageUrl(member.data.photo)
+    : member.data.photo
+      ? member.data.photo.src
+      : defaultLogo.src;
 ---
 
 <article
@@ -17,11 +30,14 @@ const { member, index } = Astro.props;
   data-name={member.data.derbyName.toLowerCase()}
   data-number={member.data.number ? member.data.number.toLowerCase() : ''}
   data-positions={member.data.positions.join(',')}
-  data-is-official={member.data.positions.some((p) => p === 'Ref' || p === 'NSO') ? 'true' : 'false'}
+  data-is-official={member.data.positions.some((p) => p === 'Ref' || p === 'NSO')
+    ? 'true'
+    : 'false'}
+  data-is-default-logo={isDefaultLogo ? 'true' : 'false'}
   data-card-index={index}
   data-card-name={member.data.derbyName}
   data-card-number={member.data.number || ''}
-  data-card-photo={typeof member.data.photo === 'string' ? member.data.photo : ''}
+  data-card-photo={photoSrc}
   data-card-positions={member.data.positions.join(', ')}
   data-card-bio={member.body || ''}
   data-card-role={member.data.positions.includes('Fresh Meat')
@@ -36,11 +52,19 @@ const { member, index } = Astro.props;
   aria-label={`View details for ${member.data.derbyName}`}
 >
   <!-- Holographic Foil Sheen (Active on Hover) -->
-  <div class="derby-foil-sheen absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl z-20 pointer-events-none" aria-hidden="true"></div>
+  <div
+    class="derby-foil-sheen absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl z-20 pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
 
   <!-- Top Card Header -->
-  <div class="p-4 pb-3 flex items-center justify-between gap-2 border-b border-[#252525] bg-[#141414]/90 relative z-10">
-    <h3 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider truncate group-hover:text-[#E5A93C] transition-colors">
+  <div
+    class="p-4 pb-3 flex items-center justify-between gap-2 border-b border-[#252525] bg-[#141414]/90 relative z-10"
+  >
+    <h3
+      class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider truncate group-hover:text-[#E5A93C] transition-colors"
+    >
       {member.data.derbyName}
     </h3>
     {
@@ -57,33 +81,38 @@ const { member, index } = Astro.props;
   </div>
 
   <!-- Card Portrait Frame -->
-  <div class="relative w-full aspect-[4/3] bg-[#0E0E0E] overflow-hidden border-y border-[#262626] flex items-center justify-center">
+  <div
+    class={`relative w-full aspect-[4/3] overflow-hidden border-y border-[#262626] flex items-center justify-center ${isDefaultLogo ? 'bg-white p-4' : 'bg-[#0E0E0E]'}`}
+  >
     {
-      typeof member.data.photo === 'string' ? (
+      isDefaultLogo ? (
+        <Image
+          src={defaultLogo}
+          alt="Brookings Area Roller Derby"
+          class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+        />
+      ) : typeof member.data.photo === 'string' ? (
         <img
           src={normalizeImageUrl(member.data.photo)}
-          alt={member.data.number ? `${member.data.derbyName} - #${member.data.number}` : member.data.derbyName}
+          alt={
+            member.data.number
+              ? `${member.data.derbyName} - #${member.data.number}`
+              : member.data.derbyName
+          }
           class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
         />
-      ) : member.data.photo ? (
+      ) : (
         <Image
-          src={member.data.photo}
-          alt={member.data.number ? `${member.data.derbyName} - #${member.data.number}` : member.data.derbyName}
+          src={member.data.photo!}
+          alt={
+            member.data.number
+              ? `${member.data.derbyName} - #${member.data.number}`
+              : member.data.derbyName
+          }
           class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ease-out"
         />
-      ) : (
-        <div class="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-b from-[#181818] to-[#0D0D0D]">
-          <Image
-            src={defaultLogo}
-            alt="Brookings Area Roller Derby"
-            class="w-20 h-20 object-contain opacity-85 group-hover:scale-110 transition-transform duration-300"
-          />
-          <span class="text-[10px] font-mono text-gray-400 uppercase tracking-widest mt-2 font-semibold">
-            BARD OFFICIAL
-          </span>
-        </div>
       )
     }
   </div>
@@ -101,9 +130,7 @@ const { member, index } = Astro.props;
       <!-- Biography Text -->
       {
         member.body ? (
-          <p class="text-xs text-gray-300 leading-relaxed font-sans line-clamp-3">
-            {member.body}
-          </p>
+          <p class="text-xs text-gray-300 leading-relaxed font-sans line-clamp-3">{member.body}</p>
         ) : (
           <p class="text-xs text-gray-500 italic font-sans">
             Active competitor with Brookings Area Roller Derby.

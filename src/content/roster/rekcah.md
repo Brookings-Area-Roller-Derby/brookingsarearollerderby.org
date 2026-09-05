@@ -1,10 +1,10 @@
 ---
-derbyName: "Rekcah"
-number: "410"
+derbyName: 'Rekcah'
+number: '410'
 positions:
-  - "Jammer"
-  - "Fresh Meat"
-photo: "../../assets/logo.jpg"
+  - 'Jammer'
+  - 'Fresh Meat'
+photo: '../../assets/logo.jpg'
 active: true
 ---
 

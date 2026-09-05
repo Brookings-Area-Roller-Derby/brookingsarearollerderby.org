@@ -53,7 +53,7 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative" id="roster-container">
     <!-- Sticky App-Style Control Bar -->
     <div
-      class="sticky top-0 z-30 bg-[#121212]/95 backdrop-blur-md border-b border-[#282828] py-4 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mb-8 transition-all shadow-md"
+      class="sticky top-20 z-30 bg-[#121212]/95 backdrop-blur-md border-b border-[#282828] py-4 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mb-8 transition-all shadow-md"
     >
       <div class="max-w-7xl mx-auto space-y-3">
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
@@ -65,12 +65,15 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
               placeholder="Search by skater name or #number..."
               class="w-full px-4 py-2 pl-9 bg-[#1A1A1A] border border-[#333] rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#E5A93C] transition-colors"
             />
-            <span class="absolute left-3 top-2.5 text-gray-500 text-xs pointer-events-none">🔍</span>
+            <span class="absolute left-3 top-2.5 text-gray-500 text-xs pointer-events-none">🔍</span
+            >
           </div>
 
           <!-- Sort Selector -->
           <div class="flex items-center justify-end gap-2">
-            <label for="roster-sort" class="text-xs text-gray-400 font-medium whitespace-nowrap">Sort:</label>
+            <label for="roster-sort" class="text-xs text-gray-400 font-medium whitespace-nowrap"
+              >Sort:</label
+            >
             <select
               id="roster-sort"
               class="bg-[#1A1A1A] border border-[#333] text-gray-300 text-xs rounded-md px-2.5 py-1.5 focus:outline-none focus:border-[#E5A93C]"
@@ -147,7 +150,8 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
     <!-- Active Count Counter Indicator -->
     <div class="flex items-center justify-between text-xs text-gray-400 mb-4 px-1">
       <span>
-        Showing <strong id="visible-count" class="text-[#E5A93C] font-mono">{roster.length}</strong> of <strong class="text-white font-mono">{roster.length}</strong> cards
+        Showing <strong id="visible-count" class="text-[#E5A93C] font-mono">{roster.length}</strong> of
+        <strong class="text-white font-mono">{roster.length}</strong> cards
       </span>
       <span class="text-gray-500 text-[11px] hidden sm:inline">
         Click any card to inspect full bio
@@ -178,11 +182,7 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
       id="roster-grid"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr"
     >
-      {
-        roster.map((member, index) => (
-          <DerbyCard member={member} index={index} />
-        ))
-      }
+      {roster.map((member, index) => <DerbyCard member={member} index={index} />)}
     </div>
 
     <!-- Floating Back to Top Button -->
@@ -193,7 +193,11 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
       class="fixed bottom-6 right-6 z-40 bg-[#541221] hover:bg-[#7A1A30] text-white p-3 rounded-full shadow-2xl border border-[#9E1F3D] opacity-0 pointer-events-none transition-all duration-300 translate-y-2 hover:scale-110"
     >
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
       </svg>
     </button>
 
@@ -253,35 +257,31 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
         <div id="modal-card-number-wrapper" class="flex-shrink-0">
           <span
             id="modal-card-number"
-            class="font-heading text-3xl sm:text-4xl text-[#E5A93C] font-bold"
-          ></span>
+            class="font-heading text-3xl sm:text-4xl text-[#E5A93C] font-bold"></span>
         </div>
       </div>
 
       <!-- Modal Card Art Frame (Clean) -->
-      <div class="relative w-full aspect-[4/3] bg-[#0E0E0E] rounded-xl overflow-hidden border border-[#333] shadow-inner flex items-center justify-center">
-        <img
-          id="modal-card-photo"
-          src=""
-          alt=""
-          class="w-full h-full object-cover object-top"
-        />
+      <div
+        id="modal-card-frame"
+        class="relative w-full aspect-[4/3] bg-[#0E0E0E] rounded-xl overflow-hidden border border-[#333] shadow-inner flex items-center justify-center transition-colors"
+      >
+        <img id="modal-card-photo" src="" alt="" class="w-full h-full object-cover object-top" />
       </div>
 
       <!-- Modal Card Details -->
       <div class="space-y-3">
         <!-- Team Subheader Strip -->
         <div class="mb-2 pb-1.5 border-b border-[#252525]">
-          <span class="text-[10px] font-mono text-[#E5A93C] uppercase tracking-widest font-semibold">
+          <span
+            class="text-[10px] font-mono text-[#E5A93C] uppercase tracking-widest font-semibold"
+          >
             Brookings Area Roller Derby
           </span>
         </div>
 
         <div class="bg-[#151515] p-4 rounded-xl border border-[#262626] max-h-48 overflow-y-auto">
-          <p
-            id="modal-card-bio"
-            class="text-sm text-gray-200 leading-relaxed font-sans"
-          ></p>
+          <p id="modal-card-bio" class="text-sm text-gray-200 leading-relaxed font-sans"></p>
         </div>
 
         <!-- Card Bottom Footer: Positions -->
@@ -316,7 +316,9 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
   function setupRosterSPA() {
     const searchInput = document.getElementById('roster-search') as HTMLInputElement | null;
     const sortSelect = document.getElementById('roster-sort') as HTMLSelectElement | null;
-    const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.roster-filter-btn'));
+    const filterButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('.roster-filter-btn'),
+    );
     const grid = document.getElementById('roster-grid');
     const cards = Array.from(document.querySelectorAll<HTMLElement>('.roster-card'));
     const visibleCount = document.getElementById('visible-count');
@@ -343,7 +345,7 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
     function getVisibleCards(): HTMLElement[] {
       if (!grid) return [];
       return Array.from(grid.querySelectorAll<HTMLElement>('.roster-card')).filter(
-        (card) => card.style.display !== 'none'
+        (card) => card.style.display !== 'none',
       );
     }
 
@@ -382,9 +384,7 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
         const isOfficial = card.dataset.isOfficial === 'true';
 
         const matchesSearch =
-          !searchQuery ||
-          name.includes(searchQuery) ||
-          number.includes(searchQuery);
+          !searchQuery || name.includes(searchQuery) || number.includes(searchQuery);
 
         let matchesFilter = true;
         if (activeFilter === 'all') {
@@ -438,18 +438,37 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
 
       const name = card.dataset.cardName || '';
       const number = card.dataset.cardNumber || '';
-      const positions = (card.dataset.cardPositions || '').split(',').map((p) => p.trim()).filter(Boolean);
+      const positions = (card.dataset.cardPositions || '')
+        .split(',')
+        .map((p) => p.trim())
+        .filter(Boolean);
       const bio = card.dataset.cardBio || 'Active skater with Brookings Area Roller Derby.';
 
       // Find photo element in card
       const img = card.querySelector('img') as HTMLImageElement | null;
-      const photoSrc = img ? img.src : '';
+      const photoSrc = card.dataset.cardPhoto || (img ? img.src : '');
+      const isDefault = card.dataset.isDefaultLogo === 'true' || photoSrc.includes('logo');
+      const modalFrame = document.getElementById('modal-card-frame');
 
       if (modalName) modalName.textContent = name;
       if (modalNumber) modalNumber.textContent = number ? `#${number}` : 'COACH';
       if (modalPhoto) {
         modalPhoto.src = photoSrc;
         modalPhoto.alt = `${name} roster portrait`;
+        if (isDefault) {
+          modalPhoto.className = 'w-full h-full object-contain';
+        } else {
+          modalPhoto.className = 'w-full h-full object-cover object-top';
+        }
+      }
+      if (modalFrame) {
+        if (isDefault) {
+          modalFrame.className =
+            'relative w-full aspect-[4/3] bg-white p-6 rounded-xl overflow-hidden border border-[#333] shadow-inner flex items-center justify-center transition-colors';
+        } else {
+          modalFrame.className =
+            'relative w-full aspect-[4/3] bg-[#0E0E0E] rounded-xl overflow-hidden border border-[#333] shadow-inner flex items-center justify-center transition-colors';
+        }
       }
       if (modalBio) modalBio.textContent = bio;
       if (modalCounter) {
@@ -460,7 +479,8 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
         modalPositions.innerHTML = '';
         for (const pos of positions) {
           const badge = document.createElement('span');
-          badge.className = 'px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider rounded bg-[#202020] text-[#E5A93C] border border-[#333]';
+          badge.className =
+            'px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider rounded bg-[#202020] text-[#E5A93C] border border-[#333]';
           badge.textContent = pos;
           modalPositions.appendChild(badge);
         }

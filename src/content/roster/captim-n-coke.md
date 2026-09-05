@@ -1,8 +1,8 @@
 ---
-derbyName: "CapTim N Coke"
+derbyName: 'CapTim N Coke'
 positions:
-  - "Coach"
-photo: "../../assets/logo.jpg"
+  - 'Coach'
+photo: '../../assets/logo.jpg'
 active: true
 ---
 

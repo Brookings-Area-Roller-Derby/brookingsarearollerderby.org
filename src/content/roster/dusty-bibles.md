@@ -1,9 +1,9 @@
 ---
-derbyName: "Dusty Bibles"
+derbyName: 'Dusty Bibles'
 positions:
-  - "Coach"
-  - "Blocker"
-photo: "../../assets/logo.jpg"
+  - 'Coach'
+  - 'Blocker'
+photo: '../../assets/logo.jpg'
 active: false
 ---
 

@@ -51,7 +51,7 @@ const socialImageUrl = new URL(siteConfig.socialImage, siteConfig.url);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
 
-    <title>{title} | {siteConfig.name} ({siteConfig.shortName})</title>
+    <title>{`${title} | ${siteConfig.name} (${siteConfig.shortName})`}</title>
   </head>
 
   <body
@@ -70,6 +70,4 @@ const socialImageUrl = new URL(siteConfig.socialImage, siteConfig.url);
     </main>
     <Footer />
   </body>
-
-
 </html>

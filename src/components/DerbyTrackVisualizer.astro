@@ -7,14 +7,24 @@
   id="derby-visualizer-container"
 >
   <!-- Background Glow & Grid Accents -->
-  <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#541221]/30 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#E5A93C]/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div
+    class="absolute -top-24 -right-24 w-96 h-96 bg-[#541221]/30 rounded-full blur-3xl pointer-events-none"
+  >
+  </div>
+  <div
+    class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#E5A93C]/10 rounded-full blur-3xl pointer-events-none"
+  >
+  </div>
 
   <!-- Component Header -->
-  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#282828] relative z-10">
+  <div
+    class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#282828] relative z-10"
+  >
     <div>
       <div class="flex items-center gap-2 mb-1">
-        <span class="px-2.5 py-0.5 rounded-full bg-[#541221] text-red-300 font-mono text-xs uppercase font-bold tracking-wider border border-[#7A1A30]">
+        <span
+          class="px-2.5 py-0.5 rounded-full bg-[#541221] text-red-300 font-mono text-xs uppercase font-bold tracking-wider border border-[#7A1A30]"
+        >
           Interactive Simulator
         </span>
         <span class="text-xs text-gray-400 font-mono">MRDA &amp; WFTDA Flat Track</span>
@@ -23,13 +33,18 @@
         Roller Derby Track Simulator
       </h3>
       <p class="text-xs sm:text-sm text-gray-400">
-        Step through a typical 2-minute jam to see how the pack works, who scores, and how jams are called off.
+        Step through a typical 2-minute jam to see how the pack works, who scores, and how jams are
+        called off.
       </p>
     </div>
   </div>
 
   <!-- Step Navigation Pills -->
-  <div class="py-4 border-b border-[#252525] relative z-10" role="tablist" aria-label="Roller derby game phases">
+  <div
+    class="py-4 border-b border-[#252525] relative z-10"
+    role="tablist"
+    aria-label="Roller derby game phases"
+  >
     <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="vis-step-pills">
       <button
         type="button"
@@ -50,7 +65,9 @@
         class="step-pill px-3 py-2.5 rounded-lg text-left transition-all border border-[#2A2A2A] bg-[#1B1B1B] text-gray-400 hover:text-gray-200 hover:border-[#383838]"
       >
         <span class="text-[10px] font-mono text-gray-500 block uppercase font-bold">Step 2</span>
-        <span class="font-heading text-sm uppercase tracking-wide truncate block">2. The Breakout</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block"
+          >2. The Breakout</span
+        >
       </button>
 
       <button
@@ -61,7 +78,9 @@
         class="step-pill px-3 py-2.5 rounded-lg text-left transition-all border border-[#2A2A2A] bg-[#1B1B1B] text-gray-400 hover:text-gray-200 hover:border-[#383838]"
       >
         <span class="text-[10px] font-mono text-gray-500 block uppercase font-bold">Step 3</span>
-        <span class="font-heading text-sm uppercase tracking-wide truncate block">3. Lead Jammer</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block"
+          >3. Lead Jammer</span
+        >
       </button>
 
       <button
@@ -72,7 +91,9 @@
         class="step-pill px-3 py-2.5 rounded-lg text-left transition-all border border-[#2A2A2A] bg-[#1B1B1B] text-gray-400 hover:text-gray-200 hover:border-[#383838]"
       >
         <span class="text-[10px] font-mono text-gray-500 block uppercase font-bold">Step 4</span>
-        <span class="font-heading text-sm uppercase tracking-wide truncate block">4. Both Teams Score</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block"
+          >4. Both Teams Score</span
+        >
       </button>
 
       <button
@@ -83,20 +104,30 @@
         class="step-pill col-span-2 sm:col-span-1 px-3 py-2.5 rounded-lg text-left transition-all border border-[#2A2A2A] bg-[#1B1B1B] text-gray-400 hover:text-gray-200 hover:border-[#383838]"
       >
         <span class="text-[10px] font-mono text-gray-500 block uppercase font-bold">Step 5</span>
-        <span class="font-heading text-sm uppercase tracking-wide truncate block">5. The Call-Off</span>
+        <span class="font-heading text-sm uppercase tracking-wide truncate block"
+          >5. The Call-Off</span
+        >
       </button>
     </div>
 
     <!-- Auto-Play Progress Bar -->
     <div class="w-full bg-[#202020] h-1 rounded-full mt-3 overflow-hidden">
-      <div id="vis-progress-bar" class="h-full bg-gradient-to-r from-[#541221] to-[#E5A93C] w-1/5 transition-all duration-300"></div>
+      <div
+        id="vis-progress-bar"
+        class="h-full bg-gradient-to-r from-[#541221] to-[#E5A93C] w-1/5 transition-all duration-300"
+      >
+      </div>
     </div>
   </div>
 
   <!-- Visual Track Canvas Section -->
-  <div class="relative mt-4 bg-[#0D0D0D] rounded-xl border border-[#222] p-2 sm:p-4 overflow-hidden">
+  <div
+    class="relative mt-4 bg-[#0D0D0D] rounded-xl border border-[#222] p-2 sm:p-4 overflow-hidden"
+  >
     <!-- Live Match Status HUD Bar -->
-    <div class="flex items-center justify-between px-3 py-2 bg-[#141414] border border-[#282828] rounded-lg mb-3 text-xs font-mono">
+    <div
+      class="flex items-center justify-between px-3 py-2 bg-[#141414] border border-[#282828] rounded-lg mb-3 text-xs font-mono"
+    >
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
@@ -138,49 +169,48 @@
         <defs>
           <!-- Track Floor Texture Gradient -->
           <radialGradient id="infieldGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#141416" />
-            <stop offset="100%" stop-color="#0E0E10" />
+            <stop offset="0%" stop-color="#141416"></stop>
+            <stop offset="100%" stop-color="#0E0E10"></stop>
           </radialGradient>
 
           <linearGradient id="trackFloorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#232328" />
-            <stop offset="50%" stop-color="#1E1E23" />
-            <stop offset="100%" stop-color="#222227" />
+            <stop offset="0%" stop-color="#232328"></stop>
+            <stop offset="50%" stop-color="#1E1E23"></stop>
+            <stop offset="100%" stop-color="#222227"></stop>
           </linearGradient>
 
           <!-- Glow Filter for Lead Jammer -->
           <filter id="leadGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"></feGaussianBlur>
             <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
             </feMerge>
           </filter>
 
           <!-- Shadow Filter for Skaters -->
           <filter id="skaterShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.7" />
+            <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.7"
+            ></feDropShadow>
           </filter>
         </defs>
 
         <!-- Outer Infield Floor -->
-        <rect width="900" height="480" fill="#0C0C0E" rx="14" />
+        <rect width="900" height="480" fill="#0C0C0E" rx="14"></rect>
 
         <!-- Track Lane Surface -->
         <path
           d="M 260 45 L 640 45 A 195 195 0 0 1 640 435 L 260 435 A 195 195 0 0 1 260 45 Z"
           fill="url(#trackFloorGrad)"
           stroke="#38383F"
-          stroke-width="3"
-        />
+          stroke-width="3"></path>
 
         <!-- Infield (Center Area of Track) -->
         <path
           d="M 260 135 L 640 135 A 105 105 0 0 1 640 345 L 260 345 A 105 105 0 0 1 260 135 Z"
           fill="url(#infieldGrad)"
           stroke="#38383F"
-          stroke-width="3"
-        />
+          stroke-width="3"></path>
 
         <!-- Track Centerline Guide Dash (Counter-Clockwise: Bottom-Left -> Bottom-Right -> Right Turn UP -> Top-Right -> Top-Left -> Left Turn DOWN) -->
         <path
@@ -189,16 +219,31 @@
           fill="none"
           stroke="#2F2F36"
           stroke-width="1.5"
-          stroke-dasharray="6 8"
-        />
+          stroke-dasharray="6 8"></path>
 
         <!-- Infield Label & Watermark -->
         <g opacity="0.15" transform="translate(450, 240)">
-          <circle r="60" fill="none" stroke="#E5A93C" stroke-width="2" stroke-dasharray="4 6" />
-          <text text-anchor="middle" y="-10" font-family="'Bebas Neue', sans-serif" font-size="34" fill="#FFFFFF" letter-spacing="4">
+          <circle r="60" fill="none" stroke="#E5A93C" stroke-width="2" stroke-dasharray="4 6"
+          ></circle>
+          <text
+            text-anchor="middle"
+            y="-10"
+            font-family="'Bebas Neue', sans-serif"
+            font-size="34"
+            fill="#FFFFFF"
+            letter-spacing="4"
+          >
             BARD INFIELD
           </text>
-          <text text-anchor="middle" y="20" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" fill="#E5A93C" letter-spacing="2">
+          <text
+            text-anchor="middle"
+            y="20"
+            font-family="'Inter', sans-serif"
+            font-size="11"
+            font-weight="bold"
+            fill="#E5A93C"
+            letter-spacing="2"
+          >
             OFFICIALS &amp; PENALTY BOX
           </text>
         </g>
@@ -206,43 +251,108 @@
         <!-- Direction Indicators (Counter-Clockwise Arrows: Bottom moves Right, Right moves Up, Top moves Left, Left moves Down) -->
         <g stroke="#E5A93C" stroke-width="2" fill="none" opacity="0.4">
           <!-- Bottom straight: Left to Right -->
-          <path d="M 440 390 L 480 390 M 465 383 L 480 390 L 465 397" />
+          <path d="M 440 390 L 480 390 M 465 383 L 480 390 L 465 397"></path>
           <!-- Right turn: Down to Up -->
-          <path d="M 790 260 L 790 220 M 783 235 L 790 220 L 797 235" />
+          <path d="M 790 260 L 790 220 M 783 235 L 790 220 L 797 235"></path>
           <!-- Top straight: Right to Left -->
-          <path d="M 470 90 L 430 90 M 445 83 L 430 90 L 445 97" />
+          <path d="M 470 90 L 430 90 M 445 83 L 430 90 L 445 97"></path>
           <!-- Left turn: Up to Down -->
-          <path d="M 110 220 L 110 260 M 103 245 L 110 260 L 117 245" />
+          <path d="M 110 220 L 110 260 M 103 245 L 110 260 L 117 245"></path>
         </g>
 
         <!-- Jammer Line (Rear of Pack Start) at x=340 on bottom straightaway (Left-to-Right counter-clockwise flow) -->
         <g id="track-jammer-line">
-          <line x1="340" y1="345" x2="340" y2="435" stroke="#E5A93C" stroke-width="3.5" stroke-dasharray="8 4" />
-          <text x="340" y="455" text-anchor="middle" fill="#E5A93C" font-family="'Inter', sans-serif" font-size="10" font-weight="700" letter-spacing="1">
+          <line
+            x1="340"
+            y1="345"
+            x2="340"
+            y2="435"
+            stroke="#E5A93C"
+            stroke-width="3.5"
+            stroke-dasharray="8 4"></line>
+          <text
+            x="340"
+            y="455"
+            text-anchor="middle"
+            fill="#E5A93C"
+            font-family="'Inter', sans-serif"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="1"
+          >
             JAMMER LINE
           </text>
         </g>
 
         <!-- Pivot Line (Front of Pack Start) at x=560 on bottom straightaway -->
         <g id="track-pivot-line">
-          <line x1="560" y1="345" x2="560" y2="435" stroke="#FFFFFF" stroke-width="3.5" />
-          <text x="560" y="455" text-anchor="middle" fill="#A0A0A0" font-family="'Inter', sans-serif" font-size="10" font-weight="700" letter-spacing="1">
+          <line x1="560" y1="345" x2="560" y2="435" stroke="#FFFFFF" stroke-width="3.5"></line>
+          <text
+            x="560"
+            y="455"
+            text-anchor="middle"
+            fill="#A0A0A0"
+            font-family="'Inter', sans-serif"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="1"
+          >
             PIVOT LINE
           </text>
         </g>
 
         <!-- Dynamic Visual Annotations (Pack Zone between x=350 and 550) -->
         <g id="vis-pack-bracket" class="transition-opacity duration-500" opacity="1">
-          <rect x="350" y="347" width="200" height="86" rx="8" fill="#E5A93C" fill-opacity="0.08" stroke="#E5A93C" stroke-width="1.5" stroke-dasharray="4 4" />
-          <text x="450" y="337" text-anchor="middle" fill="#E5A93C" font-family="'Bebas Neue', sans-serif" font-size="15" letter-spacing="1.5">
+          <rect
+            x="350"
+            y="347"
+            width="200"
+            height="86"
+            rx="8"
+            fill="#E5A93C"
+            fill-opacity="0.08"
+            stroke="#E5A93C"
+            stroke-width="1.5"
+            stroke-dasharray="4 4"></rect>
+          <text
+            x="450"
+            y="337"
+            text-anchor="middle"
+            fill="#E5A93C"
+            font-family="'Bebas Neue', sans-serif"
+            font-size="15"
+            letter-spacing="1.5"
+          >
             ★ THE PACK ZONE (All 8 Blockers) ★
           </text>
         </g>
 
         <!-- Whistle Announcement Visual Bubble -->
-        <g id="vis-whistle-bubble" class="transition-all duration-300" opacity="0" transform="translate(450, 40) scale(0.9)">
-          <rect id="vis-whistle-bg" x="-130" y="-18" width="260" height="36" rx="18" fill="#541221" stroke="#9E1F3D" stroke-width="2" />
-          <text id="vis-whistle-text" text-anchor="middle" y="5" fill="#FFFFFF" font-family="'Bebas Neue', sans-serif" font-size="16" letter-spacing="1">
+        <g
+          id="vis-whistle-bubble"
+          class="transition-all duration-300"
+          opacity="0"
+          transform="translate(450, 40) scale(0.9)"
+        >
+          <rect
+            id="vis-whistle-bg"
+            x="-130"
+            y="-18"
+            width="260"
+            height="36"
+            rx="18"
+            fill="#541221"
+            stroke="#9E1F3D"
+            stroke-width="2"></rect>
+          <text
+            id="vis-whistle-text"
+            text-anchor="middle"
+            y="5"
+            fill="#FFFFFF"
+            font-family="'Bebas Neue', sans-serif"
+            font-size="16"
+            letter-spacing="1"
+          >
             📢 TWEEEEET! (Jam Starts)
           </text>
         </g>
@@ -254,74 +364,166 @@
         <g id="vis-skaters-layer" class="pointer-events-none">
           <!-- BARD TEAM (Maroon #7A1A30, Accent Gold/White) -->
           <g id="skater-bard-jammer" filter="url(#skaterShadow)">
-            <circle id="halo-bard-jammer" r="24" fill="#E5A93C" opacity="0" class="transition-opacity duration-300" filter="url(#leadGlow)" />
-            <circle r="15" fill="#7A1A30" stroke="#E5A93C" stroke-width="2.5" />
-            <polygon points="0,-9 2.7,-2.7 9.4,-2.7 4,1.8 6.1,8.1 0,4.2 -6.1,8.1 -4,1.8 -9.4,-2.7 -2.7,-2.7" fill="#FFFFFF" />
-            <text y="26" text-anchor="middle" fill="#FFFFFF" font-size="9" font-family="'Inter', sans-serif" font-weight="bold">BARD ⭐</text>
+            <circle
+              id="halo-bard-jammer"
+              r="24"
+              fill="#E5A93C"
+              opacity="0"
+              class="transition-opacity duration-300"
+              filter="url(#leadGlow)"></circle>
+            <circle r="15" fill="#7A1A30" stroke="#E5A93C" stroke-width="2.5"></circle>
+            <polygon
+              points="0,-9 2.7,-2.7 9.4,-2.7 4,1.8 6.1,8.1 0,4.2 -6.1,8.1 -4,1.8 -9.4,-2.7 -2.7,-2.7"
+              fill="#FFFFFF"></polygon>
+            <text
+              y="26"
+              text-anchor="middle"
+              fill="#FFFFFF"
+              font-size="9"
+              font-family="'Inter', sans-serif"
+              font-weight="bold">BARD ⭐</text
+            >
           </g>
 
           <g id="skater-bard-pivot" filter="url(#skaterShadow)">
-            <circle r="14" fill="#7A1A30" stroke="#FFFFFF" stroke-width="2" />
-            <rect x="-2.5" y="-10" width="5" height="20" rx="1.5" fill="#FFFFFF" />
-            <text y="24" text-anchor="middle" fill="#D1D5DB" font-size="8" font-family="'Inter', sans-serif">Pivot</text>
+            <circle r="14" fill="#7A1A30" stroke="#FFFFFF" stroke-width="2"></circle>
+            <rect x="-2.5" y="-10" width="5" height="20" rx="1.5" fill="#FFFFFF"></rect>
+            <text
+              y="24"
+              text-anchor="middle"
+              fill="#D1D5DB"
+              font-size="8"
+              font-family="'Inter', sans-serif">Pivot</text
+            >
           </g>
 
           <g id="skater-bard-b1" filter="url(#skaterShadow)">
-            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2" />
-            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">B1</text>
+            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2"></circle>
+            <text
+              y="4"
+              text-anchor="middle"
+              fill="#FFFFFF"
+              font-size="8"
+              font-weight="bold"
+              font-family="'Inter', sans-serif">B1</text
+            >
           </g>
 
           <g id="skater-bard-b2" filter="url(#skaterShadow)">
-            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2" />
-            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">B2</text>
+            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2"></circle>
+            <text
+              y="4"
+              text-anchor="middle"
+              fill="#FFFFFF"
+              font-size="8"
+              font-weight="bold"
+              font-family="'Inter', sans-serif">B2</text
+            >
           </g>
 
           <g id="skater-bard-b3" filter="url(#skaterShadow)">
-            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2" />
-            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">B3</text>
+            <circle r="13" fill="#7A1A30" stroke="#9E1F3D" stroke-width="2"></circle>
+            <text
+              y="4"
+              text-anchor="middle"
+              fill="#FFFFFF"
+              font-size="8"
+              font-weight="bold"
+              font-family="'Inter', sans-serif">B3</text
+            >
           </g>
 
           <!-- AWAY TEAM (Teal #0284C7, Accent White) -->
           <g id="skater-away-jammer" filter="url(#skaterShadow)">
-            <circle id="halo-away-jammer" r="24" fill="#38BDF8" opacity="0" class="transition-opacity duration-300" filter="url(#leadGlow)" />
-            <circle r="15" fill="#0284C7" stroke="#FFFFFF" stroke-width="2.5" />
-            <polygon points="0,-9 2.7,-2.7 9.4,-2.7 4,1.8 6.1,8.1 0,4.2 -6.1,8.1 -4,1.8 -9.4,-2.7 -2.7,-2.7" fill="#FFFFFF" />
-            <text y="26" text-anchor="middle" fill="#FFFFFF" font-size="9" font-family="'Inter', sans-serif" font-weight="bold">AWAY ⭐</text>
+            <circle
+              id="halo-away-jammer"
+              r="24"
+              fill="#38BDF8"
+              opacity="0"
+              class="transition-opacity duration-300"
+              filter="url(#leadGlow)"></circle>
+            <circle r="15" fill="#0284C7" stroke="#FFFFFF" stroke-width="2.5"></circle>
+            <polygon
+              points="0,-9 2.7,-2.7 9.4,-2.7 4,1.8 6.1,8.1 0,4.2 -6.1,8.1 -4,1.8 -9.4,-2.7 -2.7,-2.7"
+              fill="#FFFFFF"></polygon>
+            <text
+              y="26"
+              text-anchor="middle"
+              fill="#FFFFFF"
+              font-size="9"
+              font-family="'Inter', sans-serif"
+              font-weight="bold">AWAY ⭐</text
+            >
           </g>
 
           <g id="skater-away-pivot" filter="url(#skaterShadow)">
-            <circle r="14" fill="#0284C7" stroke="#FFFFFF" stroke-width="2" />
-            <rect x="-2.5" y="-10" width="5" height="20" rx="1.5" fill="#FFFFFF" />
-            <text y="24" text-anchor="middle" fill="#D1D5DB" font-size="8" font-family="'Inter', sans-serif">Pivot</text>
+            <circle r="14" fill="#0284C7" stroke="#FFFFFF" stroke-width="2"></circle>
+            <rect x="-2.5" y="-10" width="5" height="20" rx="1.5" fill="#FFFFFF"></rect>
+            <text
+              y="24"
+              text-anchor="middle"
+              fill="#D1D5DB"
+              font-size="8"
+              font-family="'Inter', sans-serif">Pivot</text
+            >
           </g>
 
           <g id="skater-away-b1" filter="url(#skaterShadow)">
-            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2" />
-            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">A1</text>
+            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2"></circle>
+            <text
+              y="4"
+              text-anchor="middle"
+              fill="#FFFFFF"
+              font-size="8"
+              font-weight="bold"
+              font-family="'Inter', sans-serif">A1</text
+            >
           </g>
 
           <g id="skater-away-b2" filter="url(#skaterShadow)">
-            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2" />
-            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">A2</text>
+            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2"></circle>
+            <text
+              y="4"
+              text-anchor="middle"
+              fill="#FFFFFF"
+              font-size="8"
+              font-weight="bold"
+              font-family="'Inter', sans-serif">A2</text
+            >
           </g>
 
           <g id="skater-away-b3" filter="url(#skaterShadow)">
-            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2" />
-            <text y="4" text-anchor="middle" fill="#FFFFFF" font-size="8" font-weight="bold" font-family="'Inter', sans-serif">A3</text>
+            <circle r="13" fill="#0284C7" stroke="#38BDF8" stroke-width="2"></circle>
+            <text
+              y="4"
+              text-anchor="middle"
+              fill="#FFFFFF"
+              font-size="8"
+              font-weight="bold"
+              font-family="'Inter', sans-serif">A3</text
+            >
           </g>
         </g>
       </svg>
     </div>
 
     <!-- Live Legend -->
-    <div class="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-400 pt-2 border-t border-[#1F1F1F]">
+    <div
+      class="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-400 pt-2 border-t border-[#1F1F1F]"
+    >
       <div class="flex flex-wrap items-center gap-4">
         <span class="inline-flex items-center gap-1.5 text-gray-300">
-          <span class="w-4 h-4 rounded-full bg-[#7A1A30] border border-[#E5A93C] flex items-center justify-center text-[9px] text-white">⭐</span>
+          <span
+            class="w-4 h-4 rounded-full bg-[#7A1A30] border border-[#E5A93C] flex items-center justify-center text-[9px] text-white"
+            >⭐</span
+          >
           Jammer (Scorer)
         </span>
         <span class="inline-flex items-center gap-1.5 text-gray-300">
-          <span class="w-4 h-4 rounded-full bg-[#7A1A30] border border-white flex items-center justify-center text-[9px] text-white font-bold">▌</span>
+          <span
+            class="w-4 h-4 rounded-full bg-[#7A1A30] border border-white flex items-center justify-center text-[9px] text-white font-bold"
+            >▌</span
+          >
           Pivot (Pace &amp; Star Pass)
         </span>
         <span class="inline-flex items-center gap-1.5 text-gray-300">
@@ -330,29 +532,36 @@
         </span>
       </div>
 
-      <div class="text-[11px] text-gray-400 font-mono">
-        ↺ Counter-clockwise skating direction
-      </div>
+      <div class="text-[11px] text-gray-400 font-mono">↺ Counter-clockwise skating direction</div>
     </div>
   </div>
 
   <!-- Dynamic Step Explanation Card -->
-  <div class="mt-6 bg-[#1A1A1A] border-2 border-[#541221] rounded-xl p-5 sm:p-6 transition-all duration-300 relative">
+  <div
+    class="mt-6 bg-[#1A1A1A] border-2 border-[#541221] rounded-xl p-5 sm:p-6 transition-all duration-300 relative"
+  >
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
       <div class="lg:col-span-8 space-y-3">
         <div class="flex items-center gap-2">
-          <span id="vis-card-badge" class="px-2.5 py-0.5 bg-[#541221] text-red-200 font-mono text-xs uppercase font-bold rounded">
+          <span
+            id="vis-card-badge"
+            class="px-2.5 py-0.5 bg-[#541221] text-red-200 font-mono text-xs uppercase font-bold rounded"
+          >
             Step 1 of 5
           </span>
-          <h4 id="vis-card-title" class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+          <h4
+            id="vis-card-title"
+            class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider"
+          >
             The Pack &amp; The Starting Lineup
           </h4>
         </div>
 
         <p id="vis-card-description" class="text-gray-300 text-sm sm:text-base leading-relaxed">
-          Unlike most sports, roller derby has no ball or puck! Both teams share the track simultaneously.
-          The 4 blockers from each team line up between the Pivot Line and the Jammer Line to form <strong>The Pack</strong>.
-          The two <strong>Jammers</strong> (wearing the star covers) line up 30 feet behind the pack.
+          Unlike most sports, roller derby has no ball or puck! Both teams share the track
+          simultaneously. The 4 blockers from each team line up between the Pivot Line and the
+          Jammer Line to form <strong>The Pack</strong>. The two <strong>Jammers</strong> (wearing the
+          star covers) line up 30 feet behind the pack.
         </p>
 
         <div class="p-3.5 bg-[#121212] border-l-4 border-[#E5A93C] rounded-r-lg">
@@ -360,7 +569,9 @@
             👀 What Spectators Should Watch For:
           </strong>
           <span id="vis-card-spectator-tip" class="text-xs sm:text-sm text-gray-300">
-            Notice how blockers from opposing teams stand right next to each other. Their goal is to stay together as a defined pack while positioning themselves to help their own jammer and trap the opponent.
+            Notice how blockers from opposing teams stand right next to each other. Their goal is to
+            stay together as a defined pack while positioning themselves to help their own jammer
+            and trap the opponent.
           </span>
         </div>
       </div>
@@ -373,18 +584,25 @@
         <div id="vis-card-takeaway" class="text-xs sm:text-sm text-gray-200 space-y-2">
           <p class="flex items-start gap-2">
             <span class="text-red-400 font-bold">✔</span>
-            <span><strong>Pack Definition:</strong> Largest group of in-bounds blockers skating within 10 feet of each other.</span>
+            <span
+              ><strong>Pack Definition:</strong> Largest group of in-bounds blockers skating within 10
+              feet of each other.</span
+            >
           </p>
           <p class="flex items-start gap-2">
             <span class="text-red-400 font-bold">✔</span>
-            <span><strong>Skater Count:</strong> 5 skaters per team on the track (1 Jammer + 4 Blockers).</span>
+            <span
+              ><strong>Skater Count:</strong> 5 skaters per team on the track (1 Jammer + 4 Blockers).</span
+            >
           </p>
         </div>
       </div>
     </div>
 
     <!-- Playback Navigation Controls Bar inside explanation card -->
-    <div class="mt-5 pt-4 border-t border-[#2A2A2A] flex flex-col sm:flex-row items-center justify-between gap-3">
+    <div
+      class="mt-5 pt-4 border-t border-[#2A2A2A] flex flex-col sm:flex-row items-center justify-between gap-3"
+    >
       <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
         <span class="w-2 h-2 rounded-full bg-[#E5A93C] animate-pulse"></span>
         <span class="text-gray-300 font-semibold uppercase tracking-wider">Jam Walkthrough</span>
@@ -400,7 +618,11 @@
           aria-label="Previous step"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"></path>
           </svg>
           <span>Prev</span>
         </button>
@@ -411,11 +633,21 @@
           class="px-5 py-2.5 bg-[#541221] hover:bg-[#7A1A30] text-white rounded-lg border border-[#9E1F3D] transition-colors text-xs font-heading tracking-wider uppercase flex items-center gap-2 shadow-md focus-visible:outline-2 focus-visible:outline-[#E5A93C]"
           aria-label="Toggle auto-play animation"
         >
-          <svg id="vis-play-icon" class="w-4 h-4 text-[#E5A93C]" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
+          <svg
+            id="vis-play-icon"
+            class="w-4 h-4 text-[#E5A93C]"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M8 5v14l11-7z"></path>
           </svg>
-          <svg id="vis-pause-icon" class="w-4 h-4 hidden text-[#E5A93C]" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          <svg
+            id="vis-pause-icon"
+            class="w-4 h-4 hidden text-[#E5A93C]"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
           </svg>
           <span id="vis-play-text">Auto-Play</span>
         </button>
@@ -428,7 +660,8 @@
         >
           <span>Next</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+            ></path>
           </svg>
         </button>
       </div>
@@ -591,7 +824,7 @@
       title: 'The Scoring Pass: BARD +4, Away +2 (Then Blocked!)',
       badge: 'Step 4 of 5',
       description:
-        'Both jammers complete a full lap in pursuit! BARD Jammer stays in front, powers through the pack, and passes all 4 Away blockers to score <strong>+4 Points</strong>. Pursuing right behind, Away Jammer passes 2 BARD blockers for <strong>+2 Points</strong>—but then gets <strong>blocked and stopped dead by BARD\'s 2-blocker wall</strong>!',
+        "Both jammers complete a full lap in pursuit! BARD Jammer stays in front, powers through the pack, and passes all 4 Away blockers to score <strong>+4 Points</strong>. Pursuing right behind, Away Jammer passes 2 BARD blockers for <strong>+2 Points</strong>—but then gets <strong>blocked and stopped dead by BARD's 2-blocker wall</strong>!",
       spectatorTip:
         'Notice how all 8 blockers stay grouped in the pack! Scoring badges appear directly beside each blocker passed: Away badges on the inside, BARD badges on the outside.',
       takeawayHtml: `
@@ -631,7 +864,7 @@
       title: 'The Strategic Call-Off (Opponent Blocked!)',
       badge: 'Step 5 of 5',
       description:
-        'With Away Jammer trapped by BARD\'s two-wall inside the pack, BARD holds a 4–2 lead (+2 net points). Rather than risk Away breaking free or continuing the jam, BARD\'s Lead Jammer <strong>taps both hands to their hips</strong>. The referee blows four quick whistles to end the jam, preserving the 4–2 advantage while the opposing Jammer remains contained.',
+        "With Away Jammer trapped by BARD's two-wall inside the pack, BARD holds a 4–2 lead (+2 net points). Rather than risk Away breaking free or continuing the jam, BARD's Lead Jammer <strong>taps both hands to their hips</strong>. The referee blows four quick whistles to end the jam, preserving the 4–2 advantage while the opposing Jammer remains contained.",
       spectatorTip:
         'This is masterclass derby strategy: the Lead Jammer calls off the jam while the opponent is trapped, preventing any further points from being scored!',
       takeawayHtml: `
@@ -743,8 +976,8 @@
     // 2. Prepare animation targets
     // For smooth forward motion:
     // If going forward (or looping from 4 to 0), ensure skaters advance forward counter-clockwise
-    const startStates: Record<SkaterKey, SkaterTrackState> = {} as any;
-    const targetDistances: Record<SkaterKey, { dist: number; lane: number }> = {} as any;
+    const startStates = {} as Record<SkaterKey, SkaterTrackState>;
+    const targetDistances = {} as Record<SkaterKey, { dist: number; lane: number }>;
 
     const isForward = targetIndex > fromIndex || (fromIndex === 4 && targetIndex === 0);
     const animDuration = targetIndex === 3 && fromIndex === 2 ? 1900 : 1300; // Smooth 1-lap scoring sprint
@@ -754,10 +987,11 @@
       const target = targetConfig.positions[key];
       startStates[key] = { dist: current.dist, lane: current.lane };
 
-      let targetD = target.dist;
+      const targetD = target.dist;
       if (isForward) {
         // Find forward distance: normalize current to base loop, then ensure target >= current
-        const currentMod = ((current.dist % totalTrackLength) + totalTrackLength) % totalTrackLength;
+        const currentMod =
+          ((current.dist % totalTrackLength) + totalTrackLength) % totalTrackLength;
         let diff = targetD - currentMod;
         if (diff < 0) {
           diff += totalTrackLength;
@@ -768,7 +1002,8 @@
         };
       } else {
         // Moving backward (e.g. clicking prev): take shortest direct distance
-        const currentMod = ((current.dist % totalTrackLength) + totalTrackLength) % totalTrackLength;
+        const currentMod =
+          ((current.dist % totalTrackLength) + totalTrackLength) % totalTrackLength;
         let diff = targetD - currentMod;
         if (diff > totalTrackLength / 2) diff -= totalTrackLength;
         if (diff < -totalTrackLength / 2) diff += totalTrackLength;
@@ -909,7 +1144,7 @@
         let measuredWidth = 0;
         try {
           measuredWidth = whistleText.getComputedTextLength();
-        } catch (e) {
+        } catch {
           measuredWidth = data.whistleText.length * 10;
         }
         if (!measuredWidth || measuredWidth < 50) {

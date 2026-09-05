@@ -1,12 +1,12 @@
 ---
-title: "Battle of the Beasts Tournament"
+title: 'Battle of the Beasts Tournament'
 date: 2026-10-03
-opponent: "MRDA Invitational (Hosted by Concussion Roller Derby)"
-location: "The Madhouse (1335 Madison St NE, Salem, OR)"
-homeOrAway: "away"
-time: "Weekend Tournament | 9 MRDA Games"
+opponent: 'MRDA Invitational (Hosted by Concussion Roller Derby)'
+location: 'The Madhouse (1335 Madison St NE, Salem, OR)'
+homeOrAway: 'away'
+time: 'Weekend Tournament | 9 MRDA Games'
 highlight: true
-facebookEventUrl: "https://concussionrollerderby.com"
+facebookEventUrl: 'https://concussionrollerderby.com'
 canceled: false
 ---
 

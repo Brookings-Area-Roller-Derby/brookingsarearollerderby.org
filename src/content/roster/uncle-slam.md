@@ -1,8 +1,8 @@
 ---
-derbyName: "Uncle Slam"
+derbyName: 'Uncle Slam'
 positions:
-  - "Ref"
-photo: "../../assets/logo.jpg"
+  - 'Ref'
+photo: '../../assets/logo.jpg'
 active: true
 ---
 

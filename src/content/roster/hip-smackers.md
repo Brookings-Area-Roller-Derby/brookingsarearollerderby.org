@@ -1,8 +1,8 @@
 ---
-derbyName: "Hip Smackers"
-number: "91"
+derbyName: 'Hip Smackers'
+number: '91'
 positions:
-  - "Blocker"
-photo: "../../assets/logo.jpg"
+  - 'Blocker'
+photo: '../../assets/logo.jpg'
 active: true
 ---

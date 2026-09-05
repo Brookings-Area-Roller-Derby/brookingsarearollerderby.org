@@ -1,10 +1,10 @@
 ---
-derbyName: "Bomb Diggity"
-number: "00"
+derbyName: 'Bomb Diggity'
+number: '00'
 positions:
-  - "NSO"
-  - "Blocker"
-photo: "../../assets/logo.jpg"
+  - 'NSO'
+  - 'Blocker'
+photo: '../../assets/logo.jpg'
 active: false
 ---
 

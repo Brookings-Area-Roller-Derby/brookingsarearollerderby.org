@@ -1,8 +1,8 @@
 ---
-derbyName: "Jawz"
-number: "518"
+derbyName: 'Jawz'
+number: '518'
 positions:
-  - "Blocker"
-photo: "../../assets/logo.jpg"
+  - 'Blocker'
+photo: '../../assets/logo.jpg'
 active: true
 ---

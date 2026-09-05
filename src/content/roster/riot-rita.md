@@ -1,11 +1,11 @@
 ---
-derbyName: "Riot Rita"
-number: "135"
+derbyName: 'Riot Rita'
+number: '135'
 positions:
-  - "Blocker"
-  - "Jammer"
-  - "Pivot"
-photo: "../../assets/logo.jpg"
+  - 'Blocker'
+  - 'Jammer'
+  - 'Pivot'
+photo: '../../assets/logo.jpg'
 active: true
 ---
 

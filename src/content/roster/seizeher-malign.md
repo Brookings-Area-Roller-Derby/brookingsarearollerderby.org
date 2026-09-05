@@ -1,9 +1,9 @@
 ---
-derbyName: "SeizeHer Malign"
-number: "58"
+derbyName: 'SeizeHer Malign'
+number: '58'
 positions:
-  - "Coach"
-photo: "../../assets/logo.jpg"
+  - 'Coach'
+photo: '../../assets/logo.jpg'
 active: true
 ---
 
