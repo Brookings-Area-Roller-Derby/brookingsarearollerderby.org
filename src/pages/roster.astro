@@ -3,25 +3,37 @@ import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import DerbyCard from '../components/DerbyCard.astro';
 
-const roster = (await getCollection('roster', ({ data }) => data.active)).sort((a, b) => {
-  const numA = a.data.number ? String(a.data.number).trim() : '';
-  const numB = b.data.number ? String(b.data.number).trim() : '';
-  if (numA && numB) {
-    const cmp = numA.localeCompare(numB, undefined, { numeric: true, sensitivity: 'base' });
-    if (cmp !== 0) return cmp;
+// Sort helper: jersey number first (natural order), then alphabetical
+const sortRosterMembers = (list: typeof allMembers) =>
+  [...list].sort((a, b) => {
+    const numA = a.data.number ? String(a.data.number).trim() : '';
+    const numB = b.data.number ? String(b.data.number).trim() : '';
+    if (numA && numB) {
+      const cmp = numA.localeCompare(numB, undefined, { numeric: true, sensitivity: 'base' });
+      if (cmp !== 0) return cmp;
+      return a.data.derbyName.localeCompare(b.data.derbyName);
+    }
+    if (numA && !numB) return -1;
+    if (!numA && numB) return 1;
     return a.data.derbyName.localeCompare(b.data.derbyName);
-  }
-  if (numA && !numB) return -1;
-  if (!numA && numB) return 1;
-  return a.data.derbyName.localeCompare(b.data.derbyName);
-});
-const coaches = roster.filter((m) => m.data.positions.includes('Coach'));
-const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
+  });
+
+const allMembers = await getCollection('roster', ({ data }) => data.active);
+
+// Separate members by their explicit section property in frontmatter
+// 'roster': Active roster (skaters, skater-coaches)
+// 'coaches': Bench coaches / coaching staff
+// 'officials': Referees, NSOs, and volunteers
+const activeRoster = sortRosterMembers(allMembers.filter((m) => m.data.section === 'roster'));
+const coachesList = sortRosterMembers(allMembers.filter((m) => m.data.section === 'coaches'));
+const officialsAndVolunteers = sortRosterMembers(allMembers.filter((m) => m.data.section === 'officials'));
+
+const freshMeat = activeRoster.filter((m) => m.data.positions.includes('Fresh Meat'));
 ---
 
 <Layout
   title="Skater Roster | Brookings Area Roller Derby (BARD)"
-  description="Meet the active blockers, jammers, pivots, referees, and officials of Brookings Area Roller Derby (BARD)."
+  description="Meet the active skaters, jammers, blockers, pivots, coaches, and officials of Brookings Area Roller Derby (BARD)."
 >
   <!-- Hero Section -->
   <section class="bg-[#121212] py-12 sm:py-16 border-b border-[#252525] relative overflow-hidden">
@@ -36,14 +48,28 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
           <span
             class="px-2.5 py-1 bg-[#1C1C1C] text-gray-300 font-mono text-xs rounded border border-[#333]"
           >
-            ROSTER SIZE: {roster.length} ATHLETES
+            SKATERS: {activeRoster.length} ATHLETES
           </span>
+          {
+            coachesList.length > 0 && (
+              <span class="px-2.5 py-1 bg-[#1C1C1C] text-gray-300 font-mono text-xs rounded border border-[#333]">
+                COACHES: {coachesList.length}
+              </span>
+            )
+          }
+          {
+            officialsAndVolunteers.length > 0 && (
+              <span class="px-2.5 py-1 bg-[#1C1C1C] text-gray-300 font-mono text-xs rounded border border-[#333]">
+                CREW: {officialsAndVolunteers.length} OFFICIALS
+              </span>
+            )
+          }
         </div>
         <h1 class="font-heading text-5xl sm:text-7xl uppercase tracking-wider text-white">
           Meet the Pack
         </h1>
         <p class="text-gray-400 text-base sm:text-lg max-w-2xl mt-2 leading-relaxed">
-          The competitive skaters, pivots, blockers, jammers, and zebra referees of BARD.
+          The competitive skaters, pivots, blockers, jammers, bench coaches, and dedicated crew of BARD.
         </p>
       </div>
     </div>
@@ -116,22 +142,11 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
           </button>
           <button
             type="button"
-            data-filter="Official"
+            data-filter="Coach"
             class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
           >
-            Officials &amp; Refs
+            Coaches
           </button>
-          {
-            coaches.length > 0 && (
-              <button
-                type="button"
-                data-filter="Coach"
-                class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
-              >
-                Coaches
-              </button>
-            )
-          }
           {
             freshMeat.length > 0 && (
               <button
@@ -143,6 +158,13 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
               </button>
             )
           }
+          <button
+            type="button"
+            data-filter="Official"
+            class="roster-filter-btn px-3.5 py-1.5 text-xs font-heading uppercase tracking-wider rounded-md border transition-all bg-[#1E1E1E] text-gray-300 border-[#333] hover:border-gray-500"
+          >
+            Officials &amp; Volunteers
+          </button>
         </div>
       </div>
     </div>
@@ -150,8 +172,8 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
     <!-- Active Count Counter Indicator -->
     <div class="flex items-center justify-between text-xs text-gray-400 mb-4 px-1">
       <span>
-        Showing <strong id="visible-count" class="text-[#E5A93C] font-mono">{roster.length}</strong> of
-        <strong class="text-white font-mono">{roster.length}</strong> cards
+        Showing <strong id="visible-count" class="text-[#E5A93C] font-mono">{allMembers.length}</strong> of
+        <strong class="text-white font-mono">{allMembers.length}</strong> members
       </span>
       <span class="text-gray-500 text-[11px] hidden sm:inline">
         Click any card to inspect full bio
@@ -164,9 +186,9 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
       class="hidden bg-[#181818] border border-[#2A2A2A] rounded-2xl p-12 text-center space-y-3 my-8"
     >
       <div class="text-4xl">🛼</div>
-      <h3 class="font-heading text-2xl uppercase tracking-wider text-white">No Skaters Found</h3>
+      <h3 class="font-heading text-2xl uppercase tracking-wider text-white">No Members Found</h3>
       <p class="text-gray-400 text-sm max-w-md mx-auto">
-        No roster members match your search or filter criteria.
+        No roster or crew members match your search or filter criteria.
       </p>
       <button
         type="button"
@@ -177,13 +199,80 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
       </button>
     </div>
 
-    <!-- Roster Grid with Uniform Heights -->
-    <div
-      id="roster-grid"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr"
-    >
-      {roster.map((member, index) => <DerbyCard member={member} index={index} />)}
-    </div>
+    <!-- Active Roster Section -->
+    <section id="section-active-roster" class="mb-14">
+      <div class="flex items-center gap-3 mb-6 pb-2 border-b border-[#282828]">
+        <h2 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+          Active Roster
+        </h2>
+        <span class="px-2.5 py-0.5 bg-[#1F1F1F] text-[#E5A93C] font-mono text-xs font-semibold rounded border border-[#E5A93C]/30">
+          Skaters &amp; Player-Coaches
+        </span>
+      </div>
+
+      <div
+        id="roster-grid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr"
+      >
+        {activeRoster.map((member, index) => <DerbyCard member={member} index={index} />)}
+      </div>
+    </section>
+
+    <!-- Bench Coaches Section -->
+    {
+      coachesList.length > 0 && (
+        <section id="section-coaches" class="mb-14">
+          <div class="flex items-center gap-3 mb-6 pb-2 border-b border-[#282828]">
+            <h2 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+              Coaching Staff
+            </h2>
+            <span class="px-2.5 py-0.5 bg-[#1F1F1F] text-[#E5A93C] font-mono text-xs font-semibold rounded border border-[#E5A93C]/30">
+              Bench Coaches
+            </span>
+          </div>
+          <p class="text-gray-400 text-sm mb-6 -mt-3">
+            The masterminds behind our strategy, pack dynamics, and bench leadership.
+          </p>
+
+          <div
+            id="coaches-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr"
+          >
+            {coachesList.map((member, index) => (
+              <DerbyCard member={member} index={activeRoster.length + index} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Officials & Volunteers Section -->
+    {
+      officialsAndVolunteers.length > 0 && (
+        <section id="section-officials-volunteers" class="mb-12">
+          <div class="flex items-center gap-3 mb-6 pb-2 border-b border-[#282828]">
+            <h2 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider">
+              Officials &amp; Volunteers
+            </h2>
+            <span class="px-2.5 py-0.5 bg-[#1F1F1F] text-gray-300 font-mono text-xs font-semibold rounded border border-[#333]">
+              Referees &amp; Non-Skating Officials
+            </span>
+          </div>
+          <p class="text-gray-400 text-sm mb-6 -mt-3">
+            Our bouts and operations run thanks to dedicated referees, non-skating officials (NSOs), and volunteers who keep the wheels turning.
+          </p>
+
+          <div
+            id="officials-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr"
+          >
+            {officialsAndVolunteers.map((member, index) => (
+              <DerbyCard member={member} index={activeRoster.length + coachesList.length + index} />
+            ))}
+          </div>
+        </section>
+      )
+    }
 
     <!-- Floating Back to Top Button -->
     <button
@@ -319,7 +408,12 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
     const filterButtons = Array.from(
       document.querySelectorAll<HTMLButtonElement>('.roster-filter-btn'),
     );
-    const grid = document.getElementById('roster-grid');
+    const rosterGrid = document.getElementById('roster-grid');
+    const coachesGrid = document.getElementById('coaches-grid');
+    const officialsGrid = document.getElementById('officials-grid');
+    const activeSection = document.getElementById('section-active-roster');
+    const coachesSection = document.getElementById('section-coaches');
+    const officialsSection = document.getElementById('section-officials-volunteers');
     const cards = Array.from(document.querySelectorAll<HTMLElement>('.roster-card'));
     const visibleCount = document.getElementById('visible-count');
     const emptyState = document.getElementById('roster-empty');
@@ -343,18 +437,13 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
     let currentModalIndex = 0;
 
     function getVisibleCards(): HTMLElement[] {
-      if (!grid) return [];
-      return Array.from(grid.querySelectorAll<HTMLElement>('.roster-card')).filter(
-        (card) => card.style.display !== 'none',
-      );
+      return cards.filter((card) => card.style.display !== 'none');
     }
 
-    function sortAndFilterCards() {
-      let visible = 0;
-      const sortBy = sortSelect?.value ?? 'number';
-
-      // Sort: based on jersey number, then by alphanumeric name if no jersey number
-      const sorted = [...cards].sort((a, b) => {
+    function sortCardElements(container: HTMLElement | null, sortBy: string) {
+      if (!container) return;
+      const childCards = Array.from(container.querySelectorAll<HTMLElement>('.roster-card'));
+      const sorted = childCards.sort((a, b) => {
         if (sortBy === 'name') {
           return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
         }
@@ -370,11 +459,22 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
         return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
       });
 
-      if (grid) {
-        for (const card of sorted) {
-          grid.appendChild(card);
-        }
+      for (const card of sorted) {
+        container.appendChild(card);
       }
+    }
+
+    function sortAndFilterCards() {
+      let visible = 0;
+      let activeVisible = 0;
+      let coachesVisible = 0;
+      let officialsVisible = 0;
+      const sortBy = sortSelect?.value ?? 'number';
+
+      // Sort within each grid container preserving section division
+      sortCardElements(rosterGrid, sortBy);
+      sortCardElements(coachesGrid, sortBy);
+      sortCardElements(officialsGrid, sortBy);
 
       // Filter
       for (const card of cards) {
@@ -398,9 +498,27 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
         if (matchesSearch && matchesFilter) {
           card.style.display = '';
           visible++;
+          if (card.closest('#section-active-roster')) {
+            activeVisible++;
+          } else if (card.closest('#section-coaches')) {
+            coachesVisible++;
+          } else if (card.closest('#section-officials-volunteers')) {
+            officialsVisible++;
+          }
         } else {
           card.style.display = 'none';
         }
+      }
+
+      // Hide/show section headers based on whether any cards in that section match
+      if (activeSection) {
+        activeSection.style.display = activeVisible > 0 ? '' : 'none';
+      }
+      if (coachesSection) {
+        coachesSection.style.display = coachesVisible > 0 ? '' : 'none';
+      }
+      if (officialsSection) {
+        officialsSection.style.display = officialsVisible > 0 ? '' : 'none';
       }
 
       if (visibleCount) visibleCount.textContent = String(visible);
@@ -451,7 +569,7 @@ const freshMeat = roster.filter((m) => m.data.positions.includes('Fresh Meat'));
       const modalFrame = document.getElementById('modal-card-frame');
 
       if (modalName) modalName.textContent = name;
-      if (modalNumber) modalNumber.textContent = number ? `#${number}` : 'COACH';
+      if (modalNumber) modalNumber.textContent = number ? `#${number}` : (card.dataset.headerBadge || 'STAFF');
       if (modalPhoto) {
         modalPhoto.src = photoSrc;
         modalPhoto.alt = `${name} roster portrait`;

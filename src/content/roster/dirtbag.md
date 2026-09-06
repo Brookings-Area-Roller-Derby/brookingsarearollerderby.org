@@ -1,8 +1,10 @@
 ---
 derbyName: 'Dirtbag'
 number: '66'
-positions:
+positions:  # Options: 'Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat'
   - 'Blocker'
+  - Pivot
+section: 'roster'  # Options: 'roster', 'coaches', 'officials'
 photo: 'https://photos.smugmug.com/Unlisted-on-Website/BARDS/n-sfNGdC/BARDS-MediaDay-Selects/i-ZJ7NHgC/0/Kbs4wszcmxRtZXMRx2WZJbKJRkXbPwWSFzDRMJqb2/XL/20260401_hmo_00521-XL.jpg'
 active: true
 ---

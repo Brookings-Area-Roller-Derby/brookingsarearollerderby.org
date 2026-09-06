@@ -1,9 +1,9 @@
 ---
 derbyName: 'Bomb Diggity'
 number: '00'
-positions:
+positions:  # Options: 'Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat'
   - 'NSO'
-  - 'Blocker'
+section: 'officials'  # Options: 'roster', 'coaches', 'officials'
 photo: '../../assets/logo.jpg'
 active: false
 ---

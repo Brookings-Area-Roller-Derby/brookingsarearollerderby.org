@@ -1,8 +1,8 @@
 ---
 derbyName: 'Dusty Bibles'
-positions:
+positions:  # Options: 'Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat'
   - 'Coach'
-  - 'Blocker'
+section: 'coaches'  # Options: 'roster', 'coaches', 'officials'
 photo: '../../assets/logo.jpg'
 active: false
 ---

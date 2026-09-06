@@ -16,6 +16,7 @@ const roster = defineCollection({
       positions: z.array(
         z.enum(['Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat']),
       ),
+      section: z.enum(['roster', 'coaches', 'officials']).default('roster'),
       photo: z.union([image(), z.string()]).optional(),
       photoUrl: z.string().optional(),
       active: z.boolean().default(true),
@@ -69,6 +70,7 @@ const sponsors = defineCollection({
     z.object({
       name: z.string(),
       tier: z.enum(['grand-slam', 'apex-jump', 'rookie', 'exclusive']),
+      packageTitle: z.string().optional(),
       logo: z.union([image(), z.string()]).optional(),
       url: z.url().optional(),
       active: z.boolean().default(true),

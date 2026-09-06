@@ -1,11 +1,12 @@
 ---
 derbyName: 'Rekcah'
 number: '410'
-positions:
+positions:  # Options: 'Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat'
   - 'Jammer'
   - 'Fresh Meat'
+section: 'roster'  # Options: 'roster', 'coaches', 'officials'
 photo: '../../assets/logo.jpg'
 active: true
 ---
 
-Fresh Meat skater hitting the track with BARD!
+Fresh meat that loves to hit hard!

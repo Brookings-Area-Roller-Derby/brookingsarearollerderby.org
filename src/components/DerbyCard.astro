@@ -23,10 +23,20 @@ const photoSrc =
     : member.data.photo
       ? member.data.photo.src
       : defaultLogo.src;
+
+const headerBadge = member.data.positions.includes('Ref')
+  ? 'REF'
+  : member.data.positions.includes('NSO')
+    ? 'NSO'
+    : member.data.positions.includes('Coach')
+      ? 'COACH'
+      : member.data.positions.includes('Fresh Meat')
+        ? 'ROOKIE'
+        : 'SKATER';
 ---
 
 <article
-  class="roster-card derby-trading-card bg-gradient-to-b from-[#1C1C1C] via-[#161616] to-[#121212] rounded-2xl border-2 border-[#2A2A2A] hover:border-[#E5A93C] overflow-hidden shadow-xl hover:shadow-[0_12px_35px_rgba(229,169,60,0.22)] transition-all duration-300 flex flex-col justify-between group relative cursor-pointer min-h-[460px] select-none"
+  class="roster-card derby-trading-card bg-gradient-to-b from-[#1C1C1C] via-[#161616] to-[#121212] rounded-2xl border-2 border-[#2A2A2A] hover:border-[#E5A93C] overflow-hidden shadow-xl hover:shadow-[0_12px_35px_rgba(229,169,60,0.22)] transition-all duration-300 flex flex-col justify-between group relative cursor-pointer h-full select-none"
   data-name={member.data.derbyName.toLowerCase()}
   data-number={member.data.number ? member.data.number.toLowerCase() : ''}
   data-positions={member.data.positions.join(',')}
@@ -47,6 +57,8 @@ const photoSrc =
       : member.data.positions.some((p) => p === 'Ref' || p === 'NSO')
         ? 'BARD Official'
         : 'BARD Active Skater'}
+  data-header-badge={headerBadge}
+  data-section={member.data.section}
   role="button"
   tabindex="0"
   aria-label={`View details for ${member.data.derbyName}`}
@@ -74,7 +86,7 @@ const photoSrc =
         </span>
       ) : (
         <span class="px-2 py-0.5 bg-[#1F1F1F] text-[#E5A93C] font-mono text-[11px] font-bold uppercase tracking-wider rounded border border-[#E5A93C]/40 flex-shrink-0">
-          COACH
+          {headerBadge}
         </span>
       )
     }
@@ -130,7 +142,7 @@ const photoSrc =
       <!-- Biography Text -->
       {
         member.body ? (
-          <p class="text-xs text-gray-300 leading-relaxed font-sans line-clamp-3">{member.body}</p>
+          <p class="text-xs text-gray-300 leading-relaxed font-sans">{member.body}</p>
         ) : (
           <p class="text-xs text-gray-500 italic font-sans">
             Active competitor with Brookings Area Roller Derby.

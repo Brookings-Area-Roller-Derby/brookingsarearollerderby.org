@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import logoImage from '../assets/logo.jpg';
 import { siteConfig } from '../config/site';
 import { normalizeImageUrl } from '../lib/images';
 
@@ -274,15 +275,84 @@ const tiers = [
             </p>
           </div>
 
-          {/* Grand Slam Tier (Featured Large Cards) */}
-          {grandSlamSponsors.length > 0 && (
+          {/* Exclusive / Title Packages (Featured Top Cards) */}
+          {exclusiveSponsors.length > 0 && (
             <div class="space-y-4">
               <div class="flex items-center gap-3">
-                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#E5A93C] text-black font-bold rounded">
-                  Grand Slam Tier
+                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#541221] text-[#E5A93C] font-bold rounded">
+                  Exclusive &amp; Title Sponsors
                 </span>
-                <span class="h-px flex-1 bg-gradient-to-r from-[#E5A93C]/40 to-transparent" />
+                <span class="h-px flex-1 bg-gradient-to-r from-[#541221] to-transparent" />
               </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {exclusiveSponsors.map((s) => (
+                  <div class="bg-gradient-to-br from-[#1E1215] to-[#141414] border-2 border-[#541221] hover:border-[#9E1F3D] rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between shadow-2xl relative overflow-hidden transition-all">
+                    {s.data.logo && (
+                      <div class="w-36 h-28 sm:w-44 sm:h-32 flex-shrink-0 bg-white rounded-xl p-2.5 flex items-center justify-center shadow-inner border border-white/20">
+                        {typeof s.data.logo === 'string' ? (
+                          <img
+                            src={normalizeImageUrl(s.data.logo)}
+                            alt={`${s.data.name} logo`}
+                            class="w-full h-full object-contain rounded-lg"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <Image
+                            src={s.data.logo}
+                            alt={`${s.data.name} logo`}
+                            class="w-full h-full object-contain rounded-lg"
+                          />
+                        )}
+                      </div>
+                    )}
+                    <div class="flex-1 text-center sm:text-left flex flex-col justify-between h-full space-y-3">
+                      <div>
+                        {s.data.packageTitle && (
+                          <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1.5">
+                            <span class="text-[11px] font-heading uppercase tracking-widest text-[#E5A93C] bg-[#3B0B16] px-2.5 py-0.5 rounded font-bold border border-[#541221]">
+                              {s.data.packageTitle}
+                            </span>
+                          </div>
+                        )}
+                        <h4 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider leading-tight">
+                          {s.data.name}
+                        </h4>
+                        {s.body && (
+                          <p class="text-sm text-gray-300 mt-2.5 leading-relaxed font-sans">
+                            {s.body}
+                          </p>
+                        )}
+                      </div>
+                      {s.data.url && (
+                        <div class="pt-2">
+                          <a
+                            href={s.data.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#541221] hover:bg-[#7A1A30] text-[#E5A93C] hover:text-white font-heading uppercase text-xs tracking-wider rounded font-bold border border-[#9E1F3D] transition-all shadow"
+                          >
+                            Visit Partner Website &rarr;
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Grand Slam Tier (Featured Large Cards) */}
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#E5A93C] text-black font-bold rounded">
+                Grand Slam Tier {grandSlamSponsors.length === 0 && '(Available - Example Card)'}
+              </span>
+              <span class="h-px flex-1 bg-gradient-to-r from-[#E5A93C]/40 to-transparent" />
+            </div>
+
+            {grandSlamSponsors.length > 0 ? (
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {grandSlamSponsors.map((s) => (
                   <div class="bg-gradient-to-br from-[#1E1B13] to-[#141414] border-2 border-[#E5A93C] rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between shadow-2xl relative overflow-hidden group hover:border-[#F2BE63] transition-all">
@@ -337,18 +407,51 @@ const tiers = [
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            ) : (
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-br from-[#1E1B13]/70 to-[#141414] border-2 border-dashed border-[#E5A93C]/60 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between shadow-2xl relative overflow-hidden group">
+                  <div class="w-36 h-28 sm:w-44 sm:h-32 flex-shrink-0 bg-white/10 rounded-xl p-3 flex flex-col items-center justify-center border border-dashed border-[#E5A93C]/40 text-center">
+                    <Image src={logoImage} alt="Your Logo Here" class="w-16 h-16 opacity-40 object-contain mb-1" />
+                    <span class="text-[11px] font-heading uppercase tracking-wider text-[#E5A93C]">Your Logo Here</span>
+                  </div>
+                  <div class="flex-1 text-center sm:text-left flex flex-col justify-between h-full space-y-3">
+                    <div>
+                      <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1.5">
+                        <span class="text-[10px] font-heading uppercase tracking-widest text-[#E5A93C] bg-[#3B0B16] px-2 py-0.5 rounded font-bold border border-[#E5A93C]/30">
+                          Example Card • Position Available
+                        </span>
+                      </div>
+                      <h4 class="font-heading text-2xl sm:text-3xl text-white uppercase tracking-wider leading-tight">
+                        Your Business Name
+                      </h4>
+                      <p class="text-sm text-gray-400 mt-2.5 leading-relaxed font-sans">
+                        Grand Slam Sponsors receive premium bout program placement, trackside banners at all home bouts, dedicated Facebook features, and live announcer shout-outs!
+                      </p>
+                    </div>
+                    <div class="pt-2">
+                      <a
+                        href={`mailto:${siteConfig.email}?subject=${encodeURIComponent('BARD Sponsorship Inquiry - Grand Slam Sponsor')}`}
+                        class="inline-flex items-center gap-2 px-5 py-2 bg-[#E5A93C] hover:bg-[#d6982b] text-black font-heading uppercase text-xs tracking-wider rounded font-bold transition-all shadow"
+                      >
+                        Claim This Sponsor Spot &rarr;
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Apex Jump Tier (Medium Cards) */}
-          {apexJumpSponsors.length > 0 && (
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#9E1F3D] text-white font-bold rounded">
-                  Apex Jump Tier
-                </span>
-                <span class="h-px flex-1 bg-gradient-to-r from-[#9E1F3D]/40 to-transparent" />
-              </div>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#9E1F3D] text-white font-bold rounded">
+                Apex Jump Tier {apexJumpSponsors.length === 0 && '(Available - Example Card)'}
+              </span>
+              <span class="h-px flex-1 bg-gradient-to-r from-[#9E1F3D]/40 to-transparent" />
+            </div>
+
+            {apexJumpSponsors.length > 0 ? (
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {apexJumpSponsors.map((s) => (
                   <div class="bg-gradient-to-br from-[#221015] to-[#151515] border border-[#9E1F3D] hover:border-red-500 rounded-xl p-6 flex flex-col justify-between shadow-lg transition-all">
@@ -398,18 +501,51 @@ const tiers = [
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            ) : (
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-[#221015]/70 to-[#151515] border border-dashed border-[#9E1F3D]/60 hover:border-red-500 rounded-xl p-6 flex flex-col justify-between shadow-lg transition-all">
+                  <div class="space-y-3">
+                    <div class="w-full h-24 bg-white/10 rounded-lg p-2.5 flex flex-col items-center justify-center border border-dashed border-[#9E1F3D]/40 text-center">
+                      <Image src={logoImage} alt="Your Logo Here" class="w-10 h-10 opacity-40 object-contain mb-1" />
+                      <span class="text-[11px] font-heading uppercase tracking-wider text-red-300">Your Logo Here</span>
+                    </div>
+                    <div>
+                      <div class="mb-1">
+                        <span class="text-[10px] font-heading uppercase tracking-wider px-2 py-0.5 bg-[#3B0B16] text-red-300 rounded font-bold border border-[#9E1F3D]/30">
+                          Example Card • Spot Open
+                        </span>
+                      </div>
+                      <h4 class="font-heading text-xl text-white uppercase tracking-wider">
+                        Your Business Name
+                      </h4>
+                      <p class="text-xs text-gray-400 mt-2 leading-relaxed font-sans">
+                        Apex Jump Sponsors receive 4 season tickets, banner display, Facebook mentions, and printed bout program advertising.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="pt-4 mt-4 border-t border-[#3B0B16]">
+                    <a
+                      href={`mailto:${siteConfig.email}?subject=${encodeURIComponent('BARD Sponsorship Inquiry - Apex Jump Sponsor')}`}
+                      class="text-xs font-heading uppercase text-red-400 hover:text-red-300 tracking-wider inline-flex items-center gap-1 font-bold"
+                    >
+                      Claim This Spot &rarr;
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Rookie Tier (Compact Cards) */}
-          {rookieSponsors.length > 0 && (
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-gray-700 text-gray-200 font-bold rounded">
-                  Rookie Tier
-                </span>
-                <span class="h-px flex-1 bg-gradient-to-r from-gray-700/40 to-transparent" />
-              </div>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-gray-700 text-gray-200 font-bold rounded">
+                Rookie Tier {rookieSponsors.length === 0 && '(Available - Example Card)'}
+              </span>
+              <span class="h-px flex-1 bg-gradient-to-r from-gray-700/40 to-transparent" />
+            </div>
+
+            {rookieSponsors.length > 0 ? (
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                 {rookieSponsors.map((s) => (
                   <div class="bg-[#181818] border border-[#2E2E2E] hover:border-gray-500 rounded-xl p-5 flex flex-col justify-between shadow transition-all">
@@ -457,67 +593,37 @@ const tiers = [
                   </div>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Custom / Exclusive Tier (if any) */}
-          {exclusiveSponsors.length > 0 && (
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <span class="px-3 py-1 text-xs font-heading uppercase tracking-wider bg-[#541221] text-[#E5A93C] font-bold rounded">
-                  Exclusive / Title Sponsors
-                </span>
-                <span class="h-px flex-1 bg-gradient-to-r from-[#541221] to-transparent" />
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {exclusiveSponsors.map((s) => (
-                  <div class="bg-[#1B1B1B] border-2 border-[#541221] rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between shadow-xl">
-                    {s.data.logo && (
-                      <div class="w-36 h-28 flex-shrink-0 bg-white rounded-xl p-3 flex items-center justify-center shadow-inner">
-                        {typeof s.data.logo === 'string' ? (
-                          <img
-                            src={normalizeImageUrl(s.data.logo)}
-                            alt={`${s.data.name} logo`}
-                            class="w-full h-full object-contain"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        ) : (
-                          <Image
-                            src={s.data.logo}
-                            alt={`${s.data.name} logo`}
-                            class="w-full h-full object-contain"
-                          />
-                        )}
-                      </div>
-                    )}
-                    <div class="flex-1 text-center sm:text-left flex flex-col justify-between h-full space-y-3">
-                      <div>
-                        <h4 class="font-heading text-2xl text-white uppercase tracking-wider">
-                          {s.data.name}
-                        </h4>
-                        {s.body && (
-                          <p class="text-sm text-gray-300 mt-2 leading-relaxed font-sans">
-                            {s.body}
-                          </p>
-                        )}
-                      </div>
-                      {s.data.url && (
-                        <a
-                          href={s.data.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="inline-flex items-center gap-2 px-5 py-2 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase text-xs tracking-wider rounded border border-[#9E1F3D]"
-                        >
-                          Visit Partner &rarr;
-                        </a>
-                      )}
+            ) : (
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                <div class="bg-[#181818]/70 border border-dashed border-gray-600 rounded-xl p-5 flex flex-col justify-between shadow transition-all">
+                  <div>
+                    <div class="w-full h-16 bg-white/10 rounded-md p-1.5 mb-3 flex flex-col items-center justify-center border border-dashed border-gray-600 text-center">
+                      <span class="text-[10px] font-heading uppercase tracking-wider text-gray-300">Your Logo Here</span>
                     </div>
+                    <div class="mb-1">
+                      <span class="text-[9px] font-heading uppercase tracking-wider px-1.5 py-0.5 bg-[#252525] text-gray-300 rounded font-bold border border-[#3A3A3A]">
+                        Example Card • Available
+                      </span>
+                    </div>
+                    <h4 class="font-heading text-lg text-white uppercase tracking-wider">
+                      Your Business Name
+                    </h4>
+                    <p class="text-xs text-gray-400 mt-1.5 leading-relaxed font-sans">
+                      Rookie Sponsors receive 2 season tickets, banner display, social shoutouts, and program logo placement.
+                    </p>
                   </div>
-                ))}
+                  <div class="pt-3 mt-3 border-t border-[#252525]">
+                    <a
+                      href={`mailto:${siteConfig.email}?subject=${encodeURIComponent('BARD Sponsorship Inquiry - Rookie Sponsor')}`}
+                      class="text-[11px] font-heading uppercase text-gray-300 hover:text-[#E5A93C] tracking-wider inline-flex items-center gap-1 font-bold"
+                    >
+                      Claim This Spot &rarr;
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )
     }

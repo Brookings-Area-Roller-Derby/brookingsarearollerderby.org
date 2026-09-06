@@ -1,7 +1,8 @@
 ---
 derbyName: 'CapTim N Coke'
-positions:
+positions:  # Options: 'Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat'
   - 'Coach'
+section: 'coaches'  # Options: 'roster', 'coaches', 'officials'
 photo: '../../assets/logo.jpg'
 active: true
 ---
