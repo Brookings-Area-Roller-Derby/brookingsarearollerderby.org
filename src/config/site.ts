@@ -13,7 +13,7 @@ export const siteConfig = {
   instagramUrl: 'https://www.instagram.com/bard_rollerderby/',
   youtubeUrl: 'https://www.youtube.com/@bardrollerderby',
   tiktokUrl: 'https://www.tiktok.com/@brookingsarearollerderby',
-  merchUrl: 'https://www.bonfire.com/new-bard-merch/',
+  merchUrl: 'https://www.bonfire.com/store/brookings-area-roller-derby-merch/',
   donationUrl: 'https://www.venmo.com/u/BrookingsAreaRollerDerby',
   homeVenue: {
     name: 'Brookings County Outdoor Adventure Center',

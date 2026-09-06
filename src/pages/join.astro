@@ -178,8 +178,8 @@ import { siteConfig } from '../config/site';
             Join the Pack / Get in Touch
           </h2>
           <p class="text-gray-400 text-sm mt-2 max-w-xl mx-auto">
-            The fastest and easiest way to join BARD, ask questions about practice schedules, or
-            connect regarding junior carpooling is to message our team directly on Facebook.
+            The fastest way to join BARD, ask questions about practice schedules, or
+            connect regarding junior carpooling is to message our team on Facebook or send us an email.
           </p>
         </div>
 
@@ -188,14 +188,28 @@ import { siteConfig } from '../config/site';
             href={siteConfig.facebookUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="px-8 py-4 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider text-xl rounded-xl shadow-xl border border-[#9E1F3D] transition-transform active:scale-95 flex items-center gap-3"
+            class="w-full sm:w-auto px-7 py-3.5 bg-[#541221] hover:bg-[#7A1A30] text-white font-heading uppercase tracking-wider text-lg rounded-xl shadow-xl border border-[#9E1F3D] transition-transform active:scale-95 flex items-center justify-center gap-2.5"
           >
-            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
               <path
                 d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.582 9 4.615V8z"
               ></path>
             </svg>
             Message Us on Facebook
+          </a>
+          <a
+            href={`mailto:${siteConfig.email}?subject=Inquiry%20About%20Joining%20BARD`}
+            class="w-full sm:w-auto px-7 py-3.5 bg-[#1C1C1C] hover:bg-[#252525] text-gray-200 hover:text-white font-heading uppercase tracking-wider text-lg rounded-xl border border-[#3A3A3A] hover:border-gray-400 transition-colors flex items-center justify-center gap-2.5"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+            Email the League
           </a>
         </div>
 
