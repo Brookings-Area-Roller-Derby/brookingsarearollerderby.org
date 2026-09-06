@@ -1,6 +1,6 @@
 ---
 derbyName: 'Jawz'
-number: '518'
+number: '516'
 positions:  # Options: 'Jammer', 'Blocker', 'Pivot', 'Ref', 'NSO', 'Coach', 'Fresh Meat'
   - 'Blocker'
 section: 'roster'  # Options: 'roster', 'coaches', 'officials'
