@@ -11,6 +11,13 @@ interface Props {
 
 const { member, index } = Astro.props;
 
+const bioHtml = (member.rendered?.html || '')
+  .replace(/\[!WARNING\]/gi, '⚠️')
+  .replace(/\[!NOTE\]/gi, 'ℹ️')
+  .replace(/\[!TIP\]/gi, '💡')
+  .replace(/\[!IMPORTANT\]/gi, '❗')
+  .replace(/\[!CAUTION\]/gi, '🛑');
+
 const isDefaultLogo =
   !member.data.photo ||
   (typeof member.data.photo === 'string'
@@ -50,6 +57,7 @@ const headerBadge = member.data.positions.includes('Ref')
   data-card-photo={photoSrc}
   data-card-positions={member.data.positions.join(', ')}
   data-card-bio={member.body || ''}
+  data-card-bio-html={bioHtml}
   data-card-role={member.data.positions.includes('Fresh Meat')
     ? 'BARD Fresh Meat'
     : member.data.positions.includes('Coach')
@@ -142,7 +150,10 @@ const headerBadge = member.data.positions.includes('Ref')
       <!-- Biography Text -->
       {
         member.body ? (
-          <p class="text-xs text-gray-300 leading-relaxed font-sans">{member.body}</p>
+          <div
+            class="roster-card-bio text-xs text-gray-300 leading-relaxed font-sans space-y-1 [&_strong]:text-white [&_strong]:font-semibold [&_em]:italic [&_em]:text-gray-200 [&_a]:text-[#E5A93C] [&_a]:underline hover:[&_a]:text-[#F3C26B] [&_blockquote]:border-l-2 [&_blockquote]:border-[#E5A93C] [&_blockquote]:pl-2.5 [&_blockquote]:py-1 [&_blockquote]:my-1 [&_blockquote]:bg-[#1A1A1A] [&_blockquote]:rounded-r-md [&_blockquote]:text-gray-200 [&_p]:my-0 [&_p]:leading-relaxed"
+            set:html={bioHtml}
+          />
         ) : (
           <p class="text-xs text-gray-400 italic font-sans">
             Active competitor with Brookings Area Roller Derby.
